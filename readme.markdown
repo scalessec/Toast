@@ -1,9 +1,8 @@
 Toast for iOS
 =============
+*Version 0.1*
 
-Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. As sample project is included with the source.
-
-Version 0.1
+Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. A sample project is included with the source.
 
 
 Setup Instructions
@@ -13,8 +12,8 @@ Setup Instructions
 3. Import "Toast+UIView.h".
 
 
-License
--------
+MIT License
+-----------
 Copyright (c) 2011 Charles Scalesse.
 
 Permission is hereby granted, free of charge, to any person obtaining a
