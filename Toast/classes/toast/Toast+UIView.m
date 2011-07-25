@@ -258,7 +258,7 @@ static NSString *kDurationKey = @"duration";
     float longerLeft = (messageLeft < titleLeft) ? titleLeft : messageLeft;
     
     //if the image width is larger than longerWidth, use the image width to calculate the wrapper width.
-    //the same logic applys to the wrapper height
+    //the same logic applies to the wrapper height
     float wrapperWidth = ((longerLeft + longerWidth + kHorizontalPadding) < imageWidth + (kHorizontalPadding * 2)) ? imageWidth + (kHorizontalPadding * 2) : (longerLeft + longerWidth + kHorizontalPadding);
     float wrapperHeight = ((messageTop + messageHeight + kVerticalPadding) < imageHeight + (kVerticalPadding * 2)) ? imageHeight + (kVerticalPadding * 2) : (messageTop + messageHeight + kVerticalPadding);
                          
