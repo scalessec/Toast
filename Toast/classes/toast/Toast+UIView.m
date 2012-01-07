@@ -107,7 +107,7 @@ static NSString *kDurationKey = @"duration";
     
     UIView *toast = (UIView *)context;
     
-    //retrieve the display interval associated with the view
+    // retrieve the display interval associated with the view
     float interval = [(NSNumber *)objc_getAssociatedObject(toast, &kDurationKey) floatValue];
     
     if([animationID isEqualToString:@"fade_in"]) {
@@ -173,7 +173,7 @@ static NSString *kDurationKey = @"duration";
     UILabel *titleLabel = nil;
     UIImageView *imageView = nil;
     
-    //create the parent view
+    // create the parent view
     UIView *wrapperView = [[[UIView alloc] init] autorelease];
     [wrapperView.layer setCornerRadius:kCornerRadius];
     [wrapperView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
@@ -186,7 +186,7 @@ static NSString *kDurationKey = @"duration";
     
     float imageWidth, imageHeight, imageLeft;
     
-    //the imageView frame values will be used to size & position the other views
+    // the imageView frame values will be used to size & position the other views
     if(imageView != nil) {
         imageWidth = imageView.bounds.size.width;
         imageHeight = imageView.bounds.size.height;
@@ -206,7 +206,7 @@ static NSString *kDurationKey = @"duration";
         [titleLabel setAlpha:1.0];
         [titleLabel setText:title];
         
-        //size the title label according to the length of the text
+        // size the title label according to the length of the text
         CGSize maxSizeTitle = CGSizeMake((self.bounds.size.width * kMaxWidth) - imageWidth, self.bounds.size.height * kMaxHeight);
         CGSize expectedSizeTitle = [title sizeWithFont:titleLabel.font constrainedToSize:maxSizeTitle lineBreakMode:titleLabel.lineBreakMode]; 
         [titleLabel setFrame:CGRectMake(0, 0, expectedSizeTitle.width, expectedSizeTitle.height)];
@@ -222,13 +222,13 @@ static NSString *kDurationKey = @"duration";
         [messageLabel setAlpha:1.0];
         [messageLabel setText:message];
         
-        //size the message label according to the length of the text
+        // size the message label according to the length of the text
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * kMaxWidth) - imageWidth, self.bounds.size.height * kMaxHeight);
         CGSize expectedSizeMessage = [message sizeWithFont:messageLabel.font constrainedToSize:maxSizeMessage lineBreakMode:messageLabel.lineBreakMode]; 
         [messageLabel setFrame:CGRectMake(0, 0, expectedSizeMessage.width, expectedSizeMessage.height)];
     }
     
-    //titleLabel frame values
+    // titleLabel frame values
     float titleWidth, titleHeight, titleTop, titleLeft;
     
     if(titleLabel != nil) {
@@ -240,7 +240,7 @@ static NSString *kDurationKey = @"duration";
         titleWidth = titleHeight = titleTop = titleLeft = 0;
     }
     
-    //messageLabel frame values
+    // messageLabel frame values
     float messageWidth, messageHeight, messageLeft, messageTop;
 
     if(messageLabel != nil) {
@@ -252,13 +252,13 @@ static NSString *kDurationKey = @"duration";
         messageWidth = messageHeight = messageLeft = messageTop = 0;
     }
     
-    //compare the title & message widths and use the longer value to calculate the size of the wrapper width
-    //the same logic applies to the x value (left)
+    // compare the title & message widths and use the longer value to calculate the size of the wrapper width
+    // the same logic applies to the x value (left)
     float longerWidth = (messageWidth < titleWidth) ? titleWidth : messageWidth;
     float longerLeft = (messageLeft < titleLeft) ? titleLeft : messageLeft;
     
-    //if the image width is larger than longerWidth, use the image width to calculate the wrapper width.
-    //the same logic applies to the wrapper height
+    // if the image width is larger than longerWidth, use the image width to calculate the wrapper width.
+    // the same logic applies to the wrapper height
     float wrapperWidth = ((longerLeft + longerWidth + kHorizontalPadding) < imageWidth + (kHorizontalPadding * 2)) ? imageWidth + (kHorizontalPadding * 2) : (longerLeft + longerWidth + kHorizontalPadding);
     float wrapperHeight = ((messageTop + messageHeight + kVerticalPadding) < imageHeight + (kVerticalPadding * 2)) ? imageHeight + (kVerticalPadding * 2) : (messageTop + messageHeight + kVerticalPadding);
                          
