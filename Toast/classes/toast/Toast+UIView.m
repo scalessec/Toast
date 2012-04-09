@@ -48,22 +48,22 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [self makeToast:message duration:kDefaultLength position:kDefaultPosition];
 }
 
-- (void)makeToast:(NSString *)message duration:(float)interval position:(id)point {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)point {
     UIView *toast = [self makeViewForMessage:message title:nil image:nil];
     [self showToast:toast duration:interval position:point];  
 }
 
-- (void)makeToast:(NSString *)message duration:(float)interval position:(id)point title:(NSString *)title {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)point title:(NSString *)title {
     UIView *toast = [self makeViewForMessage:message title:title image:nil];
     [self showToast:toast duration:interval position:point];  
 }
 
-- (void)makeToast:(NSString *)message duration:(float)interval position:(id)point image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)point image:(UIImage *)image {
     UIView *toast = [self makeViewForMessage:message title:nil image:image];
     [self showToast:toast duration:interval position:point];  
 }
 
-- (void)makeToast:(NSString *)message duration:(float)interval  position:(id)point title:(NSString *)title image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval  position:(id)point title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self makeViewForMessage:message title:title image:image];
     [self showToast:toast duration:interval position:point];  
 }
@@ -72,7 +72,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [self showToast:toast duration:kDefaultLength position:kDefaultPosition];
 }
 
-- (void)showToast:(UIView *)toast duration:(float)interval position:(id)point {
+- (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
     
     /****************************************************
      *                                                  *
@@ -107,7 +107,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     UIView *toast = (UIView *)context;
     
     // retrieve the display interval associated with the view
-    float interval = [(NSNumber *)objc_getAssociatedObject(toast, &kDurationKey) floatValue];
+    CGFloat interval = [(NSNumber *)objc_getAssociatedObject(toast, &kDurationKey) floatValue];
     
     if([animationID isEqualToString:@"fade_in"]) {
         
@@ -183,7 +183,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
         [imageView setFrame:CGRectMake(kHorizontalPadding, kVerticalPadding, kImageWidth, kImageHeight)];
     }
     
-    float imageWidth, imageHeight, imageLeft;
+    CGFloat imageWidth, imageHeight, imageLeft;
     
     // the imageView frame values will be used to size & position the other views
     if(imageView != nil) {
@@ -228,7 +228,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     }
     
     // titleLabel frame values
-    float titleWidth, titleHeight, titleTop, titleLeft;
+    CGFloat titleWidth, titleHeight, titleTop, titleLeft;
     
     if(titleLabel != nil) {
         titleWidth = titleLabel.bounds.size.width;
@@ -240,7 +240,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     }
     
     // messageLabel frame values
-    float messageWidth, messageHeight, messageLeft, messageTop;
+    CGFloat messageWidth, messageHeight, messageLeft, messageTop;
 
     if(messageLabel != nil) {
         messageWidth = messageLabel.bounds.size.width;
@@ -252,12 +252,12 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     }
     
 
-    float longerWidth = MAX(titleWidth, messageWidth);
-    float longerLeft = MAX(titleLeft, messageLeft);
+    CGFloat longerWidth = MAX(titleWidth, messageWidth);
+    CGFloat longerLeft = MAX(titleLeft, messageLeft);
     
     // wrapper width uses the longerWidth or the image width, whatever is larger. same logic applies to the wrapper height
-    float wrapperWidth = MAX((imageWidth + (kHorizontalPadding * 2)), (longerLeft + longerWidth + kHorizontalPadding));    
-    float wrapperHeight = MAX((messageTop + messageHeight + kVerticalPadding), (imageHeight + (kVerticalPadding * 2)));
+    CGFloat wrapperWidth = MAX((imageWidth + (kHorizontalPadding * 2)), (longerLeft + longerWidth + kHorizontalPadding));    
+    CGFloat wrapperHeight = MAX((messageTop + messageHeight + kVerticalPadding), (imageHeight + (kVerticalPadding * 2)));
                          
     [wrapperView setFrame:CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight)];
     
