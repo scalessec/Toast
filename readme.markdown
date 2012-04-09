@@ -8,8 +8,7 @@ Toast is an Objective-C category that adds Android-style toast notifications to 
 Setup Instructions
 ------------------
 1. Add "Toast+UIView.h" & "Toast+UIView.m" to your project.
-2. Add the QuartzCore library to your project.
-3. Import "Toast+UIView.h".
+2. Link against the QuartzCore library.
 
 
 MIT License
