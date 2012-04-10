@@ -176,6 +176,11 @@ static NSString *kDurationKey = @"duration";
     // create the parent view
     UIView *wrapperView = [[[UIView alloc] init] autorelease];
     [wrapperView.layer setCornerRadius:kCornerRadius];
+    [wrapperView.layer setShadowColor:[UIColor blackColor].CGColor];
+    [wrapperView.layer setShadowOpacity:0.8];
+    [wrapperView.layer setShadowRadius:6.0];
+    [wrapperView.layer setShadowOffset:CGSizeMake(4.0, 4.0)];
+
     [wrapperView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
     
     if(image != nil) {
@@ -277,7 +282,7 @@ static NSString *kDurationKey = @"duration";
     if(imageView != nil) {
         [wrapperView addSubview:imageView];
     }
-    
+        
     return wrapperView;
 }
 
