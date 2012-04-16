@@ -5,6 +5,7 @@ Toast for iOS
 Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class.
 
 Examples
+---------
     // basic usage
     [self.view makeToast:@"This is a piece of toast."];
 
@@ -33,6 +34,7 @@ Setup Instructions
 
 
 MIT License
+-----------
     Copyright (c) 2012 Charles Scalesse.
 
     Permission is hereby granted, free of charge, to any person obtaining a
