@@ -2,9 +2,9 @@
  
     Toast+UIView.h
     Toast
-    Version 0.1
+    Version 1.1
 
-    Copyright (c) 2011 Charles Scalesse.
+    Copyright (c) 2012 Charles Scalesse.
  
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the
@@ -39,7 +39,12 @@
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position title:(NSString *)title image:(UIImage *)image;
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position image:(UIImage *)image;
 
-// the showToast method displays an existing view as toast
+// displays toast with an activity spinner
+- (void)makeToastActivity;
+- (void)makeToastActivity:(id)position;
+- (void)hideToastActivity;
+
+// the showToast methods display any view as toast
 - (void)showToast:(UIView *)toast;
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point;
 

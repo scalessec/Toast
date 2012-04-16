@@ -1,33 +1,38 @@
 //
 //  Toast+UIView.m
 //  Toast
-//  Version 0.1
+//  Version 1.1
 //
-//  Copyright 2011 Charles Scalesse.
+//  Copyright 2012 Charles Scalesse.
 //
 
 #import "Toast+UIView.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
-#define kMaxWidth               0.8
-#define kMaxHeight              0.8
+#define kMaxWidth                   0.8
+#define kMaxHeight                  0.8
 
-#define kHorizontalPadding      10.0
-#define kVerticalPadding        10.0
-#define kCornerRadius           10.0
-#define kOpacity                0.8
-#define kFontSize               16.0
-#define kMaxTitleLines          999
-#define kMaxMessageLines        999
-#define kFadeDuration           0.2
-#define kDisplayShadow          YES
+#define kHorizontalPadding          10.0
+#define kVerticalPadding            10.0
+#define kCornerRadius               10.0
+#define kOpacity                    0.8
+#define kFontSize                   16.0
+#define kMaxTitleLines              999
+#define kMaxMessageLines            999
+#define kFadeDuration               0.2
+#define kDisplayShadow              YES
 
-#define kDefaultLength          3.0
-#define kDefaultPosition        @"bottom"
+#define kDefaultLength              3.0
+#define kDefaultPosition            @"bottom"
 
-#define kImageWidth             80.0
-#define kImageHeight            80.0
+#define kImageWidth                 80.0
+#define kImageHeight                80.0
+
+#define kActivityWidth              100.0
+#define kActivityHeight             100.0
+#define kActivityDefaultPosition    @"center"
+#define kActivityTag                91325
 
 static NSString *kDurationKey = @"CSToastDurationKey";
 
@@ -36,37 +41,37 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 
 - (CGPoint)getPositionFor:(id)position toast:(UIView *)toast;
 - (UIView *)makeViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
+- (UIView *)makeActivityViewForMessage:(NSString *)message;
 
 @end
 
 
 @implementation UIView (Toast)
 
-#pragma mark -
-#pragma mark Toast Methods
+#pragma mark - Toast Methods
 
 - (void)makeToast:(NSString *)message {
     [self makeToast:message duration:kDefaultLength position:kDefaultPosition];
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)point {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position {
     UIView *toast = [self makeViewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:interval position:point];  
+    [self showToast:toast duration:interval position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)point title:(NSString *)title {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position title:(NSString *)title {
     UIView *toast = [self makeViewForMessage:message title:title image:nil];
-    [self showToast:toast duration:interval position:point];  
+    [self showToast:toast duration:interval position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)point image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position image:(UIImage *)image {
     UIView *toast = [self makeViewForMessage:message title:nil image:image];
-    [self showToast:toast duration:interval position:point];  
+    [self showToast:toast duration:interval position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval  position:(id)point title:(NSString *)title image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(CGFloat)interval  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self makeViewForMessage:message title:title image:image];
-    [self showToast:toast duration:interval position:point];  
+    [self showToast:toast duration:interval position:position];  
 }
 
 - (void)showToast:(UIView *)toast {
@@ -83,7 +88,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     
     CGPoint toastPoint = [self getPositionFor:point toast:toast];
     
-    //use an associative reference to associate the toast view with the display interval
+    // use an associative reference to associate the toast view with the display interval
     objc_setAssociatedObject (toast, &kDurationKey, [NSNumber numberWithFloat:interval], OBJC_ASSOCIATION_RETAIN);
     
     [toast setCenter:toastPoint];
@@ -100,8 +105,60 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     
 }
 
-#pragma mark -
-#pragma mark Animation Delegate Method
+#pragma mark - Toast Activity Methods
+
+- (void)makeToastActivity {
+    [self makeToastActivity:kActivityDefaultPosition];
+}
+
+- (void)makeToastActivity:(id)position {
+    // prevent more than one activity view
+    UIView *existingToast = [self viewWithTag:kActivityTag];
+    if (existingToast != nil) {
+        [existingToast removeFromSuperview];
+    }
+    
+    UIView *activityContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, kActivityWidth, kActivityHeight)] autorelease];
+    [activityContainer setCenter:[self getPositionFor:position toast:activityContainer]];
+    [activityContainer setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
+    [activityContainer setAlpha:0.0];
+    [activityContainer setTag:kActivityTag];
+    [activityContainer.layer setCornerRadius:kCornerRadius];
+    if (kDisplayShadow) {
+        [activityContainer.layer setShadowColor:[UIColor blackColor].CGColor];
+        [activityContainer.layer setShadowOpacity:0.8];
+        [activityContainer.layer setShadowRadius:6.0];
+        [activityContainer.layer setShadowOffset:CGSizeMake(4.0, 4.0)];
+    }
+    
+    UIActivityIndicatorView *activityView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    [activityView setCenter:CGPointMake(activityContainer.bounds.size.width / 2, activityContainer.bounds.size.height / 2)];
+    [activityContainer addSubview:activityView];
+    [activityView startAnimating];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:kFadeDuration];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [activityContainer setAlpha:1.0];
+    [UIView commitAnimations];
+    
+    [self addSubview:activityContainer];
+}
+
+- (void)hideToastActivity {
+    UIView *existingToast = [self viewWithTag:kActivityTag];
+    if (existingToast != nil) {
+        [UIView beginAnimations:nil context:nil];
+        [UIView setAnimationDuration:kFadeDuration];
+        [UIView setAnimationDelegate:existingToast];
+        [UIView setAnimationDidStopSelector:@selector(removeFromSuperview)];
+        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+        [existingToast setAlpha:0.0];
+        [UIView commitAnimations];
+    }
+}
+
+#pragma mark - Animation Delegate Method
 
 - (void)animationDidStop:(NSString*)animationID finished:(BOOL)finished context:(void *)context {
     
@@ -129,8 +186,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     
 }
 
-#pragma mark -
-#pragma mark Private Methods
+#pragma mark - Private Methods
 
 - (CGPoint)getPositionFor:(id)point toast:(UIView *)toast {
     

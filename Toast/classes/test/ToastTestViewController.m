@@ -11,6 +11,7 @@
 @implementation ToastTestViewController
 
 @synthesize yellowView = _yellowView;
+@synthesize activityButton = _activityButton;
 
 #pragma mark - IBActions
 
@@ -72,7 +73,7 @@
             
             [self.view showToast:toastView 
                         duration:2.0
-                        position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]]; // CGPoint is a C struct and therefore must be wrapped in an NSValue object.
+                        position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]]; // wrap CGPoint in an NSValue object
                         
             [toastView release];
             break;
@@ -83,6 +84,18 @@
             [_yellowView makeToast:@"This is a piece of toast in the center of the yellow subview."
                           duration:2.0
                           position:@"center"];
+            break;
+        }
+            
+        case 7: {
+            if (!isShowingActivity) {
+                [_activityButton setTitle:@"Hide Activity" forState:UIControlStateNormal];
+                [self.view makeToastActivity];
+            } else {
+                [_activityButton setTitle:@"Show Activity" forState:UIControlStateNormal];
+                [self.view hideToastActivity];
+            }
+            isShowingActivity = !isShowingActivity;
             break;
         }
             
@@ -107,6 +120,7 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
     _yellowView = nil;
+    _activityButton = nil;
 }
 
 #pragma mark - Memory Management
@@ -116,7 +130,8 @@
 }
 
 - (void)dealloc {
-    [_yellowView release];
+    [_yellowView release], _yellowView = nil;
+    [_activityButton release], _activityButton = nil;
     [super dealloc];
 }
 
