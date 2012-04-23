@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Toast : Toast is an Objective-C category that adds Android-style toast notifications to iOS." />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Toast</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/scalessec/Toast">Fork Me on GitHub</a>
+
+          <h1 id="project_title">Toast</h1>
+          <h2 id="project_tagline">Toast is an Objective-C category that adds Android-style toast notifications to iOS.</h2>
+
+          <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/scalessec/Toast/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/scalessec/Toast/tarball/master">Download this project as a tar.gz file</a>
+          </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>Toast for iOS</h1>
+
+<p><em>Version 1.1</em></p>
+
+<p>Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class.</p>
+
+<h2>Examples</h2>
+
+<pre><code>// basic usage
+[self.view makeToast:@"This is a piece of toast."];
+
+// toast with duration, title, and position
+[self.view makeToast:@"This is a piece of toast with a title." 
+             duration:3.0
+             position:@"top"
+                title:@"Toast Title"];
+
+// toast with an image
+[self.view makeToast:@"This is a piece of toast with an image." 
+            duration:3.0
+            position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
+               image:[UIImage imageNamed:@"toast.png"]];
+
+// display toast with an activity spinner
+[self.view makeToastActivity];
+</code></pre>
+
+<p>See the test project for more examples.</p>
+
+<h2>Setup Instructions</h2>
+
+<ol>
+<li>Add "Toast+UIView.h" &amp; "Toast+UIView.m" to your project.</li>
+<li>Link against the QuartzCore library.</li>
+</ol><h2>MIT License</h2>
+
+<pre><code>Copyright (c) 2012 Charles Scalesse.
+
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be included
+in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+</code></pre>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Toast maintained by <a href="https://github.com/scalessec">scalessec</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
