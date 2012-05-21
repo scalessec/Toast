@@ -35,6 +35,7 @@
 #define kActivityTag                91325
 
 static NSString *kDurationKey = @"CSToastDurationKey";
+static NSString *kToastKey = @"toast";
 
 
 @interface UIView (ToastPrivate)
@@ -43,12 +44,23 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 - (UIView *)makeViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
 - (UIView *)makeActivityViewForMessage:(NSString *)message;
 
+- (UIView *)makeViewForMessageWithDismissButton:(NSString *)message title:(NSString *)title image:(UIImage *)image;
+
 @end
 
 
 @implementation UIView (Toast)
 
 #pragma mark - Toast Methods
+
+- (void)makeToastWithDismissButton:(NSString *)message 
+{
+    UIView*toast = [self makeViewForMessageWithDismissButton:message title:nil image:nil];
+    CGPoint toastPoint = [self getPositionFor:kDefaultPosition toast:toast];
+    [toast setCenter:toastPoint];
+    [toast setAlpha:1.0];
+    [self addSubview:toast];
+}
 
 - (void)makeToast:(NSString *)message {
     [self makeToast:message duration:kDefaultLength position:kDefaultPosition];
@@ -341,5 +353,39 @@ static NSString *kDurationKey = @"CSToastDurationKey";
         
     return wrapperView;
 }
+
+#pragma mark- With DismissButton
+
+- (void)dismissToast:(id)sender
+{
+    UIView *toast = objc_getAssociatedObject(sender, &kToastKey);
+    
+    [UIView beginAnimations:@"fade_in" context:toast];
+    [UIView setAnimationDuration:kFadeDuration];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [toast setAlpha:1.0];
+    [UIView commitAnimations];
+}
+
+- (UIView *)makeViewForMessageWithDismissButton:(NSString *)message title:(NSString *)title image:(UIImage *)image 
+{
+    UIView *wrapperView = [self makeViewForMessage:message title:title image:image];
+    
+    UIButton *btn_dismiss = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn_dismiss setImage:[UIImage imageNamed:@"dismiss.png"] forState:UIControlStateNormal];
+    [wrapperView addSubview:btn_dismiss];
+    [wrapperView bringSubviewToFront:btn_dismiss];
+    btn_dismiss.frame = CGRectMake( wrapperView.bounds.size.width - 20, 0 , 13, 13);
+    objc_setAssociatedObject (btn_dismiss, &kToastKey, wrapperView, OBJC_ASSOCIATION_RETAIN);
+    [btn_dismiss addTarget:self action:@selector(dismissToast:) forControlEvents:UIControlEventTouchUpInside];
+    
+    wrapperView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3];
+    [wrapperView.layer setCornerRadius:kCornerRadius/2];
+    
+    return  wrapperView;
+}
+
 
 @end
