@@ -123,6 +123,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [activityContainer setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
     [activityContainer setAlpha:0.0];
     [activityContainer setTag:kActivityTag];
+    [activityContainer setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)];
     [activityContainer.layer setCornerRadius:kCornerRadius];
     if (kDisplayShadow) {
         [activityContainer.layer setShadowColor:[UIColor blackColor].CGColor];
@@ -231,6 +232,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     
     // create the parent view
     UIView *wrapperView = [[[UIView alloc] init] autorelease];
+    [wrapperView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)];
     [wrapperView.layer setCornerRadius:kCornerRadius];
     if (kDisplayShadow) {
         [wrapperView.layer setShadowColor:[UIColor blackColor].CGColor];
