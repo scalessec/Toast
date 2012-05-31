@@ -57,6 +57,7 @@
         case 4: {
             // Show a custom view as toast
             UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 400)];
+            [customView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)]; // autoresizing masks are respected on custom views
             [customView setBackgroundColor:[UIColor orangeColor]];
             
             [self.view showToast:customView

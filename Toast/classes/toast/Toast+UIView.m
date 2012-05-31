@@ -41,7 +41,6 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 
 - (CGPoint)getPositionFor:(id)position toast:(UIView *)toast;
 - (UIView *)makeViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
-- (UIView *)makeActivityViewForMessage:(NSString *)message;
 
 @end
 
