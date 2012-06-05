@@ -123,6 +123,12 @@ static NSString *kToastKey = @"toast";
     [self makeToastActivity:kActivityDefaultPosition];
 }
 
+- (void)makeToastActivityWithText:(NSString*)text
+{
+    [self makeToastActivityWithText:text position:kActivityDefaultPosition];
+}
+
+
 - (void)makeToastActivity:(id)position {
     // prevent more than one activity view
     UIView *existingToast = [self viewWithTag:kActivityTag];
@@ -147,6 +153,51 @@ static NSString *kToastKey = @"toast";
     [activityView setCenter:CGPointMake(activityContainer.bounds.size.width / 2, activityContainer.bounds.size.height / 2)];
     [activityContainer addSubview:activityView];
     [activityView startAnimating];
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:kFadeDuration];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [activityContainer setAlpha:1.0];
+    [UIView commitAnimations];
+    
+    [self addSubview:activityContainer];
+}
+
+- (void)makeToastActivityWithText:(NSString*)text position:(id)position {
+    // prevent more than one activity view
+    UIView *existingToast = [self viewWithTag:kActivityTag];
+    if (existingToast != nil) {
+        [existingToast removeFromSuperview];
+    }
+    
+    UIView *activityContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, kActivityWidth, kActivityHeight)] autorelease];
+    [activityContainer setCenter:[self getPositionFor:position toast:activityContainer]];
+    [activityContainer setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
+    [activityContainer setAlpha:0.0];
+    [activityContainer setTag:kActivityTag];
+    [activityContainer.layer setCornerRadius:kCornerRadius];
+    if (kDisplayShadow) {
+        [activityContainer.layer setShadowColor:[UIColor blackColor].CGColor];
+        [activityContainer.layer setShadowOpacity:0.8];
+        [activityContainer.layer setShadowRadius:6.0];
+        [activityContainer.layer setShadowOffset:CGSizeMake(4.0, 4.0)];
+    }
+    
+    UIActivityIndicatorView *activityView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    [activityView setCenter:CGPointMake(activityContainer.bounds.size.width / 2, activityContainer.bounds.size.height / 2)];
+    [activityContainer addSubview:activityView];
+    [activityView startAnimating];
+    
+    if (text.length != 0)
+    {
+        UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kActivityHeight - 30, kActivityWidth, 20)];
+        textLabel.backgroundColor = [UIColor clearColor];
+        [activityContainer addSubview:textLabel];
+        textLabel.font = [UIFont systemFontOfSize:12];
+        textLabel.text = text;
+        textLabel.textAlignment = UITextAlignmentCenter;
+        textLabel.textColor = [UIColor whiteColor];
+    }
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:kFadeDuration];

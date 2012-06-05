@@ -43,6 +43,7 @@
 
 // displays toast with an activity spinner
 - (void)makeToastActivity;
+- (void)makeToastActivityWithText:(NSString*)text;
 - (void)makeToastActivity:(id)position;
 - (void)hideToastActivity;
 
