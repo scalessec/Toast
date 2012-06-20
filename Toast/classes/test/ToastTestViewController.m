@@ -2,8 +2,11 @@
 //  ToastTestViewController.m
 //  ToastTest
 //
-//  Copyright 2011 Charles Scalesse. All rights reserved.
+//  Copyright 2012 Charles Scalesse. All rights reserved.
 //
+
+// This test project supports both manual memory managment & ARC.
+// Toggle 'Objective-C Automatic Reference Counting' in the project's Build Settings                      
 
 #import "ToastTestViewController.h"
 #import "Toast+UIView.h"
@@ -64,7 +67,10 @@
                         duration:2.0
                         position:@"center"];
             
+            #if !__has_feature(objc_arc)
             [customView release];
+            #endif
+            
             break;
         }
             
@@ -75,8 +81,11 @@
             [self.view showToast:toastView 
                         duration:2.0
                         position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]]; // wrap CGPoint in an NSValue object
-                        
+            
+            #if !__has_feature(objc_arc)
             [toastView release];
+            #endif
+            
             break;
         }
             
@@ -100,7 +109,7 @@
             break;
         }
             
-        default:break;
+        default: break;
             
     }
     
@@ -114,26 +123,20 @@
 
 #pragma mark - Lifecycle
 
--(void)viewDidLoad {
-    [super viewDidLoad];
-}
-
 - (void)viewDidUnload {
     [super viewDidUnload];
-    _yellowView = nil;
-    _activityButton = nil;
+    self.yellowView = nil;
+    self.activityButton = nil;
 }
 
 #pragma mark - Memory Management
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
+#if !__has_feature(objc_arc)
 - (void)dealloc {
-    [_yellowView release], _yellowView = nil;
-    [_activityButton release], _activityButton = nil;
+    self.yellowView = nil;
+    self.activityButton = nil;
     [super dealloc];
 }
+#endif
 
 @end

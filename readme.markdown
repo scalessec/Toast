@@ -1,8 +1,17 @@
 Toast for iOS
 =============
-*Version 1.1*
+*Version 1.2*
 
-Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class.
+Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use.
+
+What's New
+---------
+ - Version 1.2 adds support for ARC. 
+ - The demo project has been updated to support both manual memory management & ARC. Toggle 'Objective-C Automatic Reference Counting' in the project's Build Settings to test.
+
+Screenshots
+---------
+![Toast Screenshots](http://i.imgur.com/oM28l.png)
 
 Examples
 ---------
@@ -24,13 +33,13 @@ Examples
     // display toast with an activity spinner
     [self.view makeToastActivity];
     
-See the test project for more examples.
+See the demo project for more examples.
 
 
 Setup Instructions
 ------------------
 1. Add "Toast+UIView.h" & "Toast+UIView.m" to your project.
-2. Link against the QuartzCore library.
+2. Link against QuartzCore.
 
 
 MIT License

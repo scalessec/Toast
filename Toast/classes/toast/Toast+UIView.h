@@ -2,7 +2,7 @@
  
     Toast+UIView.h
     Toast
-    Version 1.1
+    Version 1.2
 
     Copyright (c) 2012 Charles Scalesse.
  

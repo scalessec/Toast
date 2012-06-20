@@ -1,7 +1,7 @@
 //
 //  Toast+UIView.m
 //  Toast
-//  Version 1.1
+//  Version 1.2
 //
 //  Copyright 2012 Charles Scalesse.
 //
@@ -94,7 +94,7 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [toast setAlpha:0.0];
     [self addSubview:toast];
     
-    [UIView beginAnimations:@"fade_in" context:toast];
+    [UIView beginAnimations:@"fade_in" context:(__bridge void*)toast];
     [UIView setAnimationDuration:kFadeDuration];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
@@ -117,7 +117,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
         [existingToast removeFromSuperview];
     }
     
-    UIView *activityContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, kActivityWidth, kActivityHeight)] autorelease];
+    UIView *activityContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kActivityWidth, kActivityHeight)];
+#if !__has_feature(objc_arc)
+    [activityContainer autorelease];
+#endif
     [activityContainer setCenter:[self getPositionFor:position toast:activityContainer]];
     [activityContainer setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
     [activityContainer setAlpha:0.0];
@@ -131,7 +134,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
         [activityContainer.layer setShadowOffset:CGSizeMake(4.0, 4.0)];
     }
     
-    UIActivityIndicatorView *activityView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+#if !__has_feature(objc_arc)
+    [activityView autorelease];
+#endif
     [activityView setCenter:CGPointMake(activityContainer.bounds.size.width / 2, activityContainer.bounds.size.height / 2)];
     [activityContainer addSubview:activityView];
     [activityView startAnimating];
@@ -162,14 +168,14 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 
 - (void)animationDidStop:(NSString*)animationID finished:(BOOL)finished context:(void *)context {
     
-    UIView *toast = (UIView *)context;
+    UIView *toast = (UIView *)(__bridge id)context;
     
     // retrieve the display interval associated with the view
     CGFloat interval = [(NSNumber *)objc_getAssociatedObject(toast, &kDurationKey) floatValue];
     
     if([animationID isEqualToString:@"fade_in"]) {
         
-        [UIView beginAnimations:@"fade_out" context:toast];
+        [UIView beginAnimations:@"fade_out" context:(__bridge void*)toast];
         [UIView setAnimationDelay:interval];
         [UIView setAnimationDuration:kFadeDuration];
         [UIView setAnimationDelegate:self];
@@ -230,7 +236,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     UIImageView *imageView = nil;
     
     // create the parent view
-    UIView *wrapperView = [[[UIView alloc] init] autorelease];
+    UIView *wrapperView = [[UIView alloc] init];
+#if !__has_feature(objc_arc)
+    [wrapperView autorelease];
+#endif
     [wrapperView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)];
     [wrapperView.layer setCornerRadius:kCornerRadius];
     if (kDisplayShadow) {
@@ -243,7 +252,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [wrapperView setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
     
     if(image != nil) {
-        imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
+        imageView = [[UIImageView alloc] initWithImage:image];
+#if !__has_feature(objc_arc)
+        [imageView autorelease];
+#endif
         [imageView setContentMode:UIViewContentModeScaleAspectFit];
         [imageView setFrame:CGRectMake(kHorizontalPadding, kVerticalPadding, kImageWidth, kImageHeight)];
     }
@@ -260,7 +272,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     }
     
     if (title != nil) {
-        titleLabel = [[[UILabel alloc] init] autorelease];
+        titleLabel = [[UILabel alloc] init];
+#if !__has_feature(objc_arc)
+        [titleLabel autorelease];
+#endif
         [titleLabel setNumberOfLines:kMaxTitleLines];
         [titleLabel setFont:[UIFont boldSystemFontOfSize:kFontSize]];
         [titleLabel setTextAlignment:UITextAlignmentLeft];
@@ -277,7 +292,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     }
     
     if (message != nil) {
-        messageLabel = [[[UILabel alloc] init] autorelease];
+        messageLabel = [[UILabel alloc] init];
+#if !__has_feature(objc_arc)
+        [messageLabel autorelease];
+#endif
         [messageLabel setNumberOfLines:kMaxMessageLines];
         [messageLabel setFont:[UIFont systemFontOfSize:kFontSize]];
         [messageLabel setLineBreakMode:UILineBreakModeWordWrap];

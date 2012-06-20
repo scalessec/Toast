@@ -2,7 +2,7 @@
 //  ToastTestViewController.h
 //  ToastTest
 //
-//  Copyright 2011 Charles Scalesse. All rights reserved.
+//  Copyright 2012 Charles Scalesse. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
