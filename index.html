@@ -16,15 +16,15 @@
     <!-- HEADER -->
     <div id="header_wrap" class="outer">
         <header class="inner">
-          <a id="forkme_banner" href="https://github.com/scalessec/Toast">Fork Me on GitHub</a>
+          <a id="forkme_banner" href="https://github.com/scalessec/Toast">View on GitHub</a>
 
           <h1 id="project_title">Toast</h1>
           <h2 id="project_tagline">Toast is an Objective-C category that adds Android-style toast notifications to iOS.</h2>
 
-          <section id="downloads">
-            <a class="zip_download_link" href="https://github.com/scalessec/Toast/zipball/master">Download this project as a .zip file</a>
-            <a class="tar_download_link" href="https://github.com/scalessec/Toast/tarball/master">Download this project as a tar.gz file</a>
-          </section>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/scalessec/Toast/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/scalessec/Toast/tarball/master">Download this project as a tar.gz file</a>
+            </section>
         </header>
     </div>
 
@@ -33,9 +33,18 @@
       <section id="main_content" class="inner">
         <h1>Toast for iOS</h1>
 
-<p><em>Version 1.1</em></p>
+<p><em>Version 1.2</em></p>
 
-<p>Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class.</p>
+<p>Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use.</p>
+
+<h2>What's New</h2>
+
+<ul>
+<li>Version 1.2 adds support for ARC. </li>
+<li>The demo project has been updated to support both manual memory management &amp; ARC. Toggle 'Objective-C Automatic Reference Counting' in the project's Build Settings to test.</li>
+</ul><h2>Screenshots</h2>
+
+<p><img src="http://i.imgur.com/oM28l.png" alt="Toast Screenshots"></p>
 
 <h2>Examples</h2>
 
@@ -58,13 +67,13 @@
 [self.view makeToastActivity];
 </code></pre>
 
-<p>See the test project for more examples.</p>
+<p>See the demo project for more examples.</p>
 
 <h2>Setup Instructions</h2>
 
 <ol>
 <li>Add "Toast+UIView.h" &amp; "Toast+UIView.m" to your project.</li>
-<li>Link against the QuartzCore library.</li>
+<li>Link against QuartzCore.</li>
 </ol><h2>MIT License</h2>
 
 <pre><code>Copyright (c) 2012 Charles Scalesse.
