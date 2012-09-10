@@ -94,7 +94,11 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [toast setAlpha:0.0];
     [self addSubview:toast];
     
+    #if !__has_feature(objc_arc)
+    [UIView beginAnimations:@"fade_in" context:toast];
+    #else
     [UIView beginAnimations:@"fade_in" context:(__bridge void*)toast];
+    #endif
     [UIView setAnimationDuration:kFadeDuration];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
@@ -168,14 +172,21 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 
 - (void)animationDidStop:(NSString*)animationID finished:(BOOL)finished context:(void *)context {
     
+    #if !__has_feature(objc_arc)
+    UIView *toast = (UIView *)context;
+    #else
     UIView *toast = (UIView *)(__bridge id)context;
-    
+    #endif
     // retrieve the display interval associated with the view
     CGFloat interval = [(NSNumber *)objc_getAssociatedObject(toast, &kDurationKey) floatValue];
     
-    if([animationID isEqualToString:@"fade_in"]) {
-        
+    if([animationID isEqualToString:@"fade_in"])
+    {
+        #if !__has_feature(objc_arc)
+        [UIView beginAnimations:@"fade_out" context:toast];
+        #else
         [UIView beginAnimations:@"fade_out" context:(__bridge void*)toast];
+        #endif
         [UIView setAnimationDelay:interval];
         [UIView setAnimationDuration:kFadeDuration];
         [UIView setAnimationDelegate:self];
