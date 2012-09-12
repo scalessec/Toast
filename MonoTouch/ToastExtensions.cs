@@ -30,7 +30,7 @@ namespace MonoTouch.Toast
 		public const string  kActivityDefaultPosition = "center";
 		public const int  kActivityTag = 91325;
 
-		public static void MakeToast (this UIView self,String message,double duration=kDefaultLength,string position=kActivityDefaultPosition,string title=null,UIImage image=null)
+		public static void ShowToast (this UIView self,String message,double duration=kDefaultLength,string position=kActivityDefaultPosition,string title=null,UIImage image=null)
 		{
 			UIView toast = self.MakeViewForMessage(message,title,image);
 			self.ShowToast(toast,duration,position);
