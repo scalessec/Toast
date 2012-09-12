@@ -36,6 +36,11 @@ namespace MonoTouch.Toast
 			self.ShowToast(toast,duration,position);
 		}
 
+		public static void ShowToast (this UIView self,String message,PointF position,double duration=kDefaultLength,string title=null,UIImage image=null)
+		{
+			self.ShowToast(message,duration,position.ToString(),title,image);
+		}
+
 		public static void ShowToast(this UIView self,UIView toast,double interval=kDefaultLength,string position=kActivityDefaultPosition)
 		{
 			/****************************************************
@@ -197,7 +202,22 @@ namespace MonoTouch.Toast
 			}
 			else
 			{
-				// TODO: string to pointF
+				if (point.StartsWith("{X=") && point.EndsWith("}") && point.Contains(","))
+				{
+					int commaIndex=point.IndexOf(",");
+					int yEqualsIndex=point.IndexOf("Y=");
+					if (commaIndex!=-1 && yEqualsIndex!=-1)
+					{
+						yEqualsIndex=yEqualsIndex+2;
+						String xString=point.Substring(3,commaIndex-3);
+						String yString=point.Substring(yEqualsIndex,point.Length-yEqualsIndex-1);
+						float x,y;
+						if (float.TryParse(xString,out x) && float.TryParse(yString,out y))
+						{
+							return CGPointMake(x,y);
+						}
+					}
+				}
 			}
 			
 			Debug.WriteLine("Error: Invalid position for toast.");
