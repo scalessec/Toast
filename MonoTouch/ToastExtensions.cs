@@ -10,6 +10,8 @@ namespace MonoTouch.Toast
 {
 	public static class ToastExtensions
 	{
+		#region Constants
+
 		public const float kMaxWidth = 0.8f;
 		public const float kMaxHeight = 0.8f;
 		public const float  kHorizontalPadding = 10.0f;
@@ -22,6 +24,9 @@ namespace MonoTouch.Toast
 		public const double  kFadeDuration = 0.2;
 		public const bool  kDisplayShadow = true;
 		public const double  kDefaultLength = 3.0;
+		public const double  kDefaultLengthLong = 3.5;
+		public const double  kDefaultLengthShort = 2.0;
+
 		public const string kDefaultPosition = "bottom";
 		public const float  kImageWidth = 80.0f;
 		public const float  kImageHeight = 80.0f;
@@ -30,15 +35,41 @@ namespace MonoTouch.Toast
 		public const string  kActivityDefaultPosition = "center";
 		public const int  kActivityTag = 91325;
 
-		public static void ShowToast (this UIView self,String message,double duration=kDefaultLength,string position=kActivityDefaultPosition,string title=null,UIImage image=null)
+		public enum ToastLength
 		{
-			UIView toast = self.MakeViewForMessage(message,title,image);
-			self.ShowToast(toast,duration,position);
+			Long,
+			Short
+		}
+
+		#endregion
+
+		#region Show Toast Methods
+
+		public static void ShowToast (this UIView self,String message,ToastLength toastLength,string position=kActivityDefaultPosition,string title=null,UIImage image=null)
+		{
+			double duration=kDefaultLength;
+			switch (toastLength)
+			{
+				case ToastLength.Long: duration = kDefaultLengthLong; break;
+				case ToastLength.Short: duration = kDefaultLengthShort; break;
+			}
+			self.ShowToast(message,duration,position,title,image);
+		}
+
+		public static void ShowToast (this UIView self,String message,ToastLength toastLength,PointF position,string title=null,UIImage image=null)
+		{
+			self.ShowToast(message,toastLength,position.ToString(),title,image);
 		}
 
 		public static void ShowToast (this UIView self,String message,PointF position,double duration=kDefaultLength,string title=null,UIImage image=null)
 		{
 			self.ShowToast(message,duration,position.ToString(),title,image);
+		}
+
+		public static void ShowToast (this UIView self,String message,double duration=kDefaultLength,string position=kActivityDefaultPosition,string title=null,UIImage image=null)
+		{
+			UIView toast = self.MakeViewForMessage(message,title,image);
+			self.ShowToast(toast,duration,position);
 		}
 
 		public static void ShowToast(this UIView self,UIView toast,double interval=kDefaultLength,string position=kActivityDefaultPosition)
@@ -66,6 +97,8 @@ namespace MonoTouch.Toast
 			toast.Alpha=1.0f;
 			UIView.CommitAnimations();
 		}
+
+		#endregion
 
 		#region Toast Activity Methods
 
@@ -226,6 +259,8 @@ namespace MonoTouch.Toast
 		
 		#endregion
 
+		#region View Creation
+
 		public static UIView MakeViewForMessage(this UIView self,string message,string title,UIImage image)
 		{
 			
@@ -372,11 +407,6 @@ namespace MonoTouch.Toast
 			return wrapperView;
 		}
 		
-	
-		
-
-
-
-
+		#endregion
 	}
 }
