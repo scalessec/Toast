@@ -46,6 +46,7 @@
 - (void)makeToastActivityWithText:(NSString*)text;
 - (void)makeToastActivity:(id)position;
 - (void)hideToastActivity;
+- (void)makeToastActivityWithText:(NSString*)text position:(id)position;
 
 // the showToast methods display any view as toast
 - (void)showToast:(UIView *)toast;
