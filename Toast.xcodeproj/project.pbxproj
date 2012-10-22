@@ -18,6 +18,7 @@
 		151FC13213D3560C007DC282 /* ToastTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 151FC13013D3560C007DC282 /* ToastTestViewController.m */; };
 		151FC13413D36FCB007DC282 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151FC13313D36FCB007DC282 /* QuartzCore.framework */; };
 		15A9DEB913D9D92A00A8D7C4 /* toast.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A9DEB813D9D92A00A8D7C4 /* toast.png */; };
+		80DA376D156A304F00FBA255 /* dismiss.png in Resources */ = {isa = PBXBuildFile; fileRef = 80DA376C156A304F00FBA255 /* dismiss.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		151FC13013D3560C007DC282 /* ToastTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastTestViewController.m; sourceTree = "<group>"; };
 		151FC13313D36FCB007DC282 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		15A9DEB813D9D92A00A8D7C4 /* toast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toast.png; path = Toast/res/images/toast.png; sourceTree = SOURCE_ROOT; };
+		80DA376C156A304F00FBA255 /* dismiss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dismiss.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 		151FC14713D3A7A1007DC282 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				80DA376C156A304F00FBA255 /* dismiss.png */,
 				15A9DEB813D9D92A00A8D7C4 /* toast.png */,
 			);
 			name = images;
@@ -217,6 +220,7 @@
 				151FC11A13D35536007DC282 /* MainWindow.xib in Resources */,
 				151FC11B13D35536007DC282 /* ToastTestViewController.xib in Resources */,
 				15A9DEB913D9D92A00A8D7C4 /* toast.png in Resources */,
+				80DA376D156A304F00FBA255 /* dismiss.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
