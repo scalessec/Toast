@@ -35,7 +35,6 @@
 #define kActivityTag                91325
 
 static NSString *kDurationKey = @"CSToastDurationKey";
-static NSString *kToastKey = @"toast";
 
 
 @interface UIView (ToastPrivate)
@@ -43,23 +42,12 @@ static NSString *kToastKey = @"toast";
 - (CGPoint)getPositionFor:(id)position toast:(UIView *)toast;
 - (UIView *)makeViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
 
-- (UIView *)makeViewForMessageWithDismissButton:(NSString *)message title:(NSString *)title image:(UIImage *)image;
-
 @end
 
 
 @implementation UIView (Toast)
 
 #pragma mark - Toast Methods
-
-- (void)makeToastWithDismissButton:(NSString *)message 
-{
-    UIView*toast = [self makeViewForMessageWithDismissButton:message title:nil image:nil];
-    CGPoint toastPoint = [self getPositionFor:kDefaultPosition toast:toast];
-    [toast setCenter:toastPoint];
-    [toast setAlpha:1.0];
-    [self addSubview:toast];
-}
 
 - (void)makeToast:(NSString *)message {
     [self makeToast:message duration:kDefaultLength position:kDefaultPosition];
@@ -122,12 +110,6 @@ static NSString *kToastKey = @"toast";
     [self makeToastActivity:kActivityDefaultPosition];
 }
 
-- (void)makeToastActivityWithText:(NSString*)text
-{
-    [self makeToastActivityWithText:text position:kActivityDefaultPosition];
-}
-
-
 - (void)makeToastActivity:(id)position {
     // prevent more than one activity view
     UIView *existingToast = [self viewWithTag:kActivityTag];
@@ -159,51 +141,6 @@ static NSString *kToastKey = @"toast";
     [activityView setCenter:CGPointMake(activityContainer.bounds.size.width / 2, activityContainer.bounds.size.height / 2)];
     [activityContainer addSubview:activityView];
     [activityView startAnimating];
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:kFadeDuration];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [activityContainer setAlpha:1.0];
-    [UIView commitAnimations];
-    
-    [self addSubview:activityContainer];
-}
-
-- (void)makeToastActivityWithText:(NSString*)text position:(id)position {
-    // prevent more than one activity view
-    UIView *existingToast = [self viewWithTag:kActivityTag];
-    if (existingToast != nil) {
-        [existingToast removeFromSuperview];
-    }
-    
-    UIView *activityContainer = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, kActivityWidth, kActivityHeight)] autorelease];
-    [activityContainer setCenter:[self getPositionFor:position toast:activityContainer]];
-    [activityContainer setBackgroundColor:[[UIColor blackColor] colorWithAlphaComponent:kOpacity]];
-    [activityContainer setAlpha:0.0];
-    [activityContainer setTag:kActivityTag];
-    [activityContainer.layer setCornerRadius:kCornerRadius];
-    if (kDisplayShadow) {
-        [activityContainer.layer setShadowColor:[UIColor blackColor].CGColor];
-        [activityContainer.layer setShadowOpacity:0.8];
-        [activityContainer.layer setShadowRadius:6.0];
-        [activityContainer.layer setShadowOffset:CGSizeMake(4.0, 4.0)];
-    }
-    
-    UIActivityIndicatorView *activityView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
-    [activityView setCenter:CGPointMake(activityContainer.bounds.size.width / 2, activityContainer.bounds.size.height / 2)];
-    [activityContainer addSubview:activityView];
-    [activityView startAnimating];
-    
-    if (text.length != 0)
-    {
-        UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kActivityHeight - 30, kActivityWidth, 20)];
-        textLabel.backgroundColor = [UIColor clearColor];
-        [activityContainer addSubview:textLabel];
-        textLabel.font = [UIFont systemFontOfSize:12];
-        textLabel.text = text;
-        textLabel.textAlignment = UITextAlignmentCenter;
-        textLabel.textColor = [UIColor whiteColor];
-    }
     
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:kFadeDuration];
@@ -423,39 +360,5 @@ static NSString *kToastKey = @"toast";
         
     return wrapperView;
 }
-
-#pragma mark- With DismissButton
-
-- (void)dismissToast:(id)sender
-{
-    UIView *toast = objc_getAssociatedObject(sender, &kToastKey);
-    
-    [UIView beginAnimations:@"fade_in" context:toast];
-    [UIView setAnimationDuration:kFadeDuration];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
-    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
-    [toast setAlpha:1.0];
-    [UIView commitAnimations];
-}
-
-- (UIView *)makeViewForMessageWithDismissButton:(NSString *)message title:(NSString *)title image:(UIImage *)image 
-{
-    UIView *wrapperView = [self makeViewForMessage:message title:title image:image];
-    
-    UIButton *btn_dismiss = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btn_dismiss setImage:[UIImage imageNamed:@"dismiss.png"] forState:UIControlStateNormal];
-    [wrapperView addSubview:btn_dismiss];
-    [wrapperView bringSubviewToFront:btn_dismiss];
-    btn_dismiss.frame = CGRectMake( wrapperView.bounds.size.width - 20, 0 , 13, 13);
-    objc_setAssociatedObject (btn_dismiss, &kToastKey, wrapperView, OBJC_ASSOCIATION_RETAIN);
-    [btn_dismiss addTarget:self action:@selector(dismissToast:) forControlEvents:UIControlEventTouchUpInside];
-    
-    wrapperView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:.3];
-    [wrapperView.layer setCornerRadius:kCornerRadius/2];
-    
-    return  wrapperView;
-}
-
 
 @end
