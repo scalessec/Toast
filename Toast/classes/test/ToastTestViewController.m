@@ -13,7 +13,6 @@
 
 @implementation ToastTestViewController
 
-@synthesize yellowView = _yellowView;
 @synthesize activityButton = _activityButton;
 
 #pragma mark - IBActions
@@ -90,14 +89,6 @@
         }
             
         case 6: {
-            // Make toast in a subview
-            [_yellowView makeToast:@"This is a piece of toast in the center of the yellow subview."
-                          duration:2.0
-                          position:@"center"];
-            break;
-        }
-            
-        case 7: {
             if (!isShowingActivity) {
                 [_activityButton setTitle:@"Hide Activity" forState:UIControlStateNormal];
                 [self.view makeToastActivity];
@@ -125,7 +116,6 @@
 
 - (void)viewDidUnload {
     [super viewDidUnload];
-    self.yellowView = nil;
     self.activityButton = nil;
 }
 
@@ -133,7 +123,6 @@
 
 #if !__has_feature(objc_arc)
 - (void)dealloc {
-    self.yellowView = nil;
     self.activityButton = nil;
     [super dealloc];
 }
