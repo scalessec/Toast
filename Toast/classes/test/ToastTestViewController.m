@@ -100,7 +100,7 @@
         case 7: {
             if (!isShowingActivity) {
                 [_activityButton setTitle:@"Hide Activity" forState:UIControlStateNormal];
-                [self.view makeToastActivityWithText:@"Loading..."];
+                [self.view makeToastActivity];
             } else {
                 [_activityButton setTitle:@"Show Activity" forState:UIControlStateNormal];
                 [self.view hideToastActivity];
