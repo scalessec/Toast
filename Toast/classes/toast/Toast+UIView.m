@@ -78,13 +78,8 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 }
 
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
-    
-    /****************************************************
-     *                                                  *
-     * Displays a view for a given duration & position. *
-     *                                                  *
-     ****************************************************/
-    
+    // Display a view for a given duration & position.
+
     CGPoint toastPoint = [self getPositionFor:point toast:toast];
     
     // use an associative reference to associate the toast view with the display interval
@@ -94,7 +89,11 @@ static NSString *kDurationKey = @"CSToastDurationKey";
     [toast setAlpha:0.0];
     [self addSubview:toast];
     
+#if !__has_feature(objc_arc)
+    [UIView beginAnimations:@"fade_in" context:toast];
+#else
     [UIView beginAnimations:@"fade_in" context:(__bridge void*)toast];
+#endif
     [UIView setAnimationDuration:kFadeDuration];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(animationDidStop:finished:context:)];
@@ -167,15 +166,22 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 #pragma mark - Animation Delegate Method
 
 - (void)animationDidStop:(NSString*)animationID finished:(BOOL)finished context:(void *)context {
-    
+#if !__has_feature(objc_arc)
+    UIView *toast = (UIView *)context;
+#else
     UIView *toast = (UIView *)(__bridge id)context;
+#endif
     
     // retrieve the display interval associated with the view
     CGFloat interval = [(NSNumber *)objc_getAssociatedObject(toast, &kDurationKey) floatValue];
     
     if([animationID isEqualToString:@"fade_in"]) {
         
+#if !__has_feature(objc_arc)
+        [UIView beginAnimations:@"fade_out" context:toast];
+#else
         [UIView beginAnimations:@"fade_out" context:(__bridge void*)toast];
+#endif
         [UIView setAnimationDelay:interval];
         [UIView setAnimationDuration:kFadeDuration];
         [UIView setAnimationDelegate:self];
@@ -195,14 +201,9 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 #pragma mark - Private Methods
 
 - (CGPoint)getPositionFor:(id)point toast:(UIView *)toast {
-    
-    /*************************************************************************************
-     *                                                                                   *
-     * Converts string literals @"top", @"bottom", @"center", or any point wrapped in an *
-     * NSValue object into a CGPoint                                                     *
-     *                                                                                   *
-     *************************************************************************************/
-    
+    // Convert string literals @"top", @"bottom", @"center", or any point wrapped in an
+    // NSValue object into a CGPoint                                            
+
     if([point isKindOfClass:[NSString class]]) {
         
         if( [point caseInsensitiveCompare:@"top"] == NSOrderedSame ) {
@@ -222,15 +223,10 @@ static NSString *kDurationKey = @"CSToastDurationKey";
 }
 
 - (UIView *)makeViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
-    
-    /***********************************************************************************
-     *                                                                                 *
-     * Dynamically build a toast view with any combination of message, title, & image. *
-     *                                                                                 *
-     ***********************************************************************************/
-    
+    // sanity
     if((message == nil) && (title == nil) && (image == nil)) return nil;
 
+    // Dynamically build a toast view with any combination of message, title, & image.
     UILabel *messageLabel = nil;
     UILabel *titleLabel = nil;
     UIImageView *imageView = nil;

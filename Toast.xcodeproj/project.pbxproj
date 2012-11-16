@@ -17,6 +17,7 @@
 		151FC13113D3560C007DC282 /* ToastTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 151FC12E13D3560C007DC282 /* ToastTestAppDelegate.m */; };
 		151FC13213D3560C007DC282 /* ToastTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 151FC13013D3560C007DC282 /* ToastTestViewController.m */; };
 		151FC13413D36FCB007DC282 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151FC13313D36FCB007DC282 /* QuartzCore.framework */; };
+		15A7F08C16561A6200527E26 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A7F08B16561A6200527E26 /* Default-568h@2x.png */; };
 		15A9DEB913D9D92A00A8D7C4 /* toast.png in Resources */ = {isa = PBXBuildFile; fileRef = 15A9DEB813D9D92A00A8D7C4 /* toast.png */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		151FC12F13D3560C007DC282 /* ToastTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastTestViewController.h; sourceTree = "<group>"; };
 		151FC13013D3560C007DC282 /* ToastTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastTestViewController.m; sourceTree = "<group>"; };
 		151FC13313D36FCB007DC282 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		15A7F08B16561A6200527E26 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "../../../Default-568h@2x.png"; sourceTree = "<group>"; };
 		15A9DEB813D9D92A00A8D7C4 /* toast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toast.png; path = Toast/res/images/toast.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -158,6 +160,7 @@
 		151FC14713D3A7A1007DC282 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				15A7F08B16561A6200527E26 /* Default-568h@2x.png */,
 				15A9DEB813D9D92A00A8D7C4 /* toast.png */,
 			);
 			name = images;
@@ -217,6 +220,7 @@
 				151FC11A13D35536007DC282 /* MainWindow.xib in Resources */,
 				151FC11B13D35536007DC282 /* ToastTestViewController.xib in Resources */,
 				15A9DEB913D9D92A00A8D7C4 /* toast.png in Resources */,
+				15A7F08C16561A6200527E26 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +285,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -302,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
