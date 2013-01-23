@@ -66,9 +66,7 @@
                         duration:2.0
                         position:@"center"];
             
-            #if !__has_feature(objc_arc)
             [customView release];
-            #endif
             
             break;
         }
@@ -81,9 +79,7 @@
                         duration:2.0
                         position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]]; // wrap CGPoint in an NSValue object
             
-            #if !__has_feature(objc_arc)
             [toastView release];
-            #endif
             
             break;
         }
@@ -121,11 +117,9 @@
 
 #pragma mark - Memory Management
 
-#if !__has_feature(objc_arc)
 - (void)dealloc {
     self.activityButton = nil;
     [super dealloc];
 }
-#endif
 
 @end
