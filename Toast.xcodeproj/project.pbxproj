@@ -193,7 +193,7 @@
 		151FC0C913D34B79007DC282 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0450;
 			};
 			buildConfigurationList = 151FC0CC13D34B79007DC282 /* Build configuration list for PBXProject "Toast" */;
 			compatibilityVersion = "Xcode 3.2";
