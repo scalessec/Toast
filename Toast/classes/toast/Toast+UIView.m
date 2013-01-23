@@ -47,7 +47,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 @interface UIView (ToastPrivate)
 
-- (CGPoint)getPositionFor:(id)position toast:(UIView *)toast;
+- (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
 
 @end
@@ -86,7 +86,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
-    toast.center = [self getPositionFor:point toast:toast];
+    toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     [self addSubview:toast];
     
@@ -119,7 +119,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     if (existingActivityView != nil) return;
     
     UIView *activityView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, CSToastActivityWidth, CSToastActivityHeight)] autorelease];
-    activityView.center = [self getPositionFor:position toast:activityView];
+    activityView.center = [self centerPointForPosition:position withToast:activityView];
     activityView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
     activityView.alpha = 0.0;
     activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
@@ -167,14 +167,14 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 #pragma mark - Private Methods
 
-- (CGPoint)getPositionFor:(id)point toast:(UIView *)toast {
+- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
     if([point isKindOfClass:[NSString class]]) {
         // convert string literals @"top", @"bottom", @"center", or any point wrapped in an NSValue object into a CGPoint
-        if( [point caseInsensitiveCompare:@"top"] == NSOrderedSame ) {
+        if([point caseInsensitiveCompare:@"top"] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding);
-        } else if( [point caseInsensitiveCompare:@"bottom"] == NSOrderedSame ) {
+        } else if([point caseInsensitiveCompare:@"bottom"] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding);
-        } else if( [point caseInsensitiveCompare:@"center"] == NSOrderedSame ) {
+        } else if([point caseInsensitiveCompare:@"center"] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
         }
     } else if ([point isKindOfClass:[NSValue class]]) {
@@ -182,7 +182,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     }
     
     NSLog(@"Warning: Invalid position for toast.");
-    return [self getPositionFor:CSToastDefaultPosition toast:toast];
+    return [self centerPointForPosition:CSToastDefaultPosition withToast:toast];
 }
 
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
