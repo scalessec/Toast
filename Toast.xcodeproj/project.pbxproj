@@ -12,12 +12,14 @@
 		151FC0DB13D34B7A007DC282 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151FC0DA13D34B7A007DC282 /* CoreGraphics.framework */; };
 		151FC12B13D3558E007DC282 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 151FC12A13D3558E007DC282 /* main.m */; };
 		151FC13413D36FCB007DC282 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151FC13313D36FCB007DC282 /* QuartzCore.framework */; };
-		1536A60616B0E0CF0021C622 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60516B0E0CF0021C622 /* Toast+UIView.m */; };
+		1536A60616B0E0CF0021C622 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60516B0E0CF0021C622 /* Toast+UIView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1536A60D16B0E0D60021C622 /* ToastTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60916B0E0D60021C622 /* ToastTestAppDelegate.m */; };
 		1536A60E16B0E0D60021C622 /* ToastTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60B16B0E0D60021C622 /* ToastTestViewController.m */; };
 		1536A60F16B0E0D60021C622 /* ToastTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1536A60C16B0E0D60021C622 /* ToastTestViewController.xib */; };
 		1536A61316B0E0E20021C622 /* toast.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A61216B0E0E20021C622 /* toast.png */; };
 		1536A62516B0E2050021C622 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62416B0E2050021C622 /* Default-568h@2x.png */; };
+		1536A62A16B0F0B20021C622 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62816B0F0B20021C622 /* Icon.png */; };
+		1536A62B16B0F0B20021C622 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62916B0F0B20021C622 /* Icon@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +40,8 @@
 		1536A60C16B0E0D60021C622 /* ToastTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ToastTestViewController.xib; sourceTree = "<group>"; };
 		1536A61216B0E0E20021C622 /* toast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toast.png; sourceTree = "<group>"; };
 		1536A62416B0E2050021C622 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
+		1536A62816B0F0B20021C622 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		1536A62916B0F0B20021C622 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +102,9 @@
 		151FC0DD13D34B7A007DC282 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				151FC12A13D3558E007DC282 /* main.m */,
 				151FC12713D35583007DC282 /* Toast-Info.plist */,
 				151FC12813D35583007DC282 /* Toast-Prefix.pch */,
+				151FC12A13D3558E007DC282 /* main.m */,
 			);
 			name = "Supporting Files";
 			path = ToastTest;
@@ -141,6 +145,8 @@
 		1536A61116B0E0E20021C622 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1536A62816B0F0B20021C622 /* Icon.png */,
+				1536A62916B0F0B20021C622 /* Icon@2x.png */,
 				1536A62416B0E2050021C622 /* Default-568h@2x.png */,
 				1536A61216B0E0E20021C622 /* toast.png */,
 			);
@@ -200,6 +206,8 @@
 				1536A60F16B0E0D60021C622 /* ToastTestViewController.xib in Resources */,
 				1536A61316B0E0E20021C622 /* toast.png in Resources */,
 				1536A62516B0E2050021C622 /* Default-568h@2x.png in Resources */,
+				1536A62A16B0F0B20021C622 /* Icon.png in Resources */,
+				1536A62B16B0F0B20021C622 /* Icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,10 +218,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				151FC12B13D3558E007DC282 /* main.m in Sources */,
 				1536A60616B0E0CF0021C622 /* Toast+UIView.m in Sources */,
 				1536A60D16B0E0D60021C622 /* ToastTestAppDelegate.m in Sources */,
 				1536A60E16B0E0D60021C622 /* ToastTestViewController.m in Sources */,
+				151FC12B13D3558E007DC282 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,6 +233,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -246,6 +255,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
