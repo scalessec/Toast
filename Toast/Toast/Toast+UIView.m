@@ -15,7 +15,7 @@
  *  DISPLAY DURATION, ETC.
  */
 
-// appearance
+// general appearance
 static const CGFloat CSToastMaxWidth            = 0.8;      // 80% of parent view width
 static const CGFloat CSToastMaxHeight           = 0.8;      // 80% of parent view height
 static const CGFloat CSToastHorizontalPadding   = 10.0;
@@ -26,15 +26,20 @@ static const CGFloat CSToastFontSize            = 16.0;
 static const CGFloat CSToastMaxTitleLines       = 0;
 static const CGFloat CSToastMaxMessageLines     = 0;
 static const CGFloat CSToastFadeDuration        = 0.2;
+
+// shadow appearance
+static const CGFloat CSToastShadowOpacity       = 0.8;
+static const CGFloat CSToastShadowRadius        = 6.0;
+static const CGSize  CSToastShadowOffset        = { 4.0, 4.0 };
 static const BOOL    CSToastDisplayShadow       = YES;
 
 // display duration and position
 static const CGFloat CSToastDefaultDuration     = 3.0;
 static const NSString * CSToastDefaultPosition  = @"bottom";
 
-// image size
-static const CGFloat CSToastImageWidth          = 80.0;
-static const CGFloat CSToastImageHeight         = 80.0;
+// image view size
+static const CGFloat CSToastImageViewWidth      = 80.0;
+static const CGFloat CSToastImageViewHeight     = 80.0;
 
 // activity
 static const CGFloat CSToastActivityWidth       = 100.0;
@@ -129,7 +134,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         activityView.layer.shadowColor = [UIColor blackColor].CGColor;
         activityView.layer.shadowOpacity = 0.8;
         activityView.layer.shadowRadius = 6.0;
-        activityView.layer.shadowOffset = CGSizeMake(4.0, 4.0);
+        activityView.layer.shadowOffset = CSToastShadowOffset;
     }
     
     UIActivityIndicatorView *activityIndicatorView = [[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge] autorelease];
@@ -201,8 +206,8 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     
     if (CSToastDisplayShadow) {
         wrapperView.layer.shadowColor = [UIColor blackColor].CGColor;
-        wrapperView.layer.shadowOpacity = 0.8;
-        wrapperView.layer.shadowRadius = 6.0;
+        wrapperView.layer.shadowOpacity = CSToastShadowOpacity;
+        wrapperView.layer.shadowRadius = CSToastShadowRadius;
         wrapperView.layer.shadowOffset = CGSizeMake(4.0, 4.0);
     }
 
@@ -211,7 +216,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     if(image != nil) {
         imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.frame = CGRectMake(CSToastHorizontalPadding, CSToastVerticalPadding, CSToastImageWidth, CSToastImageHeight);
+        imageView.frame = CGRectMake(CSToastHorizontalPadding, CSToastVerticalPadding, CSToastImageViewWidth, CSToastImageViewHeight);
     }
     
     CGFloat imageWidth, imageHeight, imageLeft;
