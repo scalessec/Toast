@@ -2,7 +2,7 @@
 //  ToastTestAppDelegate.m
 //  ToastTest
 //
-//  Copyright 2011 Charles Scalesse. All rights reserved.
+//  Copyright 2013 Charles Scalesse. All rights reserved.
 //
 
 #import "ToastTestAppDelegate.h"
@@ -10,12 +10,12 @@
 
 @implementation ToastTestAppDelegate
 
-@synthesize window = _window;
-@synthesize viewController = _viewController;
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
+    self.viewController = [[[ToastTestViewController alloc] init] autorelease];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
     return YES;
 }
 
