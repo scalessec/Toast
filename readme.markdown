@@ -6,7 +6,7 @@ Toast is an Objective-C category that adds Android-style toast notifications to 
 
 What's New
 ---------
- - Completely refactored the library to take advantage of modern Objective-C. When the first version of this class was written years ago, blocks didn't exist and dot notation for properties was still controversial. Needless to say, it's been updated.
+ - Completely refactored the library to take advantage of modern Objective-C. When the first version of this category was written years ago, blocks didn't exist and dot notation for properties was still controversial. Needless to say, it's been updated.
  - If you're using ARC, you'll need to add the `-fno-objc-arc` compiler flag to `Toast+UIView.m`. All preprocessor conditions have been removed.
  - Minimum iOS target is 4.0
 
