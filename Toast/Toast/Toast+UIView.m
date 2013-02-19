@@ -257,6 +257,11 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         
         // size the message label according to the length of the text
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * CSToastMaxWidth) - imageWidth, self.bounds.size.height * CSToastMaxHeight);
+        
+        //make sure that if we rotate the message will still fit on the screen
+        CGFloat rotatedMaxMessageWidth = (self.bounds.size.height * CSToastMaxWidth) - imageWidth;
+        if (maxSizeMessage.width > rotatedMaxMessageWidth) maxSizeMessage.width = rotatedMaxMessageWidth;
+        
         CGSize expectedSizeMessage = [message sizeWithFont:messageLabel.font constrainedToSize:maxSizeMessage lineBreakMode:messageLabel.lineBreakMode]; 
         messageLabel.frame = CGRectMake(0.0, 0.0, expectedSizeMessage.width, expectedSizeMessage.height);
     }
