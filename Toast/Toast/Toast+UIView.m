@@ -47,6 +47,9 @@ static const CGFloat CSToastActivityHeight      = 100.0;
 static const NSString * CSToastActivityDefaultPosition = @"center";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
+// hide toast when clicked
+static const BOOL    CSToastCancelOnTouch       = YES;
+
 
 @interface UIView (ToastPrivate)
 
@@ -91,19 +94,25 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
+    
+    if (CSToastCancelOnTouch) {
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(toastClicked)];
+        [toast addGestureRecognizer:recognizer];
+    }
+    
     [self addSubview:toast];
     
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
                          [UIView animateWithDuration:CSToastFadeDuration
                                                delay:interval
-                                             options:UIViewAnimationOptionCurveEaseIn
+                                             options:UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionAllowUserInteraction
                                           animations:^{
-                                              toast.alpha = 0.0;
+                                              toast.alpha = 0.1;
                                           } completion:^(BOOL finished) {
                                               [toast removeFromSuperview];
                                           }];
@@ -169,6 +178,17 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 #pragma mark - Private Methods
+
+- (void)toastClicked
+{
+    [UIView animateWithDuration:CSToastFadeDuration
+                     animations:^{
+                         self.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished){
+                         [self removeFromSuperview];
+                     }];
+}
 
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
     if([point isKindOfClass:[NSString class]]) {
