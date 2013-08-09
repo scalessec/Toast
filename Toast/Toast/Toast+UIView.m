@@ -179,7 +179,9 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
             return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding);
         } else if([point caseInsensitiveCompare:@"center"] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
-        }
+        } else if ([point caseInsensitiveCompare:@"top_right"] == NSOrderedSame) {
+            return CGPointMake(self.bounds.size.width - (toast.frame.size.width / 2) - CSToastHorizontalPadding, (toast.frame.size.height / 2) + CSToastVerticalPadding);
+    	}
     } else if ([point isKindOfClass:[NSValue class]]) {
         return [point CGPointValue];
     }
