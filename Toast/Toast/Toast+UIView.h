@@ -39,6 +39,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position title:(NSString *)title image:(UIImage *)image;
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position image:(UIImage *)image;
 
+// hides the current toast
+- (void)dismissCurrentToast;
+
 // displays toast with an activity spinner
 - (void)makeToastActivity;
 - (void)makeToastActivity:(id)position;

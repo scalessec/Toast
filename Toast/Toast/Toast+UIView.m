@@ -46,6 +46,7 @@ static const CGFloat CSToastActivityWidth       = 100.0;
 static const CGFloat CSToastActivityHeight      = 100.0;
 static const NSString * CSToastActivityDefaultPosition = @"center";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
+static const NSString * CSToastViewKey  = @"CSToastViewKey";
 
 
 @interface UIView (ToastPrivate)
@@ -89,8 +90,16 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
+    // sanity
+    UIView *existingToastView = (UIView *)objc_getAssociatedObject(self, &CSToastViewKey);
+    if (existingToastView != nil) return;
+    
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
+    
+    // associate ourselves with the view
+    objc_setAssociatedObject (self, &CSToastViewKey, toast, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     [self addSubview:toast];
     
     [UIView animateWithDuration:CSToastFadeDuration
@@ -108,6 +117,21 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
                                               [toast removeFromSuperview];
                                           }];
                      }];
+}
+
+- (void)dismissCurrentToast {
+    UIView *existingView = (UIView *)objc_getAssociatedObject(self, &CSToastViewKey);
+    if (existingView != nil) {
+        [UIView animateWithDuration:CSToastFadeDuration
+                              delay:0.0
+                            options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
+                         animations:^{
+                             existingView.alpha = 0.0;
+                         } completion:^(BOOL finished) {
+                             [existingView removeFromSuperview];
+                             objc_setAssociatedObject (self, &CSToastViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         }];
+    }
 }
 
 #pragma mark - Toast Activity Methods
