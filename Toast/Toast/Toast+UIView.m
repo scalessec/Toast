@@ -35,7 +35,11 @@ static const BOOL    CSToastDisplayShadow       = YES;
 
 // display duration and position
 static const CGFloat CSToastDefaultDuration     = 3.0;
-static const NSString * CSToastDefaultPosition  = @"bottom";
+
+NSString * const CSToastPositionBottom = @"bottom";
+NSString * const CSToastPositionTop    = @"top";
+NSString * const CSToastPositionCenter = @"center";
+NSString * const CSToastPositionDefault = @"bottom";
 
 // image view size
 static const CGFloat CSToastImageViewWidth      = 80.0;
@@ -44,7 +48,7 @@ static const CGFloat CSToastImageViewHeight     = 80.0;
 // activity
 static const CGFloat CSToastActivityWidth       = 100.0;
 static const CGFloat CSToastActivityHeight      = 100.0;
-static const NSString * CSToastActivityDefaultPosition = @"center";
+
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 static const NSString * CSToastViewKey  = @"CSToastViewKey";
 
@@ -62,7 +66,7 @@ static const NSString * CSToastViewKey  = @"CSToastViewKey";
 #pragma mark - Toast Methods
 
 - (void)makeToast:(NSString *)message {
-    [self makeToast:message duration:CSToastDefaultDuration position:CSToastDefaultPosition];
+    [self makeToast:message duration:CSToastDefaultDuration position:CSToastPositionDefault];
 }
 
 - (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position {
@@ -86,7 +90,7 @@ static const NSString * CSToastViewKey  = @"CSToastViewKey";
 }
 
 - (void)showToast:(UIView *)toast {
-    [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition];
+    [self showToast:toast duration:CSToastDefaultDuration position:CSToastPositionDefault];
 }
 
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
@@ -137,7 +141,7 @@ static const NSString * CSToastViewKey  = @"CSToastViewKey";
 #pragma mark - Toast Activity Methods
 
 - (void)makeToastActivity {
-    [self makeToastActivity:CSToastActivityDefaultPosition];
+    [self makeToastActivity:CSToastPositionDefault];
 }
 
 - (void)makeToastActivity:(id)position {
@@ -197,11 +201,11 @@ static const NSString * CSToastViewKey  = @"CSToastViewKey";
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
     if([point isKindOfClass:[NSString class]]) {
         // convert string literals @"top", @"bottom", @"center", or any point wrapped in an NSValue object into a CGPoint
-        if([point caseInsensitiveCompare:@"top"] == NSOrderedSame) {
+        if([point caseInsensitiveCompare:CSToastPositionTop] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding);
-        } else if([point caseInsensitiveCompare:@"bottom"] == NSOrderedSame) {
+        } else if([point caseInsensitiveCompare:CSToastPositionBottom] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - CSToastVerticalPadding);
-        } else if([point caseInsensitiveCompare:@"center"] == NSOrderedSame) {
+        } else if([point caseInsensitiveCompare:CSToastPositionCenter] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
         }
     } else if ([point isKindOfClass:[NSValue class]]) {
@@ -209,7 +213,7 @@ static const NSString * CSToastViewKey  = @"CSToastViewKey";
     }
     
     NSLog(@"Warning: Invalid position for toast.");
-    return [self centerPointForPosition:CSToastDefaultPosition withToast:toast];
+    return [self centerPointForPosition:CSToastPositionDefault withToast:toast];
 }
 
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {

@@ -30,6 +30,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const CSToastPositionBottom;
+extern NSString * const CSToastPositionTop;
+extern NSString * const CSToastPositionCenter;
+extern NSString * const CSToastPositionDefault;
+
 @interface UIView (Toast)
 
 // each makeToast method creates a view and displays it as toast
