@@ -72,31 +72,31 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [self makeToast:message duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:duration position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position title:(NSString *)title {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:duration position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:duration position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval  position:(id)position title:(NSString *)title image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:interval position:position];  
+    [self showToast:toast duration:duration position:position];  
 }
 
 - (void)showToast:(UIView *)toast {
     [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
-- (void)showToast:(UIView *)toast duration:(NSTimeInterval)interval position:(id)point {
+- (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
@@ -115,7 +115,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
                      animations:^{
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
-                         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
+                         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
                          // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];

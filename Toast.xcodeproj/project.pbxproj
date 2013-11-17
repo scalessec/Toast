@@ -179,7 +179,12 @@
 		151FC0C913D34B79007DC282 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					151FC0D113D34B7A007DC282 = {
+						DevelopmentTeam = 3NC359BQ4D;
+					};
+				};
 			};
 			buildConfigurationList = 151FC0CC13D34B79007DC282 /* Build configuration list for PBXProject "Toast" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -231,7 +236,6 @@
 		151FC0F113D34B7A007DC282 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -244,6 +248,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SDKROOT = iphoneos;
@@ -253,7 +258,6 @@
 		151FC0F213D34B7A007DC282 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
