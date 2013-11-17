@@ -45,11 +45,20 @@ static const CGFloat CSToastImageViewHeight     = 80.0;
 static const CGFloat CSToastActivityWidth       = 100.0;
 static const CGFloat CSToastActivityHeight      = 100.0;
 static const NSString * CSToastActivityDefaultPosition = @"center";
-static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
+// interaction
+static const BOOL CSToastHidesOnTap             = YES;     // excludes activity views
+
+// associative references - DO NOT EDIT
+static const NSString * CSToastViewKey          = @"CSToastViewKey";
+static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
+static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 @interface UIView (ToastPrivate)
 
+- (void)hideToast:(UIView *)toast;
+- (void)toastTimerDidFinish:(NSTimer *)timer;
+- (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
 - (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
 
@@ -91,23 +100,50 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 - (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
+    
+    if (CSToastHidesOnTap) {
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(handleToastTapped:)];
+        [toast addGestureRecognizer:recognizer];
+        toast.userInteractionEnabled = YES;
+        toast.exclusiveTouch = YES;
+    }
+    
     [self addSubview:toast];
     
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
+                        options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
                      animations:^{
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
-                         [UIView animateWithDuration:CSToastFadeDuration
-                                               delay:interval
-                                             options:UIViewAnimationOptionCurveEaseIn
-                                          animations:^{
-                                              toast.alpha = 0.0;
-                                          } completion:^(BOOL finished) {
-                                              [toast removeFromSuperview];
-                                          }];
+                         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
+                         // the toast view has a strong associative reference to the timer
+                         objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         // the timer has a weak associative reference to the toast view
+                         objc_setAssociatedObject (timer, &CSToastViewKey, toast, OBJC_ASSOCIATION_ASSIGN);
                      }];
+    
+}
+
+- (void)hideToast:(UIView *)toast {
+    [UIView animateWithDuration:CSToastFadeDuration
+                          delay:0.0
+                        options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^{
+                         toast.alpha = 0.0;
+                     } completion:^(BOOL finished) {
+                         [toast removeFromSuperview];
+                     }];
+}
+
+#pragma mark - Events
+
+- (void)toastTimerDidFinish:(NSTimer *)timer {
+    [self hideToast:(UIView *)timer.userInfo];
+}
+
+- (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
+    [self hideToast:recognizer.view];
 }
 
 #pragma mark - Toast Activity Methods
@@ -168,7 +204,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     }
 }
 
-#pragma mark - Private Methods
+#pragma mark - Helpers
 
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
     if([point isKindOfClass:[NSString class]]) {
