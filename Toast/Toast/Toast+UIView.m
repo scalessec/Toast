@@ -25,7 +25,7 @@ static const CGFloat CSToastOpacity             = 0.8;
 static const CGFloat CSToastFontSize            = 16.0;
 static const CGFloat CSToastMaxTitleLines       = 0;
 static const CGFloat CSToastMaxMessageLines     = 0;
-static const CGFloat CSToastFadeDuration        = 0.2;
+static const NSTimeInterval CSToastFadeDuration = 0.2;
 
 // shadow appearance
 static const CGFloat CSToastShadowOpacity       = 0.8;
@@ -34,8 +34,8 @@ static const CGSize  CSToastShadowOffset        = { 4.0, 4.0 };
 static const BOOL    CSToastDisplayShadow       = YES;
 
 // display duration and position
-static const CGFloat CSToastDefaultDuration     = 3.0;
 static const NSString * CSToastDefaultPosition  = @"bottom";
+static const NSTimeInterval CSToastDefaultDuration  = 3.0;
 
 // image view size
 static const CGFloat CSToastImageViewWidth      = 80.0;
@@ -73,22 +73,22 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [self makeToast:message duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
     [self showToast:toast duration:interval position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position title:(NSString *)title {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
     [self showToast:toast duration:interval position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval position:(id)position image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
     [self showToast:toast duration:interval position:position];  
 }
 
-- (void)makeToast:(NSString *)message duration:(CGFloat)interval  position:(id)position title:(NSString *)title image:(UIImage *)image {
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
     [self showToast:toast duration:interval position:position];  
 }
@@ -97,7 +97,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
-- (void)showToast:(UIView *)toast duration:(CGFloat)interval position:(id)point {
+- (void)showToast:(UIView *)toast duration:(NSTimeInterval)interval position:(id)point {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
