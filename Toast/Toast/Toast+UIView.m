@@ -49,7 +49,7 @@ static const NSString * CSToastActivityDefaultPosition = @"center";
 // interaction
 static const BOOL CSToastHidesOnTap             = YES;     // excludes activity views
 
-// associative references - DO NOT EDIT
+// associative reference keys
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
