@@ -10,8 +10,8 @@
 
 @interface ToastTestViewController ()
 
-@property (nonatomic, retain) IBOutlet UIButton *activityButton;
-@property (nonatomic, assign) BOOL isShowingActivity;
+@property (strong, nonatomic) IBOutlet UIButton *activityButton;
+@property (assign, nonatomic) BOOL isShowingActivity;
 
 -(IBAction)buttonPressed:(id)sender;
 
@@ -21,9 +21,9 @@
 
 #pragma mark - IBActions
 
--(IBAction)buttonPressed:(id)sender {
+-(IBAction)buttonPressed:(UIButton *)button {
     
-    switch ([sender tag]) {
+    switch (button.tag) {
             
         case 0: {
             // Make toast
@@ -62,7 +62,7 @@
             
         case 4: {
             // Show a custom view as toast
-            UIView *customView = [[[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 400)] autorelease];
+            UIView *customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 80, 400)];
             [customView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin)]; // autoresizing masks are respected on custom views
             [customView setBackgroundColor:[UIColor orangeColor]];
             
@@ -75,7 +75,7 @@
             
         case 5: {
             // Show an imageView as toast, on center at point (110,110)
-            UIImageView *toastView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toast.png"]] autorelease];
+            UIImageView *toastView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toast.png"]];
             
             [self.view showToast:toastView
                         duration:2.0
@@ -85,7 +85,7 @@
         }
             
         case 6: {
-            if (_isShowingActivity) {
+            if (!_isShowingActivity) {
                 [_activityButton setTitle:@"Hide Activity" forState:UIControlStateNormal];
                 [self.view makeToastActivity];
             } else {
@@ -113,13 +113,6 @@
 - (void)viewDidUnload {
     [super viewDidUnload];
     self.activityButton = nil;
-}
-
-#pragma mark - Memory Management
-
-- (void)dealloc {
-    self.activityButton = nil;
-    [super dealloc];
 }
 
 @end
