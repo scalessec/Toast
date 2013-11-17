@@ -6,10 +6,10 @@ Toast is an Objective-C category that adds Android-style toast notifications to 
 
 What's New
 ---------
- - Refactored to support ARC
+ - Refactored to support ARC.
  - Added tap to dismiss support, enabled by default. This can be toggled with the `CSToastHidesOnTap` flag.
- - The toast delay duration is now implemented with NSTimer instead of the UIView animation's delay property. This fixes some reported animation glitches
- - iOS7-related UI updates for the demo app
+ - The toast delay duration is now implemented with NSTimer instead of the UIView animation's delay property. 
+ - iOS7-related UI updates for the demo app.
 
 Screenshots
 ---------
