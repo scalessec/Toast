@@ -50,7 +50,6 @@ static const NSString * CSToastActivityDefaultPosition = @"center";
 static const BOOL CSToastHidesOnTap             = YES;     // excludes activity views
 
 // associative references - DO NOT EDIT
-static const NSString * CSToastViewKey          = @"CSToastViewKey";
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
@@ -117,10 +116,8 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
                          NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
-                         // the toast view has a strong associative reference to the timer
+                         // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                         // the timer has a weak associative reference to the toast view
-                         objc_setAssociatedObject (timer, &CSToastViewKey, toast, OBJC_ASSOCIATION_ASSIGN);
                      }];
     
 }
@@ -128,7 +125,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 - (void)hideToast:(UIView *)toast {
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
-                        options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState | UIViewAnimationOptionAllowUserInteraction)
+                        options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
                      animations:^{
                          toast.alpha = 0.0;
                      } completion:^(BOOL finished) {
@@ -143,6 +140,9 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
+    NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
+    [timer invalidate];
+    
     [self hideToast:recognizer.view];
 }
 
@@ -176,7 +176,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [activityView addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];
     
-    // associate ourselves with the activity view
+    // associate the activity view with self
     objc_setAssociatedObject (self, &CSToastActivityViewKey, activityView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     [self addSubview:activityView];
