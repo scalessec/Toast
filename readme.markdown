@@ -1,14 +1,15 @@
 Toast for iOS
 =============
-*Version 2.0*
+*Version 2.1*
 
 Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use.
 
 What's New
 ---------
- - Completely refactored the library to take advantage of modern Objective-C. When the first version of this category was written years ago, blocks didn't exist and dot notation for properties was still controversial. Needless to say, it's been updated.
- - If you're using ARC, you'll need to add the `-fno-objc-arc` compiler flag to `Toast+UIView.m`. All preprocessor conditions have been removed.
- - Minimum iOS target is 4.0
+ - Refactored to support ARC.
+ - Added tap to dismiss support, enabled by default. This can be toggled with the `CSToastHidesOnTap` flag.
+ - The toast display interval is now implemented with NSTimer instead of the UIView animation's delay property. This fixes some reported animation glitches.
+ - iOS7 UI updates for the demo app
 
 Screenshots
 ---------
@@ -41,7 +42,6 @@ Setup Instructions
 ------------------
 1. Add `Toast+UIView.h` & `Toast+UIView.m` to your project.
 2. Link against QuartzCore.
-3. If you're using ARC, you'll need to add the `-fno-objc-arc` compiler flag to `Toast+UIView.m`.
 
 
 MIT License
