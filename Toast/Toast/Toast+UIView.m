@@ -234,7 +234,19 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
     }
 
-    return [string sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:lineBreakMode];
+    
+    NSAttributedString *attributedText =
+    [[NSAttributedString alloc]
+     initWithString:string
+     attributes:@
+     {
+     NSFontAttributeName: font
+     }];
+    CGRect theSize = [attributedText boundingRectWithSize:constrainedSize
+                                               options:NSStringDrawingUsesLineFragmentOrigin
+                                               context:nil];
+    
+    return theSize.size;
 }
 
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
