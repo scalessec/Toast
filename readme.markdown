@@ -1,6 +1,6 @@
 Toast for iOS
 =============
-*Version 2.1*
+*Version 2.2*
 
 Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use.
 
