@@ -1,12 +1,12 @@
 //
-//  Toast+UIView.m
+//  UIView+Toast.m
 //  Toast
 //  Version 2.2
 //
 //  Copyright 2013 Charles Scalesse.
 //
 
-#import "Toast+UIView.h"
+#import "UIView+Toast.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 

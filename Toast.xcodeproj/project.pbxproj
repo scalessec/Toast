@@ -12,7 +12,7 @@
 		151FC0DB13D34B7A007DC282 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151FC0DA13D34B7A007DC282 /* CoreGraphics.framework */; };
 		151FC12B13D3558E007DC282 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 151FC12A13D3558E007DC282 /* main.m */; };
 		151FC13413D36FCB007DC282 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 151FC13313D36FCB007DC282 /* QuartzCore.framework */; };
-		1536A60616B0E0CF0021C622 /* Toast+UIView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60516B0E0CF0021C622 /* Toast+UIView.m */; };
+		1536A60616B0E0CF0021C622 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60516B0E0CF0021C622 /* UIView+Toast.m */; };
 		1536A60D16B0E0D60021C622 /* ToastTestAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60916B0E0D60021C622 /* ToastTestAppDelegate.m */; };
 		1536A60E16B0E0D60021C622 /* ToastTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60B16B0E0D60021C622 /* ToastTestViewController.m */; };
 		1536A60F16B0E0D60021C622 /* ToastTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1536A60C16B0E0D60021C622 /* ToastTestViewController.xib */; };
@@ -31,8 +31,8 @@
 		151FC12813D35583007DC282 /* Toast-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Toast-Prefix.pch"; path = "Toast/Toast-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		151FC12A13D3558E007DC282 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Toast/main.m; sourceTree = SOURCE_ROOT; };
 		151FC13313D36FCB007DC282 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		1536A60416B0E0CF0021C622 /* Toast+UIView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Toast+UIView.h"; sourceTree = "<group>"; };
-		1536A60516B0E0CF0021C622 /* Toast+UIView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Toast+UIView.m"; sourceTree = "<group>"; };
+		1536A60416B0E0CF0021C622 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
+		1536A60516B0E0CF0021C622 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		1536A60816B0E0D60021C622 /* ToastTestAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastTestAppDelegate.h; sourceTree = "<group>"; };
 		1536A60916B0E0D60021C622 /* ToastTestAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastTestAppDelegate.m; sourceTree = "<group>"; };
 		1536A60A16B0E0D60021C622 /* ToastTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastTestViewController.h; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 		1536A60316B0E0CF0021C622 /* Toast */ = {
 			isa = PBXGroup;
 			children = (
-				1536A60416B0E0CF0021C622 /* Toast+UIView.h */,
-				1536A60516B0E0CF0021C622 /* Toast+UIView.m */,
+				1536A60416B0E0CF0021C622 /* UIView+Toast.h */,
+				1536A60516B0E0CF0021C622 /* UIView+Toast.m */,
 			);
 			name = Toast;
 			path = Toast/Toast;
@@ -223,7 +223,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1536A60616B0E0CF0021C622 /* Toast+UIView.m in Sources */,
+				1536A60616B0E0CF0021C622 /* UIView+Toast.m in Sources */,
 				1536A60D16B0E0D60021C622 /* ToastTestAppDelegate.m in Sources */,
 				1536A60E16B0E0D60021C622 /* ToastTestViewController.m in Sources */,
 				151FC12B13D3558E007DC282 /* main.m in Sources */,
