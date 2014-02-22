@@ -40,7 +40,7 @@ See the demo project for more examples.
 
 Setup Instructions
 ------------------
-1. Add `Toast+UIView.h` & `Toast+UIView.m` to your project.
+1. Add `UIView+Toast.h` & `UIView+Toast.m` to your project.
 2. Link against QuartzCore.
 
 
