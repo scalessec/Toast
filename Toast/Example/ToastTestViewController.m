@@ -6,7 +6,7 @@
 //
 
 #import "ToastTestViewController.h"
-#import "Toast+UIView.h"
+#import "UIView+Toast.h"
 
 @interface ToastTestViewController ()
 
