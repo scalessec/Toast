@@ -226,7 +226,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 }
 
 - (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode {
-    if ([string respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
+    if (NO == [string respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineBreakMode = lineBreakMode;
         NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle};
