@@ -48,4 +48,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 - (void)showToast:(UIView *)toast;
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)interval position:(id)point;
 
+// hide current toast
+- (void)hideToast;
+
 @end

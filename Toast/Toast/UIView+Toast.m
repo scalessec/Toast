@@ -10,6 +10,8 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
+
 /*
  *  CONFIGURE THESE VALUES TO ADJUST LOOK & FEEL,
  *  DISPLAY DURATION, ETC.
@@ -45,6 +47,8 @@ static const CGFloat CSToastImageViewHeight     = 80.0;
 static const CGFloat CSToastActivityWidth       = 100.0;
 static const CGFloat CSToastActivityHeight      = 100.0;
 static const NSString * CSToastActivityDefaultPosition = @"center";
+
+static const NSInteger CSToastViewTag             = 201314;
 
 // interaction
 static const BOOL CSToastHidesOnTap             = YES;     // excludes activity views
@@ -100,16 +104,21 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
-    
+    toast.tag = CSToastViewTag;
+
+    if ([self viewWithTag:CSToastViewTag] != nil) {
+      return;
+    }
+
     if (CSToastHidesOnTap) {
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(handleToastTapped:)];
         [toast addGestureRecognizer:recognizer];
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
     }
-    
+
     [self addSubview:toast];
-    
+
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
@@ -227,7 +236,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 
 - (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode {
     if ([string respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        NSMutableParagraphStyle *paragraphStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
         paragraphStyle.lineBreakMode = lineBreakMode;
         NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle};
         CGRect boundingRect = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
@@ -261,7 +270,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     wrapperView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
     
     if(image != nil) {
-        imageView = [[UIImageView alloc] initWithImage:image];
+        imageView = [[[UIImageView alloc] initWithImage:image] autorelease];
         imageView.contentMode = UIViewContentModeScaleAspectFit;
         imageView.frame = CGRectMake(CSToastHorizontalPadding, CSToastVerticalPadding, CSToastImageViewWidth, CSToastImageViewHeight);
     }
@@ -278,7 +287,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     }
     
     if (title != nil) {
-        titleLabel = [[UILabel alloc] init];
+        titleLabel = [[[UILabel alloc] init] autorelease];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
         titleLabel.font = [UIFont boldSystemFontOfSize:CSToastFontSize];
         titleLabel.textAlignment = NSTextAlignmentLeft;
@@ -295,7 +304,7 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     }
     
     if (message != nil) {
-        messageLabel = [[UILabel alloc] init];
+        messageLabel = [[[UILabel alloc] init] autorelease];
         messageLabel.numberOfLines = CSToastMaxMessageLines;
         messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
@@ -357,7 +366,13 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
         [wrapperView addSubview:imageView];
     }
         
-    return wrapperView;
+    return [wrapperView autorelease];
+}
+
+- (void)hideToast {
+  if ([self viewWithTag:CSToastViewTag] != nil) {
+    [[self viewWithTag:CSToastViewTag] removeFromSuperview];
+  }
 }
 
 @end
