@@ -40,6 +40,15 @@ See the demo project for more examples.
 
 Setup Instructions
 ------------------
+Install with [CocoaPods](http://cocoapods.org) by adding the following to your Podfile:
+
+``` ruby
+platform :ios, '7.0'
+pod 'Toast', '~> 2.2'
+```
+
+or add manually: 
+
 1. Add `UIView+Toast.h` & `UIView+Toast.m` to your project.
 2. Link against QuartzCore.
 
