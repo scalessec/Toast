@@ -9,4 +9,5 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.source_files = 'Toast/Toast'   
   s.framework    = 'QuartzCore'
+  requires_arc   = true
 end
