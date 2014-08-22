@@ -1,7 +1,6 @@
 //
 //  UIView+Toast.m
 //  Toast
-//  Version 2.2
 //
 //  Copyright 2013 Charles Scalesse.
 //
