@@ -53,6 +53,8 @@ static const BOOL CSToastHidesOnTap             = YES;     // excludes activity 
 // associative reference keys
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
+static const NSString * CSToastTapCallbackKey   = @"CSToastTapCallbackKey";
+
 
 @interface UIView (ToastPrivate)
 
@@ -98,7 +100,16 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     [self showToast:toast duration:CSToastDefaultDuration position:CSToastDefaultPosition];
 }
 
+
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point {
+    [self showToast:toast duration:duration position:point tapCallback:nil];
+    
+}
+
+
+- (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)point
+      tapCallback:(void(^)(void))tapCallback
+{
     toast.center = [self centerPointForPosition:point withToast:toast];
     toast.alpha = 0.0;
     
@@ -120,9 +131,10 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
                          NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
                          // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         objc_setAssociatedObject (toast, &CSToastTapCallbackKey, tapCallback, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
-    
 }
+
 
 - (void)hideToast:(UIView *)toast {
     [UIView animateWithDuration:CSToastFadeDuration
@@ -145,6 +157,10 @@ static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
     NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
     [timer invalidate];
     
+    void (^callback)(void) = objc_getAssociatedObject(self, &CSToastTapCallbackKey);
+    if (callback) {
+        callback();
+    }
     [self hideToast:recognizer.view];
 }
 
