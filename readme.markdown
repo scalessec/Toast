@@ -17,23 +17,25 @@ Screenshots
 
 Examples
 ---------
-    // basic usage
-    [self.view makeToast:@"This is a piece of toast."];
+```objc
+// basic usage
+[self.view makeToast:@"This is a piece of toast."];
 
-    // toast with duration, title, and position
-    [self.view makeToast:@"This is a piece of toast with a title." 
-                 duration:3.0
-                 position:@"top"
-                    title:@"Toast Title"];
+// toast with duration, title, and position
+[self.view makeToast:@"This is a piece of toast with a title." 
+            duration:3.0
+            position:@"top"
+               title:@"Toast Title"];
             
-    // toast with an image
-    [self.view makeToast:@"This is a piece of toast with an image." 
-                duration:3.0
-                position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
-                   image:[UIImage imageNamed:@"toast.png"]];
+// toast with an image
+[self.view makeToast:@"This is a piece of toast with an image." 
+            duration:3.0
+            position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
+               image:[UIImage imageNamed:@"toast.png"]];
                 
-    // display toast with an activity spinner
-    [self.view makeToastActivity];
+// display toast with an activity spinner
+[self.view makeToastActivity];
+```
     
 See the demo project for more examples.
 
