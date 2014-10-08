@@ -6,7 +6,6 @@
 //
 
 
-// A test 
 #import "UIView+Toast.h"
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
