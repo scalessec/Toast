@@ -35,7 +35,7 @@
             // Make toast with a title
             [self.view makeToast:@"This is a piece of toast with a title."
                         duration:3.0
-                        position:@"top"
+                        position:CSToastPositionTop
                            title:@"Toast Title"];
             
             break;
@@ -45,7 +45,7 @@
             // Make toast with an image
             [self.view makeToast:@"This is a piece of toast with an image."
                         duration:3.0
-                        position:@"center"
+                        position:CSToastPositionCenter
                            image:[UIImage imageNamed:@"toast.png"]];
             break;
         }
@@ -54,7 +54,7 @@
             // Make toast with an image & title
             [self.view makeToast:@"This is a piece of toast with a title & image"
                         duration:3.0
-                        position:@"bottom"
+                        position:CSToastPositionBottom
                            title:@"Toast Title"
                            image:[UIImage imageNamed:@"toast.png"]];
             break;
@@ -68,7 +68,7 @@
             
             [self.view showToast:customView
                         duration:2.0
-                        position:@"center"];
+                        position:CSToastPositionCenter];
             
             break;
         }
