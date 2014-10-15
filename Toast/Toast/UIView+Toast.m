@@ -2,7 +2,7 @@
 //  UIView+Toast.m
 //  Toast
 //
-//  Copyright 2013 Charles Scalesse.
+//  Copyright 2014 Charles Scalesse.
 //
 
 
