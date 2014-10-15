@@ -26,8 +26,11 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  
 ***************************************************************************/
 
-
 #import <UIKit/UIKit.h>
+
+extern NSString * const CSToastPositionTop;
+extern NSString * const CSToastPositionCenter;
+extern NSString * const CSToastPositionBottom;
 
 @interface UIView (Toast)
 
