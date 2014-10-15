@@ -18,7 +18,7 @@ Examples
 // toast with duration, title, and position
 [self.view makeToast:@"This is a piece of toast with a title." 
             duration:3.0
-            position:@"top"
+            position:CSToastPositionTop
                title:@"Toast Title"];
             
 // toast with an image
