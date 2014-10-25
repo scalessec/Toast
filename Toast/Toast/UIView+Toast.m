@@ -56,7 +56,7 @@ static const NSString * CSToastTapCallbackKey   = @"CSToastTapCallbackKey";
 // positions
 NSString * const CSToastPositionTop             = @"top";
 NSString * const CSToastPositionCenter          = @"center";
-NSString * const CSToastPositionBottom          = @"buttom";
+NSString * const CSToastPositionBottom          = @"bottom";
 
 @interface UIView (ToastPrivate)
 
