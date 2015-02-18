@@ -34,6 +34,9 @@ extern NSString * const CSToastPositionBottom;
 
 @interface UIView (Toast)
 
+@property (nonatomic, getter=getToastFontName) NSString *toastFontName;
+@property (nonatomic, readonly, getter=getToastFont) UIFont *toastFont;
+
 // each makeToast method creates a view and displays it as toast
 - (void)makeToast:(NSString *)message;
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position;

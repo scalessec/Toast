@@ -72,6 +72,8 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 @implementation UIView (Toast)
 
+NSString *_toastFontName;
+
 #pragma mark - Toast Methods
 
 - (void)makeToast:(NSString *)message {
@@ -147,6 +149,24 @@ NSString * const CSToastPositionBottom          = @"bottom";
                      } completion:^(BOOL finished) {
                          [toast removeFromSuperview];
                      }];
+}
+
+- (UIFont *) getToastFont {
+    if(_toastFontName != nil) {
+        UIFont *font = [UIFont fontWithName:_toastFontName size:CSToastFontSize];
+        if (font != nil) {
+            return font;
+        }
+    }
+    return [UIFont boldSystemFontOfSize:CSToastFontSize];
+}
+
+- (void) setToastFontName:(NSString *)fontName {
+    _toastFontName = fontName;
+}
+
+- (NSString *) getToastFontName {
+    return [self getToastFont].fontName;
 }
 
 #pragma mark - Events
@@ -299,7 +319,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     if (title != nil) {
         titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
-        titleLabel.font = [UIFont boldSystemFontOfSize:CSToastFontSize];
+        titleLabel.font = self.toastFont;
         titleLabel.textAlignment = NSTextAlignmentLeft;
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.textColor = [UIColor whiteColor];
@@ -316,7 +336,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     if (message != nil) {
         messageLabel = [[UILabel alloc] init];
         messageLabel.numberOfLines = CSToastMaxMessageLines;
-        messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
+        messageLabel.font = self.toastFont;
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
         messageLabel.textColor = [UIColor whiteColor];
         messageLabel.backgroundColor = [UIColor clearColor];
