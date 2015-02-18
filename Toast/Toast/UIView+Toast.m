@@ -35,6 +35,7 @@ static const BOOL    CSToastDisplayShadow       = YES;
 
 // display duration
 static const NSTimeInterval CSToastDefaultDuration  = 3.0;
+static const NSTimeInterval CSToastDummyDuration  = 3.0;
 
 // image view size
 static const CGFloat CSToastImageViewWidth      = 80.0;
@@ -49,9 +50,10 @@ static const NSString * CSToastActivityDefaultPosition = @"center";
 static const BOOL CSToastHidesOnTap             = YES;     // excludes activity views
 
 // associative reference keys
-static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 static const NSString * CSToastTapCallbackKey   = @"CSToastTapCallbackKey";
+static const NSString * CSToastTimerSourceKey   = @"CSToastTimerSourceKey";
+static const NSString * CSToastNoTapKey      = @"CSToastNoTapKey";
 
 // positions
 NSString * const CSToastPositionTop             = @"top";
@@ -61,7 +63,6 @@ NSString * const CSToastPositionBottom          = @"bottom";
 @interface UIView (ToastPrivate)
 
 - (void)hideToast:(UIView *)toast;
-- (void)toastTimerDidFinish:(NSTimer *)timer;
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
 - (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
@@ -124,19 +125,45 @@ NSString * const CSToastPositionBottom          = @"bottom";
     
     [self addSubview:toast];
     
+    __weak UIView *weakSelf = self;
+    __weak UIView *weakToast = toast;
+
+    objc_setAssociatedObject (weakToast, &CSToastNoTapKey, @YES, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        // tap attribute add.
+    
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
                      animations:^{
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
-                         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
-                         // associate the timer with the toast view
-                         objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                         objc_setAssociatedObject (toast, &CSToastTapCallbackKey, tapCallback, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         if( weakSelf != nil && weakToast != nil ){
+                             
+                             // create timer source.
+                             dispatch_source_t toastTimerSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0));
+
+                             objc_setAssociatedObject (weakToast, &CSToastTimerSourceKey, toastTimerSource, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                             
+                             dispatch_source_set_cancel_handler(toastTimerSource, ^{
+                                 dispatch_async(dispatch_get_main_queue(), ^{
+                                     NSNumber *noTapped = objc_getAssociatedObject (weakToast, &CSToastNoTapKey);
+                                     // user action check
+                                     if( [noTapped boolValue] == YES ){
+                                         [weakSelf hideToast:weakToast];
+                                     }
+                                 });
+                             });
+                             
+                             dispatch_source_set_event_handler(toastTimerSource, ^{
+                                 dispatch_source_cancel(toastTimerSource);
+                             });
+                             dispatch_source_set_timer(toastTimerSource,dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * duration/*開始時間*/),NSEC_PER_SEC * CSToastDummyDuration /*no using parameter*/,0);
+                             dispatch_resume(toastTimerSource);
+                         }else{
+                             // weakSelf == nil or weakToast == nil
+                         }
                      }];
 }
-
 
 - (void)hideToast:(UIView *)toast {
     [UIView animateWithDuration:CSToastFadeDuration
@@ -151,13 +178,10 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 #pragma mark - Events
 
-- (void)toastTimerDidFinish:(NSTimer *)timer {
-    [self hideToast:(UIView *)timer.userInfo];
-}
-
-- (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
-    NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
-    [timer invalidate];
+- (void)handleToastTapped:(UITapGestureRecognizer *)recognizer
+{
+    objc_setAssociatedObject(self, &CSToastNoTapKey, @NO, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        // Tapフラグ
     
     void (^callback)(void) = objc_getAssociatedObject(self, &CSToastTapCallbackKey);
     if (callback) {
