@@ -72,6 +72,9 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 @implementation UIView (Toast)
 
+NSString *_toastFontName;
+NSNumber *_toastFontSize;
+
 #pragma mark - Toast Methods
 
 - (void)makeToast:(NSString *)message {
@@ -80,22 +83,22 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)showToast:(UIView *)toast {
@@ -147,6 +150,35 @@ NSString * const CSToastPositionBottom          = @"bottom";
                      } completion:^(BOOL finished) {
                          [toast removeFromSuperview];
                      }];
+}
+
+- (UIFont *) getToastFont {
+    if(_toastFontName != nil) {
+        UIFont *font = [UIFont fontWithName:_toastFontName size:[self getToastFontSize]];
+        if (font != nil) {
+            return font;
+        }
+    }
+    return [UIFont boldSystemFontOfSize:[self getToastFontSize]];
+}
+
+- (void) setToastFontName:(NSString *)fontName {
+    _toastFontName = fontName;
+}
+
+- (NSString *) getToastFontName {
+    return [self getToastFont].fontName;
+}
+
+- (void) setToastFontSize:(CGFloat)fontSize {
+    _toastFontSize = @(fontSize);
+}
+
+- (CGFloat) getToastFontSize {
+    if(_toastFontSize == nil) {
+        return CSToastFontSize;
+    }
+    return [_toastFontSize floatValue];
 }
 
 #pragma mark - Events
@@ -249,7 +281,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
         CGRect boundingRect = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
         return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
     }
-
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     return [string sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:lineBreakMode];
@@ -259,7 +291,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
     // sanity
     if((message == nil) && (title == nil) && (image == nil)) return nil;
-
+    
     // dynamically build a toast view with any combination of message, title, & image.
     UILabel *messageLabel = nil;
     UILabel *titleLabel = nil;
@@ -276,7 +308,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
         wrapperView.layer.shadowRadius = CSToastShadowRadius;
         wrapperView.layer.shadowOffset = CSToastShadowOffset;
     }
-
+    
     wrapperView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
     
     if(image != nil) {
@@ -299,7 +331,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     if (title != nil) {
         titleLabel = [[UILabel alloc] init];
         titleLabel.numberOfLines = CSToastMaxTitleLines;
-        titleLabel.font = [UIFont boldSystemFontOfSize:CSToastFontSize];
+        titleLabel.font = self.toastFont;
         titleLabel.textAlignment = NSTextAlignmentLeft;
         titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
         titleLabel.textColor = [UIColor whiteColor];
@@ -316,7 +348,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     if (message != nil) {
         messageLabel = [[UILabel alloc] init];
         messageLabel.numberOfLines = CSToastMaxMessageLines;
-        messageLabel.font = [UIFont systemFontOfSize:CSToastFontSize];
+        messageLabel.font = self.toastFont;
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
         messageLabel.textColor = [UIColor whiteColor];
         messageLabel.backgroundColor = [UIColor clearColor];
@@ -343,7 +375,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     
     // messageLabel frame values
     CGFloat messageWidth, messageHeight, messageLeft, messageTop;
-
+    
     if(messageLabel != nil) {
         messageWidth = messageLabel.bounds.size.width;
         messageHeight = messageLabel.bounds.size.height;
@@ -352,14 +384,14 @@ NSString * const CSToastPositionBottom          = @"bottom";
     } else {
         messageWidth = messageHeight = messageLeft = messageTop = 0.0;
     }
-
+    
     CGFloat longerWidth = MAX(titleWidth, messageWidth);
     CGFloat longerLeft = MAX(titleLeft, messageLeft);
     
     // wrapper width uses the longerWidth or the image width, whatever is larger. same logic applies to the wrapper height
-    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));    
+    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));
     CGFloat wrapperHeight = MAX((messageTop + messageHeight + CSToastVerticalPadding), (imageHeight + (CSToastVerticalPadding * 2)));
-                         
+    
     wrapperView.frame = CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight);
     
     if(titleLabel != nil) {
@@ -375,7 +407,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     if(imageView != nil) {
         [wrapperView addSubview:imageView];
     }
-        
+    
     return wrapperView;
 }
 
