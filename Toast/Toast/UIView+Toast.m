@@ -52,6 +52,7 @@ static const BOOL CSToastHidesOnTap             = YES;     // excludes activity 
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
 static const NSString * CSToastTapCallbackKey   = @"CSToastTapCallbackKey";
+static const NSInteger CSToastTagID             = -1685;
 
 // positions
 NSString * const CSToastPositionTop             = @"top";
@@ -112,6 +113,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position
       tapCallback:(void(^)(void))tapCallback
 {
+    toast.tag = CSToastTagID;
     toast.center = [self centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
@@ -121,6 +123,8 @@ NSString * const CSToastPositionBottom          = @"bottom";
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
     }
+    
+    [self pushToastsUp];
     
     [self addSubview:toast];
     
@@ -137,6 +141,23 @@ NSString * const CSToastPositionBottom          = @"bottom";
                      }];
 }
 
+- (void)pushToastUp:(UIView *)toastView {
+    CGFloat height = toastView.frame.size.height;
+    
+    [UIView animateWithDuration:CSToastFadeDuration
+                          delay:0.0
+                        options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
+                     animations:^{
+                         toastView.center = CGPointMake(self.bounds.size.width/2, toastView.frame.origin.y - height);
+                     } completion:nil];
+}
+- (void)pushToastsUp {
+    for (UIView *toastView in self.subviews) {
+        if (toastView.tag == CSToastTagID) {
+            [self pushToastUp:toastView];
+        }
+    }
+}
 
 - (void)hideToast:(UIView *)toast {
     [UIView animateWithDuration:CSToastFadeDuration
