@@ -112,6 +112,9 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position
       tapCallback:(void(^)(void))tapCallback
 {
+    // sanity
+    if (!toast) return;
+    
     toast.center = [self centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
