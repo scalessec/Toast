@@ -112,6 +112,9 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position
       tapCallback:(void(^)(void))tapCallback
 {
+    // sanity
+    if (!toast) return;
+    
     toast.center = [self centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
@@ -258,7 +261,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
     // sanity
-    if((message == nil) && (title == nil) && (image == nil)) return nil;
+    if((message == nil || [message length] == 0) && (title == nil || [title length] == 0) && (image == nil)) return nil;
 
     // dynamically build a toast view with any combination of message, title, & image.
     UILabel *messageLabel = nil;
