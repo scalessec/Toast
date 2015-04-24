@@ -34,7 +34,7 @@ static const CGSize  CSToastShadowOffset        = { 4.0, 4.0 };
 static const BOOL    CSToastDisplayShadow       = YES;
 
 // display duration
-static const NSTimeInterval CSToastDefaultDuration  = 3.0;
+static const NSTimeInterval CSToastDefaultDuration  = 4.0;
 
 // image view size
 static const CGFloat CSToastImageViewWidth      = 80.0;
@@ -51,6 +51,7 @@ static const BOOL CSToastHidesOnTap             = YES;     // excludes activity 
 // associative reference keys
 static const NSString * CSToastTimerKey         = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey  = @"CSToastActivityViewKey";
+static const NSString * CSToastViewKey          = @"CSToastViewKey";
 static const NSString * CSToastTapCallbackKey   = @"CSToastTapCallbackKey";
 
 // positions
@@ -75,27 +76,27 @@ NSString * const CSToastPositionBottom          = @"bottom";
 #pragma mark - Toast Methods
 
 - (void)makeToast:(NSString *)message {
-    [self makeToast:message duration:CSToastDefaultDuration position:nil];
+    [self makeToast:message duration:CSToastDefaultDuration position:CSToastPositionTop];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
 }
 
 - (void)showToast:(UIView *)toast {
@@ -112,6 +113,10 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position
       tapCallback:(void(^)(void))tapCallback
 {
+    UIView *existingToastView = (UIView *)objc_getAssociatedObject(self, &CSToastViewKey);
+    if (existingToastView != nil)
+        [self hideToast:existingToastView];
+    
     toast.center = [self centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
@@ -134,18 +139,22 @@ NSString * const CSToastPositionBottom          = @"bottom";
                          // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                          objc_setAssociatedObject (toast, &CSToastTapCallbackKey, tapCallback, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         
+                         // associate the toast view with self
+                         objc_setAssociatedObject (self, &CSToastViewKey, toast, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
 }
 
 
 - (void)hideToast:(UIView *)toast {
-    [UIView animateWithDuration:CSToastFadeDuration
+    [UIView animateWithDuration:0
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
                      animations:^{
                          toast.alpha = 0.0;
                      } completion:^(BOOL finished) {
                          [toast removeFromSuperview];
+                         objc_setAssociatedObject (self, &CSToastViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
 }
 
@@ -229,7 +238,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
     if([point isKindOfClass:[NSString class]]) {
         if([point caseInsensitiveCompare:CSToastPositionTop] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding);
+            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + CSToastVerticalPadding + 30);
         } else if([point caseInsensitiveCompare:CSToastPositionCenter] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
         }
@@ -249,7 +258,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
         CGRect boundingRect = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
         return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
     }
-
+    
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
     return [string sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:lineBreakMode];
@@ -259,7 +268,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
     // sanity
     if((message == nil) && (title == nil) && (image == nil)) return nil;
-
+    
     // dynamically build a toast view with any combination of message, title, & image.
     UILabel *messageLabel = nil;
     UILabel *titleLabel = nil;
@@ -276,7 +285,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
         wrapperView.layer.shadowRadius = CSToastShadowRadius;
         wrapperView.layer.shadowOffset = CSToastShadowOffset;
     }
-
+    
     wrapperView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
     
     if(image != nil) {
@@ -343,7 +352,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     
     // messageLabel frame values
     CGFloat messageWidth, messageHeight, messageLeft, messageTop;
-
+    
     if(messageLabel != nil) {
         messageWidth = messageLabel.bounds.size.width;
         messageHeight = messageLabel.bounds.size.height;
@@ -352,14 +361,14 @@ NSString * const CSToastPositionBottom          = @"bottom";
     } else {
         messageWidth = messageHeight = messageLeft = messageTop = 0.0;
     }
-
+    
     CGFloat longerWidth = MAX(titleWidth, messageWidth);
     CGFloat longerLeft = MAX(titleLeft, messageLeft);
     
     // wrapper width uses the longerWidth or the image width, whatever is larger. same logic applies to the wrapper height
-    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));    
+    CGFloat wrapperWidth = MAX((imageWidth + (CSToastHorizontalPadding * 2)), (longerLeft + longerWidth + CSToastHorizontalPadding));
     CGFloat wrapperHeight = MAX((messageTop + messageHeight + CSToastVerticalPadding), (imageHeight + (CSToastVerticalPadding * 2)));
-                         
+    
     wrapperView.frame = CGRectMake(0.0, 0.0, wrapperWidth, wrapperHeight);
     
     if(titleLabel != nil) {
@@ -375,7 +384,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     if(imageView != nil) {
         [wrapperView addSubview:imageView];
     }
-        
+    
     return wrapperView;
 }
 
