@@ -25,7 +25,9 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 - (void)toastTimerDidFinish:(NSTimer *)timer;
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
 - (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
+- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast withProperties:(ToastProperties*)properties;
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
+- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image withProperties:(ToastProperties*)properties;
 - (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode;
 
 @end
@@ -228,7 +230,10 @@ properties:(ToastProperties*)properties
 }
 
 #pragma mark - Helpers
-
+- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast
+{
+  [self centerPointForPosition:point withToast:toast withProperties:nil];
+}
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast withProperties:(ToastProperties*)properties {
     if(!properties)
         properties = [ToastProperties sharedProperties];
@@ -261,6 +266,9 @@ properties:(ToastProperties*)properties
 #pragma clang diagnostic pop
 }
 
+- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
+  [self viewForMessage:message title:title image:image withProperties:nil];
+}
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image withProperties:(ToastProperties*)properties {
     // sanity
     if((message == nil) && (title == nil) && (image == nil)) return nil;
