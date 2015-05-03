@@ -108,4 +108,47 @@ static const BOOL CSToastHidesOnTap             = YES;     // excludes activity 
   return self;
 }
 
+-(instancetype)clone
+{
+  ToastProperties* clone = [[ToastProperties alloc] init];
+  clone.textColor = _textColor;
+  clone.titleColor = _titleColor;
+  clone.backgroundColor = _backgroundColor;
+  
+  clone.position = _position;
+  clone.hideOnTap = _hideOnTap;
+  
+  clone.maxWidth = _maxWidth;
+  clone.maxHeight = _maxHeight;
+  clone.horizontalPadding = _horizontalPadding;
+  clone.verticalPadding = _verticalPadding;
+  clone.cornerRadius = _cornerRadius;
+  clone.opacity = _opacity;
+  clone.fontSize = _fontSize;
+  clone.maxTitleLines = _maxTitleLines;
+  clone.maxMessageLines = _maxMessageLines;
+  clone.fadeDuration = _fadeDuration;
+  
+  // shadow appearance
+  clone.shadowOpacity = _shadowOpacity;
+  clone.shadowRadius = _shadowRadius;
+  clone.shadowOffset = _shadowOffset;
+  clone.displayShadow = _displayShadow;
+  clone.shadowColor = _shadowColor;
+  
+  // display duration
+  clone.duration = _duration;
+  
+  // image view size
+  clone.imageViewWidth = _imageViewWidth;
+  clone.imageViewHeight = _imageViewHeight;
+  
+  // activity
+  clone.activityWidth = _activityWidth;
+  clone.activityHeight = _activityHeight;
+  clone.activityDefaultPosition = _activityDefaultPosition;
+  
+  return clone;
+}
+
 @end

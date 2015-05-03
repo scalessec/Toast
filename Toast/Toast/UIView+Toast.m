@@ -56,7 +56,7 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     ToastProperties* properties = [ToastProperties sharedProperties];
-    properties = [properties copy];
+    properties = [properties clone];
     properties.duration = duration;
     properties.position = position;
   
@@ -85,7 +85,7 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
       tapCallback:(void(^)(void))tapCallback
 {
   ToastProperties* properties = [ToastProperties sharedProperties];
-  properties = [properties copy];
+  properties = [properties clone];
   properties.duration = interval;
   properties.position = point;
   [self showToast:toast properties:properties tapCallback:tapCallback];

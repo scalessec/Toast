@@ -51,6 +51,6 @@ extern NSString * const CSToastPositionBottom;
 @property CGFloat activityHeight;
 @property (nonatomic, strong) NSString * activityDefaultPosition;
 
-
+-(instancetype)clone;
 + (id)sharedProperties;
 @end
