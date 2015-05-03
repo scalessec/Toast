@@ -141,11 +141,8 @@ properties:(ToastProperties*)properties
 - (void)toastTimerDidFinish:(NSTimer *)timer {
     ToastProperties* properties = nil;
     NSDictionary* info = timer.userInfo;
-    if(info)
-    {
-        UIView* toastView = info[CSToastViewKey];
-        properties = info[CSToastPropertiesKey];
-    }
+    UIView* toastView = info[CSToastViewKey];
+    ToastProperties* properties = info[CSToastPropertiesKey];
     [self hideToast:toastView properties:properties];
 }
 
