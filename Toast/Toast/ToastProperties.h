@@ -52,5 +52,5 @@ extern NSString * const CSToastPositionBottom;
 @property (nonatomic, strong) NSString * activityDefaultPosition;
 
 
-+ (id)defaultProperties;
++ (id)sharedProperties;
 @end

@@ -53,13 +53,13 @@ static const CGFloat CSToastActivityHeight      = 100.0;
 static const BOOL CSToastHidesOnTap             = YES;     // excludes activity views
 
 
-+ (id)defaultProperties {
-  static ToastProperties *instance = nil;
++ (id)sharedProperties {
+  static ToastProperties *sharedProperties = nil;
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    instance = [[self alloc] init];
+    sharedProperties = [[self alloc] init];
   });
-  return instance;
+  return sharedProperties;
 }
 
 -(id)init
