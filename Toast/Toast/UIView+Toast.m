@@ -21,7 +21,8 @@ static const NSString * CSToastViewKey   = @"CSToastViewKey";
 static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 @interface UIView (ToastPrivate)
 
-- (void)hideToast:(UIView *)toast;
+- (void)hideToast:(UIView *)toast
+       properties:(ToastProperties*)properties;
 - (void)toastTimerDidFinish:(NSTimer *)timer;
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
 - (CGPoint)centerPointForProperties:(ToastProperties*)properties toast:(UIView *)toast;
@@ -138,21 +139,32 @@ properties:(ToastProperties*)properties
 #pragma mark - Events
 
 - (void)toastTimerDidFinish:(NSTimer *)timer {
+    ToastProperties* properties = nil;
     NSDictionary* info = timer.userInfo;
-    UIView* toastView = info[CSToastViewKey];
-    ToastProperties* properties = info[CSToastPropertiesKey];
+    if(info)
+    {
+        UIView* toastView = info[CSToastViewKey];
+        properties = info[CSToastPropertiesKey];
+    }
     [self hideToast:toastView properties:properties];
 }
 
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
     NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
+  
+    ToastProperties* properties = nil;
+    NSDictionary* info = timer.userInfo;
+    if(info)
+    {
+        properties = info[CSToastPropertiesKey];
+    }
     [timer invalidate];
     
     void (^callback)(void) = objc_getAssociatedObject(self, &CSToastTapCallbackKey);
     if (callback) {
         callback();
     }
-    [self hideToast:recognizer.view];
+    [self hideToast:recognizer.view properties:properties];
 }
 
 #pragma mark - Toast Activity Methods
