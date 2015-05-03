@@ -139,7 +139,6 @@ properties:(ToastProperties*)properties
 #pragma mark - Events
 
 - (void)toastTimerDidFinish:(NSTimer *)timer {
-    ToastProperties* properties = nil;
     NSDictionary* info = timer.userInfo;
     UIView* toastView = info[CSToastViewKey];
     ToastProperties* properties = info[CSToastPropertiesKey];
