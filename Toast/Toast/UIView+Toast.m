@@ -232,7 +232,7 @@ properties:(ToastProperties*)properties
 #pragma mark - Helpers
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast
 {
-  [self centerPointForPosition:point withToast:toast withProperties:nil];
+  return [self centerPointForPosition:point withToast:toast withProperties:nil];
 }
 - (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast withProperties:(ToastProperties*)properties {
     if(!properties)
@@ -267,7 +267,7 @@ properties:(ToastProperties*)properties
 }
 
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
-  [self viewForMessage:message title:title image:image withProperties:nil];
+  return [self viewForMessage:message title:title image:image withProperties:nil];
 }
 - (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image withProperties:(ToastProperties*)properties {
     // sanity
