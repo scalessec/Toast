@@ -24,10 +24,8 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 - (void)hideToast:(UIView *)toast;
 - (void)toastTimerDidFinish:(NSTimer *)timer;
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
-- (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
-- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast withProperties:(ToastProperties*)properties;
-- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image;
-- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image withProperties:(ToastProperties*)properties;
+- (CGPoint)centerPointForProperties:(ToastProperties*)properties toast:(UIView *)toast;
+- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image properties:(ToastProperties*)properties;
 - (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode;
 
 @end
@@ -42,37 +40,31 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
-    UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self makeToast:message duration:duration position:position title:nil image:nil];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
-    UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self makeToast:message duration:duration position:position title:title image:nil];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
-    UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self makeToast:message duration:duration position:position title:nil image:image];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
-    ToastProperties* properties = [ToastProperties sharedProperties];
-    properties = [properties clone];
+    ToastProperties* properties = [[ToastProperties sharedProperties] clone];
     properties.duration = duration;
     properties.position = position;
   
-    UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self makeToast:message title:title image:image properties:properties];
 }
 
 - (void)makeToast:(NSString *)message properties:(ToastProperties*)properties {
-  UIView *toast = [self viewForMessage:message title:nil image:nil];
-  [self showToast:toast properties:properties];
+    [self makeToast:message title:nil image:nil properties:properties];
 }
 
-- (void)makeToast:(NSString *)message properties:(ToastProperties*)properties title:(NSString *)title image:(UIImage *)image {
-  UIView *toast = [self viewForMessage:message title:title image:image];
+- (void)makeToast:(NSString *)message title:(NSString *)title image:(UIImage *)image properties:(ToastProperties*)properties{
+  UIView *toast = [self viewForMessage:message title:title image:image properties:properties];
   [self showToast:toast properties:properties];
 }
 
@@ -101,7 +93,7 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 {
     if(!properties)
         properties = [ToastProperties sharedProperties];
-    toast.center = [self centerPointForPosition:properties.position withToast:toast];
+    toast.center = [self centerPointForProperties:properties.position toast:toast];
     toast.alpha = 0.0;
     
     if (properties.hideOnTap) {
@@ -177,8 +169,8 @@ properties:(ToastProperties*)properties
     if(!properties)
         properties = [ToastProperties sharedProperties];
     UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, properties.activityWidth, properties.activityHeight)];
-    activityView.center = [self centerPointForPosition:properties.position withToast:activityView];
-    activityView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:properties.opacity];
+    activityView.center = [self centerPointForProperties:properties toast:activityView];
+    activityView.backgroundColor = [properties.backgroundColor colorWithAlphaComponent:properties.opacity];
     activityView.alpha = 0.0;
     activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
     activityView.layer.cornerRadius = properties.cornerRadius;
@@ -230,13 +222,11 @@ properties:(ToastProperties*)properties
 }
 
 #pragma mark - Helpers
-- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast
-{
-  return [self centerPointForPosition:point withToast:toast withProperties:nil];
-}
-- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast withProperties:(ToastProperties*)properties {
+- (CGPoint)centerPointForProperties:(ToastProperties*)properties toast:(UIView *)toast {
     if(!properties)
         properties = [ToastProperties sharedProperties];
+  
+    id point = properties.position;
     if([point isKindOfClass:[NSString class]]) {
         if([point caseInsensitiveCompare:CSToastPositionTop] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + properties.verticalPadding);
@@ -266,10 +256,7 @@ properties:(ToastProperties*)properties
 #pragma clang diagnostic pop
 }
 
-- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image {
-  return [self viewForMessage:message title:title image:image withProperties:nil];
-}
-- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image withProperties:(ToastProperties*)properties {
+- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image properties:(ToastProperties*)properties {
     // sanity
     if((message == nil) && (title == nil) && (image == nil)) return nil;
   

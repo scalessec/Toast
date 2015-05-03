@@ -39,7 +39,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position title:(NSString *)title image:(UIImage *)image;
 
 - (void)makeToast:(NSString *)message properties:(ToastProperties*)properties;
-- (void)makeToast:(NSString *)message properties:(ToastProperties*)properties title:(NSString *)title image:(UIImage *)image;
+- (void)makeToast:(NSString *)message title:(NSString *)title image:(UIImage *)image properties:(ToastProperties*)properties;
 
 // displays toast with an activity spinner
 - (void)makeToastActivity;
