@@ -120,7 +120,7 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
                          NSDictionary* info = @{CSToastViewKey: toast, CSToastPropertiesKey:properties};
-                         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:properties.fadeDuration target:self selector:@selector(toastTimerDidFinish:) userInfo:info repeats:NO];
+                         NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:properties.duration target:self selector:@selector(toastTimerDidFinish:) userInfo:info repeats:NO];
                          // associate the timer with the toast view
                          objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                          objc_setAssociatedObject (toast, &CSToastTapCallbackKey, tapCallback, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
