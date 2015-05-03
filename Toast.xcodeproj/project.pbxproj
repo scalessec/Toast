@@ -20,6 +20,7 @@
 		1536A62516B0E2050021C622 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62416B0E2050021C622 /* Default-568h@2x.png */; };
 		1536A62A16B0F0B20021C622 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62816B0F0B20021C622 /* Icon.png */; };
 		1536A62B16B0F0B20021C622 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62916B0F0B20021C622 /* Icon@2x.png */; };
+		9914DEF71AF65AB800FEAF41 /* ToastProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 9914DEF61AF65AB800FEAF41 /* ToastProperties.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,8 @@
 		1536A62416B0E2050021C622 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		1536A62816B0F0B20021C622 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		1536A62916B0F0B20021C622 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		9914DEF51AF65AB800FEAF41 /* ToastProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastProperties.h; sourceTree = "<group>"; };
+		9914DEF61AF65AB800FEAF41 /* ToastProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastProperties.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 			children = (
 				1536A60416B0E0CF0021C622 /* UIView+Toast.h */,
 				1536A60516B0E0CF0021C622 /* UIView+Toast.m */,
+				9914DEF51AF65AB800FEAF41 /* ToastProperties.h */,
+				9914DEF61AF65AB800FEAF41 /* ToastProperties.m */,
 			);
 			name = Toast;
 			path = Toast/Toast;
@@ -226,6 +231,7 @@
 				1536A60616B0E0CF0021C622 /* UIView+Toast.m in Sources */,
 				1536A60D16B0E0D60021C622 /* ToastTestAppDelegate.m in Sources */,
 				1536A60E16B0E0D60021C622 /* ToastTestViewController.m in Sources */,
+				9914DEF71AF65AB800FEAF41 /* ToastProperties.m in Sources */,
 				151FC12B13D3558E007DC282 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
