@@ -93,7 +93,7 @@ static const NSString * CSToastPropertiesKey   = @"CSToastPropertiesKey";
 {
     if(!properties)
         properties = [ToastProperties sharedProperties];
-    toast.center = [self centerPointForProperties:properties.position toast:toast];
+    toast.center = [self centerPointForProperties:properties toast:toast];
     toast.alpha = 0.0;
     
     if (properties.hideOnTap) {
