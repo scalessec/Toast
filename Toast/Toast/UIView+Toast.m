@@ -187,7 +187,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
     
     UIView *backgroundView;
     if (disableInteraction) {
-        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        backgroundView = [[UIView alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] applicationFrame].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
         backgroundView.alpha = 0.0;
         backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
     }
@@ -215,9 +215,9 @@ NSString * const CSToastPositionBottom          = @"bottom";
     // associate the activity view with self
     if (backgroundView) {
         objc_setAssociatedObject (self, &CSToastActivityViewKey, backgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    
+        
         [backgroundView addSubview:activityView];
-        [self addSubview:backgroundView];
+        [self.window.rootViewController.view addSubview:backgroundView];
     }
     else {
         objc_setAssociatedObject (self, &CSToastActivityViewKey, activityView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
