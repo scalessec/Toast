@@ -173,14 +173,30 @@ NSString * const CSToastPositionBottom          = @"bottom";
 }
 
 - (void)makeToastActivity:(id)position {
+    [self makeToastActivityAndDisableInteraction:NO position:position];
+}
+
+- (void)makeToastActivityAndDisableInteraction:(BOOL)disableInteraction {
+    [self makeToastActivityAndDisableInteraction:disableInteraction position:CSToastActivityDefaultPosition];
+}
+
+- (void)makeToastActivityAndDisableInteraction:(BOOL)disableInteraction position:(id)position {
     // sanity
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
     if (existingActivityView != nil) return;
     
+    UIView *backgroundView;
+    if (disableInteraction) {
+        backgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height)];
+        backgroundView.alpha = 0.0;
+        backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+    }
+    
     UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CSToastActivityWidth, CSToastActivityHeight)];
     activityView.center = [self centerPointForPosition:position withToast:activityView];
     activityView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:CSToastOpacity];
-    activityView.alpha = 0.0;
+    if (!backgroundView)
+        activityView.alpha = 0.0;
     activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
     activityView.layer.cornerRadius = CSToastCornerRadius;
     
@@ -197,15 +213,25 @@ NSString * const CSToastPositionBottom          = @"bottom";
     [activityIndicatorView startAnimating];
     
     // associate the activity view with self
-    objc_setAssociatedObject (self, &CSToastActivityViewKey, activityView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    if (backgroundView) {
+        objc_setAssociatedObject (self, &CSToastActivityViewKey, backgroundView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    [self addSubview:activityView];
+        [backgroundView addSubview:activityView];
+        [self addSubview:backgroundView];
+    }
+    else {
+        objc_setAssociatedObject (self, &CSToastActivityViewKey, activityView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        [self addSubview:activityView];
+    }
     
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         activityView.alpha = 1.0;
+                         if (backgroundView)
+                             backgroundView.alpha = 1.0;
+                         else
+                             activityView.alpha = 1.0;
                      } completion:nil];
 }
 
