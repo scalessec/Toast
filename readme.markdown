@@ -31,6 +31,9 @@ Examples
                 
 // display toast with an activity spinner
 [self.view makeToastActivity];
+
+// display toast with an activity spinner and prevent user interaction on the view
+[self.view makeToastActivityAndDisableInteraction:YES];
 ```
     
 See the demo project for more examples.

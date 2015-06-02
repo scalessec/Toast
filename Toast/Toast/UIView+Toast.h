@@ -45,6 +45,8 @@ extern NSString * const CSToastPositionBottom;
 - (void)makeToastActivity;
 - (void)makeToastActivity:(id)position;
 - (void)hideToastActivity;
+- (void)makeToastActivityAndDisableInteraction:(BOOL)disableInteraction;
+- (void)makeToastActivityAndDisableInteraction:(BOOL)disableInteraction position:(id)position;
 
 // the showToast methods display any view as toast
 - (void)showToast:(UIView *)toast;
