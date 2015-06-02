@@ -190,6 +190,8 @@ NSString * const CSToastPositionBottom          = @"bottom";
         backgroundView = [[UIView alloc] initWithFrame:CGRectMake([[UIScreen mainScreen] applicationFrame].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height)];
         backgroundView.alpha = 0.0;
         backgroundView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.3];
+        
+        [self disableUserInteraction:YES];
     }
     
     UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CSToastActivityWidth, CSToastActivityHeight)];
@@ -223,7 +225,6 @@ NSString * const CSToastPositionBottom          = @"bottom";
         objc_setAssociatedObject (self, &CSToastActivityViewKey, activityView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         [self addSubview:activityView];
     }
-    
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
@@ -248,6 +249,7 @@ NSString * const CSToastPositionBottom          = @"bottom";
                              objc_setAssociatedObject (self, &CSToastActivityViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                          }];
     }
+    [self disableUserInteraction:NO];
 }
 
 #pragma mark - Helpers
@@ -403,6 +405,19 @@ NSString * const CSToastPositionBottom          = @"bottom";
     }
         
     return wrapperView;
+}
+
+-(void)disableUserInteraction:(BOOL)disable{
+    static BOOL _alreadyDisabled = NO;
+    if (disable == YES){
+        // Make sure that user interaction is not disabled from somewhere else
+        _alreadyDisabled = [[UIApplication sharedApplication] isIgnoringInteractionEvents];
+        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+        return;
+    }
+    if (disable == NO && _alreadyDisabled == NO) {
+        [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+    }
 }
 
 @end
