@@ -74,28 +74,32 @@ NSString * const CSToastPositionBottom          = @"bottom";
 
 #pragma mark - Toast Methods
 
-- (void)makeToast:(NSString *)message {
-    [self makeToast:message duration:CSToastDefaultDuration position:nil];
+- (UIView*)makeToast:(NSString *)message {
+    return [self makeToast:message duration:CSToastDefaultDuration position:nil];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
+- (UIView*)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
     UIView *toast = [self viewForMessage:message title:nil image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
+    return toast;
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
+- (UIView*)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title {
     UIView *toast = [self viewForMessage:message title:title image:nil];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
+    return toast;
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
+- (UIView*)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:nil image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
+    return toast;
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
+- (UIView*)makeToast:(NSString *)message duration:(NSTimeInterval)duration  position:(id)position title:(NSString *)title image:(UIImage *)image {
     UIView *toast = [self viewForMessage:message title:title image:image];
-    [self showToast:toast duration:duration position:position];  
+    [self showToast:toast duration:duration position:position];
+    return toast;
 }
 
 - (void)showToast:(UIView *)toast {
