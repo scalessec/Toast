@@ -34,7 +34,7 @@ extern NSString * const CSToastPositionBottom;
 
 @interface UIView (Toast)
 
-// each makeToast method creates a view and displays it as toast
+// each makeToast method creates a view and displays it as toast, and returns the view
 - (UIView*)makeToast:(NSString *)message;
 - (UIView*)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position;
 - (UIView*)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position image:(UIImage *)image;
