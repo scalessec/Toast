@@ -148,14 +148,17 @@ properties:(ToastProperties*)properties
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
     NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
   
-    ToastProperties* properties = nil;
-    NSDictionary* info = timer.userInfo;
-    if(info)
+    if(timer)
     {
-        properties = info[CSToastPropertiesKey];
+        ToastProperties* properties = nil;
+        NSDictionary* info = timer.userInfo;
+        if(info)
+        {
+            properties = info[CSToastPropertiesKey];
+        }
+        [timer invalidate];
     }
-    [timer invalidate];
-    
+  
     void (^callback)(void) = objc_getAssociatedObject(self, &CSToastTapCallbackKey);
     if (callback) {
         callback();
