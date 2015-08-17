@@ -148,9 +148,9 @@ properties:(ToastProperties*)properties
 - (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
     NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
   
+    ToastProperties* properties = nil;
     if(timer)
     {
-        ToastProperties* properties = nil;
         NSDictionary* info = timer.userInfo;
         if(info)
         {

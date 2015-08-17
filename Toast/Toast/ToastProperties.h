@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 extern NSString * const CSToastPositionTop;
 extern NSString * const CSToastPositionCenter;
