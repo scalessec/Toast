@@ -20,7 +20,33 @@
 		1536A62516B0E2050021C622 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62416B0E2050021C622 /* Default-568h@2x.png */; };
 		1536A62A16B0F0B20021C622 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62816B0F0B20021C622 /* Icon.png */; };
 		1536A62B16B0F0B20021C622 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62916B0F0B20021C622 /* Icon@2x.png */; };
+		9914DEF71AF65AB800FEAF41 /* ToastProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 9914DEF61AF65AB800FEAF41 /* ToastProperties.m */; };
+		99719DAF1B825A8D00D997AE /* libToastLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 99719DA41B825A8D00D997AE /* libToastLib.a */; };
+		99719DBB1B825A9700D997AE /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60516B0E0CF0021C622 /* UIView+Toast.m */; };
+		99719DBC1B825A9700D997AE /* ToastProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 9914DEF61AF65AB800FEAF41 /* ToastProperties.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		99719DB01B825A8D00D997AE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 151FC0C913D34B79007DC282 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 99719DA31B825A8D00D997AE;
+			remoteInfo = ToastLib;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		99719DA21B825A8D00D997AE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		151FC0D213D34B7A007DC282 /* Toast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toast.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +68,10 @@
 		1536A62416B0E2050021C622 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		1536A62816B0F0B20021C622 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
 		1536A62916B0F0B20021C622 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		9914DEF51AF65AB800FEAF41 /* ToastProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastProperties.h; sourceTree = "<group>"; };
+		9914DEF61AF65AB800FEAF41 /* ToastProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastProperties.m; sourceTree = "<group>"; };
+		99719DA41B825A8D00D997AE /* libToastLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libToastLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		99719DAE1B825A8D00D997AE /* ToastLibTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToastLibTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +83,21 @@
 				151FC0D713D34B7A007DC282 /* UIKit.framework in Frameworks */,
 				151FC0D913D34B7A007DC282 /* Foundation.framework in Frameworks */,
 				151FC0DB13D34B7A007DC282 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99719DA11B825A8D00D997AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99719DAB1B825A8D00D997AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99719DAF1B825A8D00D997AE /* libToastLib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				151FC0D213D34B7A007DC282 /* Toast.app */,
+				99719DA41B825A8D00D997AE /* libToastLib.a */,
+				99719DAE1B825A8D00D997AE /* ToastLibTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -115,6 +162,8 @@
 			children = (
 				1536A60416B0E0CF0021C622 /* UIView+Toast.h */,
 				1536A60516B0E0CF0021C622 /* UIView+Toast.m */,
+				9914DEF51AF65AB800FEAF41 /* ToastProperties.h */,
+				9914DEF61AF65AB800FEAF41 /* ToastProperties.m */,
 			);
 			name = Toast;
 			path = Toast/Toast;
@@ -173,6 +222,41 @@
 			productReference = 151FC0D213D34B7A007DC282 /* Toast.app */;
 			productType = "com.apple.product-type.application";
 		};
+		99719DA31B825A8D00D997AE /* ToastLib */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99719DB91B825A8D00D997AE /* Build configuration list for PBXNativeTarget "ToastLib" */;
+			buildPhases = (
+				99719DA01B825A8D00D997AE /* Sources */,
+				99719DA11B825A8D00D997AE /* Frameworks */,
+				99719DA21B825A8D00D997AE /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ToastLib;
+			productName = ToastLib;
+			productReference = 99719DA41B825A8D00D997AE /* libToastLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		99719DAD1B825A8D00D997AE /* ToastLibTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99719DBA1B825A8D00D997AE /* Build configuration list for PBXNativeTarget "ToastLibTests" */;
+			buildPhases = (
+				99719DAA1B825A8D00D997AE /* Sources */,
+				99719DAB1B825A8D00D997AE /* Frameworks */,
+				99719DAC1B825A8D00D997AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				99719DB11B825A8D00D997AE /* PBXTargetDependency */,
+			);
+			name = ToastLibTests;
+			productName = ToastLibTests;
+			productReference = 99719DAE1B825A8D00D997AE /* ToastLibTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -183,6 +267,12 @@
 				TargetAttributes = {
 					151FC0D113D34B7A007DC282 = {
 						DevelopmentTeam = 3NC359BQ4D;
+					};
+					99719DA31B825A8D00D997AE = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					99719DAD1B825A8D00D997AE = {
+						CreatedOnToolsVersion = 6.4;
 					};
 				};
 			};
@@ -199,6 +289,8 @@
 			projectRoot = "";
 			targets = (
 				151FC0D113D34B7A007DC282 /* Toast */,
+				99719DA31B825A8D00D997AE /* ToastLib */,
+				99719DAD1B825A8D00D997AE /* ToastLibTests */,
 			);
 		};
 /* End PBXProject section */
@@ -216,6 +308,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99719DAC1B825A8D00D997AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -226,11 +325,36 @@
 				1536A60616B0E0CF0021C622 /* UIView+Toast.m in Sources */,
 				1536A60D16B0E0D60021C622 /* ToastTestAppDelegate.m in Sources */,
 				1536A60E16B0E0D60021C622 /* ToastTestViewController.m in Sources */,
+				9914DEF71AF65AB800FEAF41 /* ToastProperties.m in Sources */,
 				151FC12B13D3558E007DC282 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		99719DA01B825A8D00D997AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99719DBB1B825A9700D997AE /* UIView+Toast.m in Sources */,
+				99719DBC1B825A9700D997AE /* ToastProperties.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		99719DAA1B825A8D00D997AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		99719DB11B825A8D00D997AE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 99719DA31B825A8D00D997AE /* ToastLib */;
+			targetProxy = 99719DB01B825A8D00D997AE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		151FC0F113D34B7A007DC282 /* Debug */ = {
@@ -320,6 +444,162 @@
 			};
 			name = Release;
 		};
+		99719DB51B825A8D00D997AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		99719DB61B825A8D00D997AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		99719DB71B825A8D00D997AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = ToastLibTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		99719DB81B825A8D00D997AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = ToastLibTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -340,6 +620,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		99719DB91B825A8D00D997AE /* Build configuration list for PBXNativeTarget "ToastLib" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99719DB51B825A8D00D997AE /* Debug */,
+				99719DB61B825A8D00D997AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		99719DBA1B825A8D00D997AE /* Build configuration list for PBXNativeTarget "ToastLibTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99719DB71B825A8D00D997AE /* Debug */,
+				99719DB81B825A8D00D997AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

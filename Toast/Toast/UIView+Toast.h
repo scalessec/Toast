@@ -27,10 +27,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ***************************************************************************/
 
 #import <UIKit/UIKit.h>
-
-extern NSString * const CSToastPositionTop;
-extern NSString * const CSToastPositionCenter;
-extern NSString * const CSToastPositionBottom;
+#import "ToastProperties.h"
 
 @interface UIView (Toast)
 
@@ -41,15 +38,23 @@ extern NSString * const CSToastPositionBottom;
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position title:(NSString *)title;
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)interval position:(id)position title:(NSString *)title image:(UIImage *)image;
 
+- (void)makeToast:(NSString *)message properties:(ToastProperties*)properties;
+- (void)makeToast:(NSString *)message title:(NSString *)title image:(UIImage *)image properties:(ToastProperties*)properties;
+
 // displays toast with an activity spinner
 - (void)makeToastActivity;
-- (void)makeToastActivity:(id)position;
+- (void)makeToastActivity:(ToastProperties*)properties;
 - (void)hideToastActivity;
+- (void)hideToastActivity:(ToastProperties*)properties;
 
 // the showToast methods display any view as toast
 - (void)showToast:(UIView *)toast;
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)interval position:(id)point;
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)interval position:(id)point
+      tapCallback:(void(^)(void))tapCallback;
+
+- (void)showToast:(UIView *)toast properties:(ToastProperties*)properties;
+- (void)showToast:(UIView *)toast properties:(ToastProperties*)properties
       tapCallback:(void(^)(void))tapCallback;
 
 @end
