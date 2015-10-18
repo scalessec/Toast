@@ -31,6 +31,16 @@ extern const NSString * CSToastPositionBottom;
 
 @class CSToastStyle;
 
+/**
+ Toast is an Objective-C category that adds toast notifications to the UIView
+ object class. It is intended to be lightweight and easy to use. Most toast 
+ notifications can be triggered with a single line of code.
+ 
+ The `makeToast:` methods create a new view and then display it as toast.
+ 
+ The `showToast:` methods display any view as toast.
+ 
+ */
 @interface UIView (Toast)
 
 /**
@@ -93,7 +103,8 @@ extern const NSString * CSToastPositionBottom;
 /**
  Creates and presents a new toast view with a message, title, and image. Duration,
  position, and style can be set explicitly. The completion block executes when the
- toast view completes. didTap will be YES if the toast view was dismissed from a tap.
+ toast view completes. `didTap` will be `YES` if the toast view was dismissed from 
+ a tap.
  
  @param message The message to be displayed
  @param duration The notification duration
@@ -115,7 +126,7 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Creates a new toast view with any combination of message, title, and image.
- The look and feel is configured via the style. Unlike the makeToast: methods, 
+ The look and feel is configured via the style. Unlike the `makeToast:` methods,
  this method does not present the toast view automatically. One of the showToast:
  methods must be used to present the resulting view.
  
@@ -134,10 +145,10 @@ extern const NSString * CSToastPositionBottom;
  Creates and displays a new toast activity indicator view at a provided position. 
  
  @warning Only one toast activity indicator view can be presented per superview. Subsequent
- calls to makeToastActivity: will be ignored until hideToastActivity is called.
+ calls to `makeToastActivity:` will be ignored until hideToastActivity is called.
  
- @warning makeToastActivity: works independently of the showToast: methods. Toast activity
- views can be presented and dismissed while toast views are being displayed. makeToastActivity:
+ @warning `makeToastActivity:` works independently of the showToast: methods. Toast activity
+ views can be presented and dismissed while toast views are being displayed. `makeToastActivity:`
  has no affect on the queueing behavior of the showToast: methods.
  
  @param message The message to be displayed
@@ -174,8 +185,8 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Displays any view as toast at a provided position and duration. The completion block 
- executes when the toast view completes. didTap will be YES if the toast view was dismissed 
- from a tap.
+ executes when the toast view completes. `didTap` will be `YES` if the toast view was 
+ dismissed from a tap.
  
  @param toast The view to be displayed as toast
  @param duration The notification duration
@@ -191,6 +202,15 @@ extern const NSString * CSToastPositionBottom;
 
 @end
 
+/**
+ `CSToastStyle` instances defines the look and feel for toast views created via the 
+ `makeToast:` methods as well for toast views created with 
+ `toastViewForMessage:title:image:style:`.
+ 
+ @warning `CSToastStyle` offers relatively simple styling options for the default
+ toast view. If you require something with more complex UI, it probably makes sense to
+ create your own custom UIView subclass and present with the `showToast:` methods.
+ */
 @interface CSToastStyle : NSObject
 
 @property (strong, nonatomic) UIColor *backgroundColor;
