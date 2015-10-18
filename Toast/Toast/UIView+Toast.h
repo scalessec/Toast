@@ -48,7 +48,7 @@ extern const NSString * CSToastPositionBottom;
  @param message The message to be displayed
  @param duration The notification duration
  @param position The toast position. Can be one of the predefined CSToastPosition
-        constants or a CGPoint wrapped in an NSValue object.
+                 constants or a CGPoint wrapped in an NSValue object.
  @param style The style. The shared style will be used when nil
  */
 - (void)makeToast:(NSString *)message
@@ -62,6 +62,8 @@ extern const NSString * CSToastPositionBottom;
  
  @param message The message to be displayed
  @param duration The notification duration
+ @param position The toast position. Can be one of the predefined CSToastPosition
+                 constants or a CGPoint wrapped in an NSValue object.
  @param image The image
  @param style The style. The shared style will be used when nil
  */
@@ -77,6 +79,8 @@ extern const NSString * CSToastPositionBottom;
  
  @param message The message to be displayed
  @param duration The notification duration
+ @param position The toast position. Can be one of the predefined CSToastPosition
+                 constants or a CGPoint wrapped in an NSValue object.
  @param title The title
  @param style The style. The shared style will be used when nil
  */
@@ -93,11 +97,13 @@ extern const NSString * CSToastPositionBottom;
  
  @param message The message to be displayed
  @param duration The notification duration
+ @param position The toast position. Can be one of the predefined CSToastPosition
+                 constants or a CGPoint wrapped in an NSValue object.
  @param title The title
  @param image The image
  @param style The style. The shared style will be used when nil
  @param completion The completion block, executed after the toast view disappears.
-        didTap will be YES if the toast view was dismissed from a tap.
+                   didTap will be YES if the toast view was dismissed from a tap.
  */
 - (void)makeToast:(NSString *)message
          duration:(NSTimeInterval)interval
