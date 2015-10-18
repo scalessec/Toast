@@ -31,10 +31,16 @@ NSString * CSToastPositionTop       = @"CSToastPositionTop";
 NSString * CSToastPositionCenter    = @"CSToastPositionCenter";
 NSString * CSToastPositionBottom    = @"CSToastPositionBottom";
 
+// Keys for values associated with the toast view
 static const NSString * CSToastTimerKey             = @"CSToastTimerKey";
-static const NSString * CSToastActivityViewKey      = @"CSToastActivityViewKey";
+static const NSString * CSToastPositionKey          = @"CSToastPositionKey";
 static const NSString * CSToastCompletionKey        = @"CSToastCompletionKey";
+
+// Keys for values associated with self
+static const NSString * CSToastActiveToastViewKey   = @"CSToastActiveToastViewKey";
+static const NSString * CSToastActivityViewKey      = @"CSToastActivityViewKey";
 static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
+
 static const NSTimeInterval CSToastDefaultDuration  = 3.0;
 static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
@@ -86,6 +92,18 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position completion:(void(^)(BOOL didTap))completion {
+    // sanity
+    if (toast == nil) return;
+    
+    if ([CSToastManager enqueueToastViews]) {
+        if ([self.cs_toastQueue count] > 1) {
+            [self.cs_toastQueue addObject:toast];
+            return;
+        } else {
+            objc_setAssociatedObject(self, &CSToastActiveToastViewKey, toast, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+    }
+    
     toast.center = [self cs_centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
@@ -121,6 +139,11 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
                          toast.alpha = 0.0;
                      } completion:^(BOOL finished) {
                          [toast removeFromSuperview];
+                         
+                         UIView *nextToast = [[self cs_toastQueue] firstObject];
+                         if (nextToast != nil) {
+                             
+                         }
                      }];
 }
 
@@ -130,6 +153,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     NSMutableArray *cs_toastQueue = objc_getAssociatedObject(self, &CSToastQueueKey);
     if (cs_toastQueue == nil) {
         cs_toastQueue = [[NSMutableArray alloc] init];
+        objc_setAssociatedObject(self, &CSToastQueueKey, cs_toastQueue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     }
     return cs_toastQueue;
 }
