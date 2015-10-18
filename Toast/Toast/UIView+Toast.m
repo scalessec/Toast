@@ -395,6 +395,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 @property (strong, nonatomic) CSToastStyle *sharedStyle;
 @property (assign, nonatomic) BOOL allowTapToDismiss;
+@property (assign, nonatomic) BOOL enqueueToastViews;
 
 @end
 
@@ -421,7 +422,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     return self;
 }
 
-#pragma mark - Shared Style Methods
+#pragma mark - Singleton Methods
 
 + (void)setSharedStyle:(CSToastStyle *)sharedStyle {
     [[self sharedManager] setSharedStyle:sharedStyle];
@@ -431,14 +432,20 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     return [[self sharedManager] sharedStyle];
 }
 
-#pragma mark - Tap to Dismiss Methods
-
 + (void)setAllowTapToDismiss:(BOOL)allowTapToDismiss {
     [[self sharedManager] setAllowTapToDismiss:allowTapToDismiss];
 }
 
 + (BOOL)allowTapToDismiss {
     return [[self sharedManager] allowTapToDismiss];
+}
+
++ (void)setEnqueueToastViews:(BOOL)enqueueToastViews {
+    [[self sharedManager] setEnqueueToastViews:enqueueToastViews];
+}
+
++ (BOOL)enqueueToastViews {
+    return [[self sharedManager] enqueueToastViews];
 }
 
 @end
