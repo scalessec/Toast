@@ -27,24 +27,25 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
-NSString * CSToastPositionTop       = @"top";
-NSString * CSToastPositionCenter    = @"center";
-NSString * CSToastPositionBottom    = @"bottom";
+NSString * CSToastPositionTop       = @"CSToastPositionTop";
+NSString * CSToastPositionCenter    = @"CSToastPositionCenter";
+NSString * CSToastPositionBottom    = @"CSToastPositionBottom";
 
 static const NSString * CSToastTimerKey             = @"CSToastTimerKey";
 static const NSString * CSToastActivityViewKey      = @"CSToastActivityViewKey";
-static const NSString * CSToastTapCallbackKey       = @"CSToastTapCallbackKey";
+static const NSString * CSToastCompletionKey        = @"CSToastCompletionKey";
+static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 static const NSTimeInterval CSToastDefaultDuration  = 3.0;
 static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 @interface UIView (ToastPrivate)
 
-- (void)hideToast:(UIView *)toast;
-- (void)toastTimerDidFinish:(NSTimer *)timer;
-- (void)handleToastTapped:(UITapGestureRecognizer *)recognizer;
-- (CGPoint)centerPointForPosition:(id)position withToast:(UIView *)toast;
-- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style;
-- (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode;
+- (void)cs_hideToast:(UIView *)toast;
+- (void)cs_toastTimerDidFinish:(NSTimer *)timer;
+- (void)cs_handleToastTapped:(UITapGestureRecognizer *)recognizer;
+- (CGPoint)cs_centerPointForPosition:(id)position withToast:(UIView *)toast;
+- (CGSize)cs_sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode;
+- (NSMutableArray *)cs_toastQueue;
 
 @end
 
@@ -57,22 +58,22 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
-    UIView *toast = [self viewForMessage:message title:nil image:nil style:style];
+    UIView *toast = [self toastViewForMessage:message title:nil image:nil style:style];
     [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image style:(CSToastStyle *)style {
-    UIView *toast = [self viewForMessage:message title:nil image:image style:style];
+    UIView *toast = [self toastViewForMessage:message title:nil image:image style:style];
     [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title style:(CSToastStyle *)style {
-    UIView *toast = [self viewForMessage:message title:title image:nil style:style];
+    UIView *toast = [self toastViewForMessage:message title:title image:nil style:style];
     [self showToast:toast duration:duration position:position];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
-    UIView *toast = [self viewForMessage:message title:title image:image style:style];
+    UIView *toast = [self toastViewForMessage:message title:title image:image style:style];
     [self showToast:toast duration:duration position:position completion:completion];
 }
 
@@ -85,11 +86,11 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position completion:(void(^)(BOOL didTap))completion {
-    toast.center = [self centerPointForPosition:position withToast:toast];
+    toast.center = [self cs_centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
     if ([CSToastManager allowTapToDismiss]) {
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(handleToastTapped:)];
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(cs_handleToastTapped:)];
         [toast addGestureRecognizer:recognizer];
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
@@ -103,16 +104,16 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
                      animations:^{
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
-                         NSTimer *timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(toastTimerDidFinish:) userInfo:toast repeats:NO];
+                         NSTimer *timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(cs_toastTimerDidFinish:) userInfo:toast repeats:NO];
                          [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
                          
-                         objc_setAssociatedObject (toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                         objc_setAssociatedObject (toast, &CSToastTapCallbackKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         objc_setAssociatedObject(toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
 }
 
 
-- (void)hideToast:(UIView *)toast {
+- (void)cs_hideToast:(UIView *)toast {
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
@@ -123,21 +124,31 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
                      }];
 }
 
-#pragma mark - Events
+#pragma mark - Queue
 
-- (void)toastTimerDidFinish:(NSTimer *)timer {
-    [self hideToast:(UIView *)timer.userInfo];
+- (NSMutableArray *)cs_toastQueue {
+    NSMutableArray *cs_toastQueue = objc_getAssociatedObject(self, &CSToastQueueKey);
+    if (cs_toastQueue == nil) {
+        cs_toastQueue = [[NSMutableArray alloc] init];
+    }
+    return cs_toastQueue;
 }
 
-- (void)handleToastTapped:(UITapGestureRecognizer *)recognizer {
+#pragma mark - Events
+
+- (void)cs_toastTimerDidFinish:(NSTimer *)timer {
+    [self cs_hideToast:(UIView *)timer.userInfo];
+}
+
+- (void)cs_handleToastTapped:(UITapGestureRecognizer *)recognizer {
     NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
     [timer invalidate];
     
-    void (^completion)(BOOL didTap) = objc_getAssociatedObject(self, &CSToastTapCallbackKey);
+    void (^completion)(BOOL didTap) = objc_getAssociatedObject(self, &CSToastCompletionKey);
     if (completion) {
         completion(YES);
     }
-    [self hideToast:recognizer.view];
+    [self cs_hideToast:recognizer.view];
 }
 
 #pragma mark - Toast Activity Methods
@@ -147,18 +158,20 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
     if (existingActivityView != nil) return;
     
-    UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, [[CSToastManager sharedStyle] activitySize].width, [[CSToastManager sharedStyle] activitySize].height)];
-    activityView.center = [self centerPointForPosition:position withToast:activityView];
-    activityView.backgroundColor = [[CSToastManager sharedStyle] backgroundColor];
+    CSToastStyle *style = [CSToastManager sharedStyle];
+    
+    UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, style.activitySize.width, style.activitySize.height)];
+    activityView.center = [self cs_centerPointForPosition:position withToast:activityView];
+    activityView.backgroundColor = style.backgroundColor;
     activityView.alpha = 0.0;
     activityView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
-    activityView.layer.cornerRadius = [[CSToastManager sharedStyle] cornerRadius];
+    activityView.layer.cornerRadius = style.cornerRadius;
     
-    if ([[CSToastManager sharedStyle] displayShadow]) {
+    if (style.displayShadow) {
         activityView.layer.shadowColor = [UIColor blackColor].CGColor;
-        activityView.layer.shadowOpacity = [[CSToastManager sharedStyle] shadowOpacity];
-        activityView.layer.shadowRadius = [[CSToastManager sharedStyle] shadowRadius];
-        activityView.layer.shadowOffset = [[CSToastManager sharedStyle] shadowOffset];
+        activityView.layer.shadowOpacity = style.shadowOpacity;
+        activityView.layer.shadowRadius = style.shadowRadius;
+        activityView.layer.shadowOffset = style.shadowOffset;
     }
     
     UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
@@ -196,10 +209,12 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 #pragma mark - Helpers
 
-- (CGPoint)centerPointForPosition:(id)point withToast:(UIView *)toast {
+- (CGPoint)cs_centerPointForPosition:(id)point withToast:(UIView *)toast {
+    CSToastStyle *style = [CSToastManager sharedStyle];
+    
     if([point isKindOfClass:[NSString class]]) {
         if([point caseInsensitiveCompare:CSToastPositionTop] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + [[CSToastManager sharedStyle] verticalPadding]);
+            return CGPointMake(self.bounds.size.width/2, (toast.frame.size.height / 2) + style.verticalPadding);
         } else if([point caseInsensitiveCompare:CSToastPositionCenter] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2, self.bounds.size.height / 2);
         }
@@ -208,10 +223,10 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     }
     
     // default to bottom
-    return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - [[CSToastManager sharedStyle] verticalPadding]);
+    return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - style.verticalPadding);
 }
 
-- (CGSize)sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode {
+- (CGSize)cs_sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode {
     if ([string respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineBreakMode = lineBreakMode;
@@ -226,7 +241,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 #pragma clang diagnostic pop
 }
 
-- (UIView *)viewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style {
+- (UIView *)toastViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style {
     // sanity
     if((message == nil) && (title == nil) && (image == nil)) return nil;
 
@@ -245,7 +260,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     wrapperView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
     wrapperView.layer.cornerRadius = style.cornerRadius;
     
-    if ([[CSToastManager sharedStyle] displayShadow]) {
+    if (style.displayShadow) {
         wrapperView.layer.shadowColor = [UIColor blackColor].CGColor;
         wrapperView.layer.shadowOpacity = style.shadowOpacity;
         wrapperView.layer.shadowRadius = style.shadowRadius;
@@ -284,7 +299,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
         
         // size the title label according to the length of the text
         CGSize maxSizeTitle = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageWidth, self.bounds.size.height * style.maxHeightPercentage);
-        CGSize expectedSizeTitle = [self sizeForString:title font:titleLabel.font constrainedToSize:maxSizeTitle lineBreakMode:titleLabel.lineBreakMode];
+        CGSize expectedSizeTitle = [self cs_sizeForString:title font:titleLabel.font constrainedToSize:maxSizeTitle lineBreakMode:titleLabel.lineBreakMode];
         titleLabel.frame = CGRectMake(0.0, 0.0, expectedSizeTitle.width, expectedSizeTitle.height);
     }
     
@@ -300,7 +315,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
         
         // size the message label according to the length of the text
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageWidth, self.bounds.size.height * style.maxHeightPercentage);
-        CGSize expectedSizeMessage = [self sizeForString:message font:messageLabel.font constrainedToSize:maxSizeMessage lineBreakMode:messageLabel.lineBreakMode];
+        CGSize expectedSizeMessage = [self cs_sizeForString:message font:messageLabel.font constrainedToSize:maxSizeMessage lineBreakMode:messageLabel.lineBreakMode];
         messageLabel.frame = CGRectMake(0.0, 0.0, expectedSizeMessage.width, expectedSizeMessage.height);
     }
     
@@ -418,6 +433,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     if (self) {
         self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
         self.allowTapToDismiss = YES;
+        self.enqueueToastViews = YES;
     }
     return self;
 }
