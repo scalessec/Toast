@@ -113,6 +113,11 @@ extern const NSString * CSToastPositionBottom;
             style:(CSToastStyle *)style
        completion:(void(^)(BOOL didTap))completion;
 
+- (UIView *)toastViewForMessage:(NSString *)message
+                          title:(NSString *)title
+                          image:(UIImage *)image
+                          style:(CSToastStyle *)style;
+
 - (void)makeToastActivity:(id)position;
 
 - (void)hideToastActivity;
