@@ -36,7 +36,8 @@
             [self.view makeToast:@"This is a piece of toast with a title."
                         duration:3.0
                         position:CSToastPositionTop
-                           title:@"Toast Title"];
+                           title:@"Toast Title"
+                           style:nil];
             
             break;
         }
@@ -46,7 +47,8 @@
             [self.view makeToast:@"This is a piece of toast with an image."
                         duration:3.0
                         position:CSToastPositionCenter
-                           image:[UIImage imageNamed:@"toast.png"]];
+                           image:[UIImage imageNamed:@"toast.png"]
+                           style:nil];
             break;
         }
             
@@ -56,7 +58,9 @@
                         duration:3.0
                         position:CSToastPositionBottom
                            title:@"Toast Title"
-                           image:[UIImage imageNamed:@"toast.png"]];
+                           image:[UIImage imageNamed:@"toast.png"]
+                           style:nil
+                      completion:nil];
             break;
         }
             
@@ -87,7 +91,7 @@
         case 6: {
             if (!_isShowingActivity) {
                 [_activityButton setTitle:@"Hide Activity" forState:UIControlStateNormal];
-                [self.view makeToastActivity];
+                [self.view makeToastActivity:CSToastPositionCenter];
             } else {
                 [_activityButton setTitle:@"Show Activity" forState:UIControlStateNormal];
                 [self.view hideToastActivity];
