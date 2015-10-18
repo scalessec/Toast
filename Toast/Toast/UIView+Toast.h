@@ -154,8 +154,15 @@ extern const NSString * CSToastPositionBottom;
 @interface CSToastManager : NSObject
 
 + (void)setSharedStyle:(CSToastStyle *)sharedStyle;
+
 + (CSToastStyle *)sharedStyle;
+
 + (void)setAllowTapToDismiss:(BOOL)allowTapToDismiss;
+
 + (BOOL)allowTapToDismiss;
+
++ (void)setEnqueueToastViews:(BOOL)enqueueToastViews;
+
++ (BOOL)enqueueToastViews;
 
 @end
