@@ -142,7 +142,7 @@ extern const NSString * CSToastPositionBottom;
                           style:(CSToastStyle *)style;
 
 /**
- Creates and displays a new toast activity indicator view at an explicit position.
+ Creates and displays a new toast activity indicator view at a specified position.
  
  @warning Only one toast activity indicator view can be presented per superview. Subsequent
  calls to `makeToastActivity:` will be ignored until hideToastActivity is called.
@@ -312,7 +312,7 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  @warning Creates a new instance of `CSToastStyle` with all the
- defaults values set. 
+ defaults values set.
  */
 - (instancetype)initWithDefaultStyle NS_DESIGNATED_INITIALIZER;
 
@@ -325,8 +325,8 @@ extern const NSString * CSToastPositionBottom;
 @end
 
 /**
- `CSToastManager` provides general configuration options for toast notifications
- and is backed by a singleton instance.
+ `CSToastManager` provides general configuration options for all toast
+ notifications and is backed by a singleton instance.
  */
 @interface CSToastManager : NSObject
 
@@ -356,14 +356,14 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  
- @param enqueueToastViews
+ @param queueToastViews
  */
-+ (void)setEnqueueToastViews:(BOOL)enqueueToastViews;
++ (void)setqueueToastViews:(BOOL)queueToastViews;
 
 /**
  
  @return
  */
-+ (BOOL)enqueueToastViews;
++ (BOOL)queueToastViews;
 
 @end
