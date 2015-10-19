@@ -13,15 +13,30 @@
 @property (strong, nonatomic) IBOutlet UIButton *activityButton;
 @property (assign, nonatomic) BOOL isShowingActivity;
 
--(IBAction)buttonPressed:(id)sender;
+- (IBAction)buttonPressed:(UIButton *)button;
 
 @end
 
 @implementation ToastTestViewController
 
-#pragma mark - IBActions
+#pragma mark - View Lifecycle
 
--(IBAction)buttonPressed:(UIButton *)button {
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [CSToastManager setAllowTapToDismiss:YES];
+    [CSToastManager setQueueToastViews:YES];
+}
+
+#pragma mark - Rotation
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
+}
+
+#pragma mark - Events
+
+- (IBAction)buttonPressed:(UIButton *)button {
     
     switch (button.tag) {
             
@@ -60,7 +75,9 @@
                            title:@"Toast Title"
                            image:[UIImage imageNamed:@"toast.png"]
                            style:nil
-                      completion:nil];
+                      completion:^(BOOL didTap) {
+                          NSLog(@"completion block, from tap: %@", didTap ? @"YES" : @"NO");
+                      }];
             break;
         }
             
@@ -104,19 +121,6 @@
             
     }
     
-}
-
-#pragma mark - Rotation
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    return YES;
-}
-
-#pragma mark - Lifecycle
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    self.activityButton = nil;
 }
 
 @end

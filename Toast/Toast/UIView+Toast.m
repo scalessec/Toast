@@ -57,6 +57,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
  */
 - (void)cs_showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position;
 - (void)cs_hideToast:(UIView *)toast;
+- (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap;
 - (void)cs_toastTimerDidFinish:(NSTimer *)timer;
 - (void)cs_handleToastTapped:(UITapGestureRecognizer *)recognizer;
 - (CGPoint)cs_centerPointForPosition:(id)position withToast:(UIView *)toast;
@@ -110,6 +111,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     // store the completion block on the toast view
     objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    NSLog(@"check active toast view");
     if ([CSToastManager queueToastViews] && objc_getAssociatedObject(self, &CSToastActiveToastViewKey) != nil) {
         // we're about to queue this toast view so also store the duration and position
         objc_setAssociatedObject(toast, &CSToastDurationKey, @(duration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -136,6 +138,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
         toast.exclusiveTouch = YES;
     }
     
+    // set the active toast
+    NSLog(@"set active toast view");
     objc_setAssociatedObject(self, &CSToastActiveToastViewKey, toast, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     [self addSubview:toast];
@@ -148,10 +152,15 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
                      } completion:^(BOOL finished) {
                          NSTimer *timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(cs_toastTimerDidFinish:) userInfo:toast repeats:NO];
                          [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+                         objc_setAssociatedObject(toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
 }
 
 - (void)cs_hideToast:(UIView *)toast {
+    [self cs_hideToast:toast fromTap:NO];
+}
+    
+- (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap {
     [UIView animateWithDuration:CSToastFadeDuration
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
@@ -160,7 +169,15 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
                      } completion:^(BOOL finished) {
                          [toast removeFromSuperview];
                          
+                         // clear the active toast
+                         NSLog(@"clear active toast view");
                          objc_setAssociatedObject(self, &CSToastActiveToastViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                         
+                         // execute the completion block, if necessary
+                         void (^completion)(BOOL didTap) = objc_getAssociatedObject(toast, &CSToastCompletionKey);
+                         if (completion) {
+                             completion(fromTap);
+                         }
                          
                          if ([self.cs_toastQueue count] > 0) {
                              // dequeue
@@ -323,14 +340,11 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 }
 
 - (void)cs_handleToastTapped:(UITapGestureRecognizer *)recognizer {
-    NSTimer *timer = (NSTimer *)objc_getAssociatedObject(self, &CSToastTimerKey);
+    UIView *toast = recognizer.view;
+    NSTimer *timer = (NSTimer *)objc_getAssociatedObject(toast, &CSToastTimerKey);
     [timer invalidate];
     
-    void (^completion)(BOOL didTap) = objc_getAssociatedObject(self, &CSToastCompletionKey);
-    if (completion) {
-        completion(YES);
-    }
-    [self cs_hideToast:recognizer.view];
+    [self cs_hideToast:toast fromTap:YES];
 }
 
 #pragma mark - Activity Methods
@@ -510,8 +524,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     return [[self sharedManager] allowTapToDismiss];
 }
 
-+ (void)setqueueToastViews:(BOOL)queueToastViews {
-    [[self sharedManager] setqueueToastViews:queueToastViews];
++ (void)setQueueToastViews:(BOOL)queueToastViews {
+    [[self sharedManager] setQueueToastViews:queueToastViews];
 }
 
 + (BOOL)queueToastViews {

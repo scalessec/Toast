@@ -358,7 +358,7 @@ extern const NSString * CSToastPositionBottom;
  
  @param queueToastViews
  */
-+ (void)setqueueToastViews:(BOOL)queueToastViews;
++ (void)setQueueToastViews:(BOOL)queueToastViews;
 
 /**
  
