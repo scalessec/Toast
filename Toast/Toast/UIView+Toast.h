@@ -290,27 +290,36 @@ extern const NSString * CSToastPositionBottom;
 @property (assign, nonatomic) CGFloat shadowOpacity;
 
 /**
- 
+ The shadow radius. Default is 6.0.
  */
 @property (assign, nonatomic) CGFloat shadowRadius;
 
 /**
- 
+ The shadow offset. The default is `CGSizeMake(4.0, 4.0)(4.0, 4.0)`.
  */
 @property (assign, nonatomic) CGSize shadowOffset;
 
 /**
- 
+ The image size. The default is `CGSizeMake(80.0, 80.0)`.
  */
 @property (assign, nonatomic) CGSize imageSize;
 
 /**
- 
+ The size of the toast activity view when `makeToastActivity:` is called.
+ Default is `CGSizeMake(100.0, 100.0)`.
  */
 @property (assign, nonatomic) CGSize activitySize;
 
+/**
+ @warning Creates a new instance of `CSToastStyle` with all the
+ defaults values set. 
+ */
 - (instancetype)initWithDefaultStyle NS_DESIGNATED_INITIALIZER;
 
+/**
+ @warning Only the designated initializer should be used to create
+ and instance of `CSToastStyle`.
+ */
 - (instancetype)init NS_UNAVAILABLE;
 
 @end
