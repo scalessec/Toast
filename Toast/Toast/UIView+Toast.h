@@ -33,7 +33,7 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Toast is an Objective-C category that adds toast notifications to the UIView
- object class. It is intended to be lightweight and easy to use. Most toast 
+ object class. It is intended to be simple and lightweight. Most toast
  notifications can be triggered with a single line of code.
  
  The `makeToast:` methods create a new view and then display it as toast.
@@ -142,7 +142,7 @@ extern const NSString * CSToastPositionBottom;
                           style:(CSToastStyle *)style;
 
 /**
- Creates and displays a new toast activity indicator view at a provided position. 
+ Creates and displays a new toast activity indicator view at an explicit position.
  
  @warning Only one toast activity indicator view can be presented per superview. Subsequent
  calls to `makeToastActivity:` will be ignored until hideToastActivity is called.
@@ -151,10 +151,8 @@ extern const NSString * CSToastPositionBottom;
  views can be presented and dismissed while toast views are being displayed. `makeToastActivity:`
  has no affect on the queueing behavior of the showToast: methods.
  
- @param message The message to be displayed
- @param title The title
- @param image The image
- @param style The style. The shared style will be used when nil
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+                 constants or a CGPoint wrapped in an NSValue object.
  @return The newly created toast view
  */
 - (void)makeToastActivity:(id)position;
@@ -203,33 +201,112 @@ extern const NSString * CSToastPositionBottom;
 @end
 
 /**
- `CSToastStyle` instances defines the look and feel for toast views created via the 
- `makeToast:` methods as well for toast views created with 
+ `CSToastStyle` instances define the look and feel for toast views created via the 
+ `makeToast:` methods as well for toast views created directly with
  `toastViewForMessage:title:image:style:`.
  
  @warning `CSToastStyle` offers relatively simple styling options for the default
- toast view. If you require something with more complex UI, it probably makes sense to
- create your own custom UIView subclass and present with the `showToast:` methods.
+ toast view. If you require a toast view with more complex UI, it probably makes more
+ sense to create your own custom UIView subclass and present it with the `showToast:`
+ methods.
  */
 @interface CSToastStyle : NSObject
 
+/**
+ The background color. Default is `[UIColor blackColor]` at 80% opacity.
+ */
 @property (strong, nonatomic) UIColor *backgroundColor;
+
+/**
+ A percentage value from 0.0 to 1.0, representing the maximum width of the toast
+ view relative to it's superview. Default is 0.8 (80% of the superview's width).
+ */
 @property (assign, nonatomic) CGFloat maxWidthPercentage;
+
+/**
+ A percentage value from 0.0 to 1.0, representing the maximum height of the toast
+ view relative to it's superview. Default is 0.8 (80% of the superview's height).
+ */
 @property (assign, nonatomic) CGFloat maxHeightPercentage;
+
+/**
+ The spacing from the horizontal edge of the toast view to the content. When an image
+ is present, this is also used as the padding between the image and the text.
+ Default is 10.0.
+ */
 @property (assign, nonatomic) CGFloat horizontalPadding;
+
+/**
+ The spacing from the vertical edge of the toast view to the content. When a title
+ is present, this is also used as the padding between the title and the message.
+ Default is 10.0.
+ */
 @property (assign, nonatomic) CGFloat verticalPadding;
+
+/**
+ The corner radius. Default is 10.0.
+ */
 @property (assign, nonatomic) CGFloat cornerRadius;
+
+/**
+ The title font. Default is `[UIFont boldSystemFontOfSize:16.0]`.
+ */
 @property (strong, nonatomic) UIFont *titleFont;
+
+/**
+ The message font. Default is `[UIFont systemFontOfSize:16.0]`.
+ */
 @property (strong, nonatomic) UIFont *messageFont;
+
+/**
+ The title text alignment. Default is `NSTextAlignmentLeft`.
+ */
 @property (assign, nonatomic) NSTextAlignment titleAlignment;
+
+/**
+ The message text alignment. Default is `NSTextAlignmentLeft`.
+ */
 @property (assign, nonatomic) NSTextAlignment messageAlignment;
+
+/**
+ The maximum number of lines for the title. The default is 0 (no limit).
+ */
 @property (assign, nonatomic) CGFloat titleNumberOfLines;
+
+/**
+ The maximum number of lines for the message. The default is 0 (no limit).
+ */
 @property (assign, nonatomic) CGFloat messageNumberOfLines;
+
+/**
+ Enable or disable a shadow on the toast view. Default is `NO`.
+ */
 @property (assign, nonatomic) BOOL displayShadow;
+
+/**
+ A value from 0.0 to 1.0, representing the opacity of the shadow.
+ Default is 0.8 (80% opacity).
+ */
 @property (assign, nonatomic) CGFloat shadowOpacity;
+
+/**
+ 
+ */
 @property (assign, nonatomic) CGFloat shadowRadius;
+
+/**
+ 
+ */
 @property (assign, nonatomic) CGSize shadowOffset;
+
+/**
+ 
+ */
 @property (assign, nonatomic) CGSize imageSize;
+
+/**
+ 
+ */
 @property (assign, nonatomic) CGSize activitySize;
 
 - (instancetype)initWithDefaultStyle NS_DESIGNATED_INITIALIZER;
@@ -238,18 +315,46 @@ extern const NSString * CSToastPositionBottom;
 
 @end
 
+/**
+ `CSToastManager` provides general configuration options for toast notifications
+ and is backed by a singleton instance.
+ */
 @interface CSToastManager : NSObject
 
+/**
+ 
+ @param sharedStyle
+ */
 + (void)setSharedStyle:(CSToastStyle *)sharedStyle;
 
+/**
+ 
+ @return
+ */
 + (CSToastStyle *)sharedStyle;
 
+/**
+ 
+ @param allowTapToDismiss
+ */
 + (void)setAllowTapToDismiss:(BOOL)allowTapToDismiss;
 
+/**
+ 
+ @return
+ */
 + (BOOL)allowTapToDismiss;
 
+/**
+ 
+ @param enqueueToastViews
+ */
 + (void)setEnqueueToastViews:(BOOL)enqueueToastViews;
 
+/**
+ 
+ @return
+ */
 + (BOOL)enqueueToastViews;
 
 @end
