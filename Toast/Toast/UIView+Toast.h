@@ -33,8 +33,8 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Toast is an Objective-C category that adds toast notifications to the UIView
- object class. It is intended to be simple and lightweight. Most toast
- notifications can be triggered with a single line of code.
+ object class. It is intended to be simple, lightweight, and easy to use. Most
+ toast notifications can be triggered with a single line of code.
  
  The `makeToast:` methods create a new view and then display it as toast.
  
@@ -295,7 +295,7 @@ extern const NSString * CSToastPositionBottom;
 @property (assign, nonatomic) CGFloat shadowRadius;
 
 /**
- The shadow offset. The default is `CGSizeMake(4.0, 4.0)(4.0, 4.0)`.
+ The shadow offset. The default is `CGSizeMake(4.0, 4.0)`.
  */
 @property (assign, nonatomic) CGSize shadowOffset;
 
@@ -311,14 +311,13 @@ extern const NSString * CSToastPositionBottom;
 @property (assign, nonatomic) CGSize activitySize;
 
 /**
- @warning Creates a new instance of `CSToastStyle` with all the
- defaults values set.
+ Creates a new instance of `CSToastStyle` with all the default values set.
  */
 - (instancetype)initWithDefaultStyle NS_DESIGNATED_INITIALIZER;
 
 /**
  @warning Only the designated initializer should be used to create
- and instance of `CSToastStyle`.
+ an instance of `CSToastStyle`.
  */
 - (instancetype)init NS_UNAVAILABLE;
 
@@ -326,43 +325,56 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  `CSToastManager` provides general configuration options for all toast
- notifications and is backed by a singleton instance.
+ notifications. Backed by a singleton instance.
  */
 @interface CSToastManager : NSObject
 
 /**
+ Sets the shared style on the singleton. The shared style is used whenever
+ a `makeToast:` method (or `toastViewForMessage:title:image:style:`) is called
+ with with a nil style. By default, this is set to `CSToastStyle`'s default
+ style.
  
  @param sharedStyle
  */
 + (void)setSharedStyle:(CSToastStyle *)sharedStyle;
 
 /**
+ Gets the shared style from the singlton. By default, this is
+ `CSToastStyle`'s default style.
  
- @return
+ @return the shared style
  */
 + (CSToastStyle *)sharedStyle;
 
 /**
+ Enables or disables tap to dismiss on toast views. Default is `YES`.
  
  @param allowTapToDismiss
  */
 + (void)setAllowTapToDismiss:(BOOL)allowTapToDismiss;
 
 /**
+ Returns `YES` if tap to dismiss is enabled.
  
- @return
+ @return BOOL
  */
 + (BOOL)allowTapToDismiss;
 
 /**
+ Enables or disables a queueing behavior for toast views. When `YES`,
+ toast views will appear one after the other. When `NO`, multiple Toast
+ views will appear at the same time (potentially overlapping depending
+ on their positions).
  
  @param queueToastViews
  */
 + (void)setQueueToastViews:(BOOL)queueToastViews;
 
 /**
+ Returns `YES` if queueing is enabled.
  
- @return
+ @return BOOL
  */
 + (BOOL)queueToastViews;
 
