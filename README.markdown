@@ -25,13 +25,13 @@ Basic Examples
                title:@"Toast Title"
                style:nil];
             
-// toast with explicity duration and position
+// toast with a specific duration and position
 [self.view makeToast:@"This is a piece of toast with an image." 
             duration:3.0
             position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
                style:nil];
 
-// toast with title, message, image, and completion block
+// toast with all possible options
 [self.view makeToast:@"This is a piece of toast with a title & image"
             duration:3.0
             position:CSToastPositionBottom
