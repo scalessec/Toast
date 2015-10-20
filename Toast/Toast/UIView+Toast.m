@@ -51,9 +51,9 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
  These private methods are being prefixed with "cs_" to reduce the likelihood of non-obvious 
  naming conflicts with other UIView methods.
  
- @discussion Should the public API also use the cs_ prefix? Technically it should, but I think 
- it leads to less legible code. The current public method names seem unlikely to cause conflicts 
- so I think we should favor the cleaner API for now.
+ @discussion Should the public API also use the cs_ prefix? Technically it should, but it
+ results in code that is less legible. The current public method names seem unlikely to cause
+ conflicts so I think we should favor the cleaner API for now.
  */
 - (void)cs_showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position;
 - (void)cs_hideToast:(UIView *)toast;
@@ -111,9 +111,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     // store the completion block on the toast view
     objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    NSLog(@"check active toast view");
     if ([CSToastManager queueToastViews] && objc_getAssociatedObject(self, &CSToastActiveToastViewKey) != nil) {
-        // we're about to queue this toast view so also store the duration and position
+        // we're about to queue this toast view so we need to store the duration and position as well
         objc_setAssociatedObject(toast, &CSToastDurationKey, @(duration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         objc_setAssociatedObject(toast, &CSToastPositionKey, position, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
@@ -132,14 +131,13 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     toast.alpha = 0.0;
     
     if ([CSToastManager allowTapToDismiss]) {
-        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:toast action:@selector(cs_handleToastTapped:)];
+        UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cs_handleToastTapped:)];
         [toast addGestureRecognizer:recognizer];
         toast.userInteractionEnabled = YES;
         toast.exclusiveTouch = YES;
     }
     
     // set the active toast
-    NSLog(@"set active toast view");
     objc_setAssociatedObject(self, &CSToastActiveToastViewKey, toast, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
     [self addSubview:toast];
@@ -170,7 +168,6 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
                          [toast removeFromSuperview];
                          
                          // clear the active toast
-                         NSLog(@"clear active toast view");
                          objc_setAssociatedObject(self, &CSToastActiveToastViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                          
                          // execute the completion block, if necessary
@@ -196,9 +193,9 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 - (UIView *)toastViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style {
     // sanity
-    if((message == nil) && (title == nil) && (image == nil)) return nil;
+    if(message == nil && title == nil && image == nil) return nil;
     
-    // ensure we have a style
+    // default to the shared style
     if (style == nil) {
         style = [CSToastManager sharedStyle];
     }
