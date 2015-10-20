@@ -218,6 +218,16 @@ extern const NSString * CSToastPositionBottom;
 @property (strong, nonatomic) UIColor *backgroundColor;
 
 /**
+ The title color. Default is `[UIColor whiteColor]`.
+ */
+@property (strong, nonatomic) UIColor *titleColor;
+
+/**
+ The message color. Default is `[UIColor whiteColor]`.
+ */
+@property (strong, nonatomic) UIColor *messageColor;
+
+/**
  A percentage value from 0.0 to 1.0, representing the maximum width of the toast
  view relative to it's superview. Default is 0.8 (80% of the superview's width).
  */
