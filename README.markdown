@@ -12,7 +12,7 @@ Screenshots
 ![Toast Screenshots](http://i.imgur.com/oM28l.png)
 
 
-Examples
+Basic Examples
 ---------
 ```objc
 // basic usage
@@ -25,15 +25,57 @@ Examples
                title:@"Toast Title"
                style:nil];
             
-// toast with an image
+// toast with explicity duration and position
 [self.view makeToast:@"This is a piece of toast with an image." 
             duration:3.0
             position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
-               image:[UIImage imageNamed:@"toast.png"]
                style:nil];
+
+// toast with title, message, image, and completion block
+[self.view makeToast:@"This is a piece of toast with a title & image"
+            duration:3.0
+            position:CSToastPositionBottom
+               title:@"Toast Title"
+               image:[UIImage imageNamed:@"toast.png"]
+               style:nil
+          completion:^(BOOL didTap) {
+              NSLog(@"completion block, from tap: %@", didTap ? @"YES" : @"NO");
+          }];
                 
 // display toast with an activity spinner
-[self.view makeToastActivity];
+[self.view makeToastActivity:CSToastPositionCenter];
+
+// display any view as toast
+[self.view showToast:myView];
+```
+
+But wait, there's more!
+---------
+```objc
+// create a new style
+CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+
+// this is just one of many style options
+style.messageColor = [UIColor orangeColor];
+
+// present the toast with the new style
+[self.view makeToast:@"This is a piece of toast."
+            duration:3.0
+            position:CSToastPositionBottom
+               style:style];
+
+// or perhaps you want to use this style for all toasts going forward?
+[CSToastManager setSharedStyle:style];
+
+// now all toast views will now have orange text by default
+[self.view makeToast:@"This text will be orange now."];
+
+// toggle "tap to dismiss" functionality
+[CSToastManager setAllowTapToDismiss:YES];
+
+// toggle queueing behavior
+[CSToastManager setQueueToastViews:YES];
+            
 ```
     
 See the demo project for more examples.
@@ -45,7 +87,7 @@ Install with [CocoaPods](http://cocoapods.org) by adding the following to your P
 
 ``` ruby
 platform :ios, '7.0'
-pod 'Toast', '~> 2.4'
+pod 'Toast', '~> 3.0'
 ```
 
 or add manually: 
@@ -56,7 +98,7 @@ or add manually:
 
 MIT License
 -----------
-    Copyright (c) 2014 Charles Scalesse.
+    Copyright (c) 2011-2015 Charles Scalesse.
 
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the
