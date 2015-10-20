@@ -3,7 +3,7 @@ Toast for iOS
 
 [![Build Status](https://travis-ci.org/scalessec/Toast.svg?branch=2.4)](https://travis-ci.org/scalessec/Toast)
 
-Toast is an Objective-C category that adds toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use. Most
+Toast is an Objective-C category that adds toast notifications to the `UIView` object class. It is intended to be simple, lightweight, and easy to use. Most
  toast notifications can be triggered with a single line of code.
 
 
@@ -65,10 +65,8 @@ style.messageColor = [UIColor orangeColor];
                style:style];
 
 // or perhaps you want to use this style for all toasts going forward?
+// just set the shared style and there's no need to provide the style again
 [CSToastManager setSharedStyle:style];
-
-// now all toast views will now have orange text by default
-[self.view makeToast:@"This text will be orange now."];
 
 // toggle "tap to dismiss" functionality
 [CSToastManager setAllowTapToDismiss:YES];
