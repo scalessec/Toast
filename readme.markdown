@@ -3,7 +3,8 @@ Toast for iOS
 
 [![Build Status](https://travis-ci.org/scalessec/Toast.svg?branch=2.4)](https://travis-ci.org/scalessec/Toast)
 
-Toast is an Objective-C category that adds Android-style toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use.
+Toast is an Objective-C category that adds toast notifications to the UIView object class. It is intended to be simple, lightweight, and easy to use. Most
+ toast notifications can be triggered with a single line of code.
 
 
 Screenshots
@@ -21,13 +22,15 @@ Examples
 [self.view makeToast:@"This is a piece of toast with a title." 
             duration:3.0
             position:CSToastPositionTop
-               title:@"Toast Title"];
+               title:@"Toast Title"
+               style:nil];
             
 // toast with an image
 [self.view makeToast:@"This is a piece of toast with an image." 
             duration:3.0
             position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
-               image:[UIImage imageNamed:@"toast.png"]];
+               image:[UIImage imageNamed:@"toast.png"]
+               style:nil];
                 
 // display toast with an activity spinner
 [self.view makeToastActivity];
