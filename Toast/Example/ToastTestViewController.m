@@ -24,8 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [CSToastManager setAllowTapToDismiss:YES];
-    [CSToastManager setQueueToastViews:YES];
+    //[CSToastManager setAllowTapToDismiss:YES];
+    //[CSToastManager setQueueToastViews:YES];
 }
 
 #pragma mark - Rotation
@@ -52,7 +52,9 @@
                         duration:3.0
                         position:CSToastPositionTop
                            title:@"Toast Title"
-                           style:nil];
+                           image:nil
+                           style:nil
+                      completion:nil];
             
             break;
         }
@@ -62,8 +64,10 @@
             [self.view makeToast:@"This is a piece of toast with an image."
                         duration:3.0
                         position:CSToastPositionCenter
+                           title:nil
                            image:[UIImage imageNamed:@"toast.png"]
-                           style:nil];
+                           style:nil
+                      completion:nil];
             break;
         }
             
