@@ -42,7 +42,6 @@ static const NSString * CSToastActiveToastViewKey   = @"CSToastActiveToastViewKe
 static const NSString * CSToastActivityViewKey      = @"CSToastActivityViewKey";
 static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
-static const NSTimeInterval CSToastDefaultDuration  = 3.0;
 static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 @interface UIView (ToastPrivate)
@@ -71,7 +70,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 #pragma mark - Make Toast Methods
 
 - (void)makeToast:(NSString *)message {
-    [self makeToast:message duration:CSToastDefaultDuration position:CSToastPositionBottom style:nil];
+    [self makeToast:message duration:[CSToastManager defaultDuration] position:[CSToastManager defaultPosition] style:nil];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
@@ -87,7 +86,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 #pragma mark - Show Toast Methods
 
 - (void)showToast:(UIView *)toast {
-    [self showToast:toast duration:CSToastDefaultDuration position:CSToastPositionBottom];
+    [self showToast:toast duration:[CSToastManager defaultDuration] position:[CSToastManager defaultPosition]];
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position {
@@ -469,6 +468,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 @property (strong, nonatomic) CSToastStyle *sharedStyle;
 @property (assign, nonatomic, getter=isTapToDismissEnabled) BOOL tapToDismissEnabled;
 @property (assign, nonatomic, getter=isQueueEnabled) BOOL queueEnabled;
+@property (assign, nonatomic) NSTimeInterval defaultDuration;
+@property (strong, nonatomic) id defaultPosition;
 
 @end
 
@@ -492,6 +493,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
         self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
         self.tapToDismissEnabled = YES;
         self.queueEnabled = YES;
+        self.defaultDuration = 3.0;
+        self.defaultPosition = CSToastPositionBottom;
     }
     return self;
 }
@@ -520,6 +523,24 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 + (BOOL)isQueueEnabled {
     return [[self sharedManager] isQueueEnabled];
+}
+
++ (void)setDefaultDuration:(NSTimeInterval)duration {
+    [[self sharedManager] setDefaultDuration:duration];
+}
+
++ (NSTimeInterval)defaultDuration {
+    return [[self sharedManager] defaultDuration];
+}
+
++ (void)setDefaultPosition:(id)position {
+    if ([position isKindOfClass:[NSString class]] || [position isKindOfClass:[NSValue class]]) {
+        [[self sharedManager] setDefaultPosition:position];
+    }
+}
+
++ (id)defaultPosition {
+    return [[self sharedManager] defaultPosition];
 }
 
 @end

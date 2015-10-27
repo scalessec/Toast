@@ -56,9 +56,9 @@ extern const NSString * CSToastPositionBottom;
  style can be set explicitly.
  
  @param message The message to be displayed
- @param duration The notification duration
+ @param duration The toast duration
  @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
+                 constants or a `CGPoint` wrapped in an `NSValue` object.
  @param style The style. The shared style will be used when nil
  */
 - (void)makeToast:(NSString *)message
@@ -73,14 +73,14 @@ extern const NSString * CSToastPositionBottom;
  a tap.
  
  @param message The message to be displayed
- @param duration The notification duration
+ @param duration The toast duration
  @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
+                 constants or a `CGPoint` wrapped in an `NSValue` object.
  @param title The title
  @param image The image
  @param style The style. The shared style will be used when nil
  @param completion The completion block, executed after the toast view disappears.
-                   didTap will be YES if the toast view was dismissed from a tap.
+                   didTap will be `YES` if the toast view was dismissed from a tap.
  */
 - (void)makeToast:(NSString *)message
          duration:(NSTimeInterval)interval
@@ -120,7 +120,7 @@ extern const NSString * CSToastPositionBottom;
  has no affect on the queueing behavior of the showToast: methods.
  
  @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
+                 constants or a `CGPoint` wrapped in an `NSValue` object.
  @return The newly created toast view
  */
 - (void)makeToastActivity:(id)position;
@@ -141,9 +141,9 @@ extern const NSString * CSToastPositionBottom;
  Displays any view as toast at a provided position and duration.
  
  @param toast The view to be displayed as toast
- @param duration The notification duration
+ @param duration The toast duration
  @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
+                 constants or a `CGPoint` wrapped in an `NSValue` object.
  */
 - (void)showToast:(UIView *)toast
          duration:(NSTimeInterval)duration
@@ -157,9 +157,9 @@ extern const NSString * CSToastPositionBottom;
  @param toast The view to be displayed as toast
  @param duration The notification duration
  @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
+                 constants or a `CGPoint` wrapped in an `NSValue` object.
  @param completion The completion block, executed after the toast view disappears.
-                   didTap will be YES if the toast view was dismissed from a tap.
+                   didTap will be `YES` if the toast view was dismissed from a tap.
  */
 - (void)showToast:(UIView *)toast
          duration:(NSTimeInterval)duration
@@ -334,6 +334,7 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Returns `YES` if tap to dismiss is enabled, otherwise `NO`.
+ Default is `YES`.
  
  @return BOOL
  */
@@ -352,9 +353,44 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Returns `YES` if the queue is enabled, otherwise `NO`.
+ Default is `YES`.
  
  @return BOOL
  */
 + (BOOL)isQueueEnabled;
+
+/**
+ Sets the default duration. Used for the `makeToast:` and
+ `showToast:` methods that don't require an explicit duration.
+ Default is 3.0.
+ 
+ @param duration The toast duration
+ */
++ (void)setDefaultDuration:(NSTimeInterval)duration;
+
+/**
+ Returns the default duration. Default is 3.0.
+ 
+ @return duration The toast duration
+*/
++ (NSTimeInterval)defaultDuration;
+
+/**
+ Sets the default position. Used for the `makeToast:` and
+ `showToast:` methods that don't require an explicit position.
+ Default is `CSToastPositionBottom`.
+ 
+ @param position The default center point. Can be one of the predefined
+ CSToastPosition constants or a `CGPoint` wrapped in an `NSValue` object.
+ */
++ (void)setDefaultPosition:(id)position;
+
+/**
+ Returns the default toast position. Default is `CSToastPositionBottom`.
+ 
+ @return position The default center point. Will be one of the predefined
+ CSToastPosition constants or a `CGPoint` wrapped in an `NSValue` object.
+ */
++ (id)defaultPosition;
 
 @end
