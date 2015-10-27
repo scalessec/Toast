@@ -67,11 +67,10 @@ style.messageColor = [UIColor orangeColor];
 [CSToastManager setSharedStyle:style];
 
 // toggle "tap to dismiss" functionality
-[CSToastManager setAllowTapToDismiss:YES];
+[CSToastManager setTapToDismissEnabled:YES];
 
 // toggle queueing behavior
-[CSToastManager setQueueToastViews:YES];
-            
+CSToastManager setQueueEnabled:YES];
 ```
     
 See the demo project for more examples.
