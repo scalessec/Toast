@@ -79,16 +79,6 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     [self showToast:toast duration:duration position:position];
 }
 
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position image:(UIImage *)image style:(CSToastStyle *)style {
-    UIView *toast = [self toastViewForMessage:message title:nil image:image style:style];
-    [self showToast:toast duration:duration position:position];
-}
-
-- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title style:(CSToastStyle *)style {
-    UIView *toast = [self toastViewForMessage:message title:title image:nil style:style];
-    [self showToast:toast duration:duration position:position];
-}
-
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
     UIView *toast = [self toastViewForMessage:message title:title image:image style:style];
     [self showToast:toast duration:duration position:position completion:completion];
@@ -111,7 +101,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     // store the completion block on the toast view
     objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
-    if ([CSToastManager queueToastViews] && objc_getAssociatedObject(self, &CSToastActiveToastViewKey) != nil) {
+    if ([CSToastManager isQueueEnabled] && objc_getAssociatedObject(self, &CSToastActiveToastViewKey) != nil) {
         // we're about to queue this toast view so we need to store the duration and position as well
         objc_setAssociatedObject(toast, &CSToastDurationKey, @(duration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         objc_setAssociatedObject(toast, &CSToastPositionKey, position, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -130,7 +120,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     toast.center = [self cs_centerPointForPosition:position withToast:toast];
     toast.alpha = 0.0;
     
-    if ([CSToastManager allowTapToDismiss]) {
+    if ([CSToastManager isTapToDismissEnabled]) {
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cs_handleToastTapped:)];
         [toast addGestureRecognizer:recognizer];
         toast.userInteractionEnabled = YES;
@@ -476,8 +466,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 @interface CSToastManager ()
 
 @property (strong, nonatomic) CSToastStyle *sharedStyle;
-@property (assign, nonatomic) BOOL allowTapToDismiss;
-@property (assign, nonatomic) BOOL queueToastViews;
+@property (assign, nonatomic, getter=isTapToDismissEnabled) BOOL tapToDismissEnabled;
+@property (assign, nonatomic, getter=isQueueEnabled) BOOL queueEnabled;
 
 @end
 
@@ -499,8 +489,8 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     self = [super init];
     if (self) {
         self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
-        self.allowTapToDismiss = YES;
-        self.queueToastViews = YES;
+        self.tapToDismissEnabled = YES;
+        self.queueEnabled = YES;
     }
     return self;
 }
@@ -515,20 +505,20 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     return [[self sharedManager] sharedStyle];
 }
 
-+ (void)setAllowTapToDismiss:(BOOL)allowTapToDismiss {
-    [[self sharedManager] setAllowTapToDismiss:allowTapToDismiss];
++ (void)setTapToDismissEnabled:(BOOL)tapToDismissEnabled {
+    [[self sharedManager] setTapToDismissEnabled:tapToDismissEnabled];
 }
 
-+ (BOOL)allowTapToDismiss {
-    return [[self sharedManager] allowTapToDismiss];
++ (BOOL)isTapToDismissEnabled {
+    return [[self sharedManager] isTapToDismissEnabled];
 }
 
-+ (void)setQueueToastViews:(BOOL)queueToastViews {
-    [[self sharedManager] setQueueToastViews:queueToastViews];
++ (void)setQueueEnabled:(BOOL)queueEnabled {
+    [[self sharedManager] setQueueEnabled:queueEnabled];
 }
 
-+ (BOOL)queueToastViews {
-    return [[self sharedManager] queueToastViews];
++ (BOOL)isQueueEnabled {
+    return [[self sharedManager] isQueueEnabled];
 }
 
 @end

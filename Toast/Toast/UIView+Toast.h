@@ -67,40 +67,6 @@ extern const NSString * CSToastPositionBottom;
             style:(CSToastStyle *)style;
 
 /**
- Creates and presents a new toast view with a message and image. Duration, position,
- and style can be set explicitly.
- 
- @param message The message to be displayed
- @param duration The notification duration
- @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
- @param image The image
- @param style The style. The shared style will be used when nil
- */
-- (void)makeToast:(NSString *)message
-         duration:(NSTimeInterval)interval
-         position:(id)position
-            image:(UIImage *)image
-            style:(CSToastStyle *)style;
-
-/**
- Creates and presents a new toast view with a message and title. Duration, position,
- and style can be set explicitly.
- 
- @param message The message to be displayed
- @param duration The notification duration
- @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a CGPoint wrapped in an NSValue object.
- @param title The title
- @param style The style. The shared style will be used when nil
- */
-- (void)makeToast:(NSString *)message
-         duration:(NSTimeInterval)interval
-         position:(id)position
-            title:(NSString *)title
-            style:(CSToastStyle *)style;
-
-/**
  Creates and presents a new toast view with a message, title, and image. Duration,
  position, and style can be set explicitly. The completion block executes when the
  toast view completes. `didTap` will be `YES` if the toast view was dismissed from 
@@ -362,30 +328,31 @@ extern const NSString * CSToastPositionBottom;
  
  @param allowTapToDismiss
  */
-+ (void)setAllowTapToDismiss:(BOOL)allowTapToDismiss;
++ (void)setTapToDismissEnabled:(BOOL)tapToDismissEnabled;
 
 /**
- Returns `YES` if tap to dismiss is enabled.
+ Returns `YES` if tap to dismiss is enabled, otherwise `NO`.
  
  @return BOOL
  */
-+ (BOOL)allowTapToDismiss;
++ (BOOL)isTapToDismissEnabled;
 
 /**
- Enables or disables a queueing behavior for toast views. When `YES`,
+ Enables or disables queueing behavior for toast views. When `YES`,
  toast views will appear one after the other. When `NO`, multiple Toast
  views will appear at the same time (potentially overlapping depending
- on their positions).
+ on their positions). This has no affect on the toast activity view,
+ which operates independently of normal toast views. Default is `YES`.
  
- @param queueToastViews
+ @param queueEnabled
  */
-+ (void)setQueueToastViews:(BOOL)queueToastViews;
++ (void)setQueueEnabled:(BOOL)queueEnabled;
 
 /**
- Returns `YES` if queueing is enabled.
+ Returns `YES` if the queue is enabled, otherwise `NO`.
  
  @return BOOL
  */
-+ (BOOL)queueToastViews;
++ (BOOL)isQueueEnabled;
 
 @end
