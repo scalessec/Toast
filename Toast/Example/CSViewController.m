@@ -148,7 +148,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         } else if (indexPath.row == 3) {
             cell.textLabel.text = @"Make toast with an image";
         } else if (indexPath.row == 4) {
-            cell.textLabel.text = @"Make toast with a title and image";
+            cell.textLabel.text = @"Make toast with a title, image, and completion block";
         } else if (indexPath.row == 5) {
             cell.textLabel.text = @"Make toast with a custom style";
         } else if (indexPath.row == 6) {
@@ -171,7 +171,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     if (indexPath.row == 0) {
         
         // Make toast
-        [self.navigationController.view makeToast:@"This is a piece of toast."];
+        [self.navigationController.view makeToast:@"This is a piece of toast"];
         
     } else if (indexPath.row == 1) {
         
@@ -184,7 +184,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     } else if (indexPath.row == 2) {
         
         // Make toast with a title
-        [self.navigationController.view makeToast:@"This is a piece of toast with a title."
+        [self.navigationController.view makeToast:@"This is a piece of toast with a title"
                                          duration:2.0
                                          position:CSToastPositionTop
                                             title:@"Toast Title"
@@ -195,7 +195,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     } else if (indexPath.row == 3) {
         
         // Make toast with an image
-        [self.navigationController.view makeToast:@"This is a piece of toast with an image."
+        [self.navigationController.view makeToast:@"This is a piece of toast with an image"
                                          duration:2.0
                                          position:CSToastPositionCenter
                                             title:nil
@@ -205,14 +205,20 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         
     } else if (indexPath.row == 4) {
         
-        // Make toast with an image & title
-        [self.navigationController.view makeToast:@"This is a piece of toast with a title & image"
+        // Make toast with an image, title, and completion block
+        [self.navigationController.view makeToast:@"This is a piece of toast with a title, image, and completion block"
                                          duration:2.0
                                          position:CSToastPositionBottom
                                             title:@"Toast Title"
                                             image:[UIImage imageNamed:@"toast.png"]
                                             style:nil
-                                       completion:nil];
+                                       completion:^(BOOL didTap) {
+                                           if (didTap) {
+                                               NSLog(@"completion from tap");
+                                           } else {
+                                               NSLog(@"completion without tap");
+                                           }
+                                       }];
         
     } else if (indexPath.row == 5) {
         
