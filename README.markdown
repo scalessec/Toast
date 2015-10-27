@@ -82,7 +82,7 @@ Install with [CocoaPods](http://cocoapods.org) by adding the following to your P
 
 ``` ruby
 platform :ios, '7.0'
-pod 'Toast', '~> 2.4'
+pod 'Toast', '~> 3.0'
 ```
 
 or add manually: 
