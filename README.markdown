@@ -70,7 +70,7 @@ style.messageColor = [UIColor orangeColor];
 [CSToastManager setTapToDismissEnabled:YES];
 
 // toggle queueing behavior
-CSToastManager setQueueEnabled:YES];
+[CSToastManager setQueueEnabled:YES];
 ```
     
 See the demo project for more examples.
