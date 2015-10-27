@@ -7,6 +7,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ToastTestViewController : UIViewController
+@interface ToastTestViewController : UITableViewController
 
 @end

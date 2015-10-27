@@ -247,6 +247,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
         messageLabel = [[UILabel alloc] init];
         messageLabel.numberOfLines = style.messageNumberOfLines;
         messageLabel.font = style.messageFont;
+        messageLabel.textAlignment = style.messageAlignment;
         messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
         messageLabel.textColor = style.messageColor;
         messageLabel.backgroundColor = [UIColor clearColor];
