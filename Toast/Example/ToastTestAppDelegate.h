@@ -12,6 +12,5 @@
 @interface ToastTestAppDelegate : NSObject <UIApplicationDelegate>
 
 @property (nonatomic, retain) UIWindow *window;
-@property (nonatomic, retain) ToastTestViewController *viewController;
 
 @end

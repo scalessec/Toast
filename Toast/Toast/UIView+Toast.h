@@ -96,6 +96,8 @@ extern const NSString * CSToastPositionBottom;
  this method does not present the toast view automatically. One of the showToast:
  methods must be used to present the resulting view.
  
+ @warning if message, title, and image are all nil, this method will return nil.
+ 
  @param message The message to be displayed
  @param title The title
  @param image The image
