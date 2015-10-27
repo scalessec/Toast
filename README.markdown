@@ -9,7 +9,7 @@ Toast is an Objective-C category that adds toast notifications to the `UIView` o
 
 Screenshots
 ---------
-![Toast Screenshots](http://i.imgur.com/oM28l.png)
+![Toast Screenshots](toast_screenshot.jpg)
 
 
 Basic Examples
