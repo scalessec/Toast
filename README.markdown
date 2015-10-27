@@ -32,7 +32,11 @@ Basic Examples
                image:[UIImage imageNamed:@"toast.png"]
                style:nil
           completion:^(BOOL didTap) {
-              NSLog(@"completion block, from tap: %@", didTap ? @"YES" : @"NO");
+              if (didTap) {
+                  NSLog(@"completion from tap");
+              } else {
+                  NSLog(@"completion without tap");
+              }
           }];
                 
 // display toast with an activity spinner
