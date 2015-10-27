@@ -18,23 +18,16 @@ Basic Examples
 // basic usage
 [self.view makeToast:@"This is a piece of toast."];
 
-// toast with duration, title, and position
-[self.view makeToast:@"This is a piece of toast with a title." 
+// toast with a specific duration and position
+[self.view makeToast:@"This is a piece of toast with a specific duration and position." 
             duration:3.0
             position:CSToastPositionTop
-               title:@"Toast Title"
-               style:nil];
-            
-// toast with a specific duration and position
-[self.view makeToast:@"This is a piece of toast with an image." 
-            duration:3.0
-            position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
                style:nil];
 
 // toast with all possible options
 [self.view makeToast:@"This is a piece of toast with a title & image"
             duration:3.0
-            position:CSToastPositionBottom
+            position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]
                title:@"Toast Title"
                image:[UIImage imageNamed:@"toast.png"]
                style:nil
