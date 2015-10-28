@@ -151,18 +151,6 @@ extern const NSString * CSToastPositionBottom;
 - (void)showToast:(UIView *)toast;
 
 /**
- Displays any view as toast at a provided position and duration.
- 
- @param toast The view to be displayed as toast
- @param duration The toast duration
- @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a `CGPoint` wrapped in an `NSValue` object.
- */
-- (void)showToast:(UIView *)toast
-         duration:(NSTimeInterval)duration
-         position:(id)position;
-
-/**
  Displays any view as toast at a provided position and duration. The completion block 
  executes when the toast view completes. `didTap` will be `YES` if the toast view was 
  dismissed from a tap.
