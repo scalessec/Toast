@@ -22,8 +22,7 @@ Basic Examples
 // toast with a specific duration and position
 [self.view makeToast:@"This is a piece of toast with a specific duration and position." 
             duration:3.0
-            position:CSToastPositionTop
-               style:nil];
+            position:CSToastPositionTop];
 
 // toast with all possible options
 [self.view makeToast:@"This is a piece of toast with a title & image"
