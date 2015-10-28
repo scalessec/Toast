@@ -79,7 +79,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
     UIView *toast = [self toastViewForMessage:message title:nil image:nil style:style];
-    [self showToast:toast duration:duration position:position];
+    [self showToast:toast duration:duration position:position completion:nil];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
@@ -90,11 +90,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 #pragma mark - Show Toast Methods
 
 - (void)showToast:(UIView *)toast {
-    [self showToast:toast duration:[CSToastManager defaultDuration] position:[CSToastManager defaultPosition]];
-}
-
-- (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position {
-    [self showToast:toast duration:duration position:position completion:nil];
+    [self showToast:toast duration:[CSToastManager defaultDuration] position:[CSToastManager defaultPosition] completion:nil];
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position completion:(void(^)(BOOL didTap))completion {

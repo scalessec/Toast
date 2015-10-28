@@ -245,7 +245,8 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         
         [self.navigationController.view showToast:customView
                                          duration:2.0
-                                         position:CSToastPositionCenter];
+                                         position:CSToastPositionCenter
+                                       completion:nil];
         
     } else if (indexPath.row == 7) {
         
@@ -254,7 +255,8 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         
         [self.navigationController.view showToast:toastView
                                          duration:2.0
-                                         position:[NSValue valueWithCGPoint:CGPointMake(110, 110)]]; // wrap CGPoint in an NSValue object
+                                         position:[NSValue valueWithCGPoint:CGPointMake(110, 110)] // wrap CGPoint in an NSValue object
+                                       completion:nil];
         
     } else if (indexPath.row == 8) {
         
