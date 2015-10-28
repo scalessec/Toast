@@ -457,6 +457,14 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     return self;
 }
 
+- (void)setMaxWidthPercentage:(CGFloat)maxWidthPercentage {
+    _maxWidthPercentage = MAX(MIN(maxWidthPercentage, 1.0), 0.0);
+}
+
+- (void)setMaxHeightPercentage:(CGFloat)maxHeightPercentage {
+    _maxHeightPercentage = MAX(MIN(maxHeightPercentage, 1.0), 0.0);
+}
+
 - (instancetype)init NS_UNAVAILABLE {
     return nil;
 }
