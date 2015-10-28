@@ -178,8 +178,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         // Make toast with a duration and position
         [self.navigationController.view makeToast:@"This is a piece of toast on top for 3 seconds"
                                          duration:3.0
-                                         position:CSToastPositionTop
-                                            style:nil];
+                                         position:CSToastPositionTop];
         
     } else if (indexPath.row == 2) {
         
