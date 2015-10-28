@@ -130,7 +130,7 @@ extern const NSString * CSToastPositionBottom;
  
  @warning `makeToastActivity:` works independently of the showToast: methods. Toast activity
  views can be presented and dismissed while toast views are being displayed. `makeToastActivity:`
- has no affect on the queueing behavior of the showToast: methods.
+ has no effect on the queueing behavior of the showToast: methods.
  
  @param position The toast's center point. Can be one of the predefined CSToastPosition
                  constants or a `CGPoint` wrapped in an `NSValue` object.
@@ -345,7 +345,7 @@ extern const NSString * CSToastPositionBottom;
  Enables or disables queueing behavior for toast views. When `YES`,
  toast views will appear one after the other. When `NO`, multiple Toast
  views will appear at the same time (potentially overlapping depending
- on their positions). This has no affect on the toast activity view,
+ on their positions). This has no effect on the toast activity view,
  which operates independently of normal toast views. Default is `YES`.
  
  @param queueEnabled
