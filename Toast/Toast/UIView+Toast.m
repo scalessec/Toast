@@ -73,6 +73,10 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     [self makeToast:message duration:[CSToastManager defaultDuration] position:[CSToastManager defaultPosition] style:nil];
 }
 
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position {
+    [self makeToast:message duration:duration position:position style:nil];
+}
+
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
     UIView *toast = [self toastViewForMessage:message title:nil image:nil style:style];
     [self showToast:toast duration:duration position:position];

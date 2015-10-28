@@ -52,17 +52,30 @@ extern const NSString * CSToastPositionBottom;
 - (void)makeToast:(NSString *)message;
 
 /**
+ Creates and presents a new toast view with a message. Duration and position
+ can be set explicitly. Styled using the shared style.
+ 
+ @param message The message to be displayed
+ @param duration The toast duration
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+                 constants or a `CGPoint` wrapped in an `NSValue` object.
+ */
+- (void)makeToast:(NSString *)message
+         duration:(NSTimeInterval)duration
+         position:(id)position;
+
+/**
  Creates and presents a new toast view with a message. Duration, position, and
  style can be set explicitly.
  
  @param message The message to be displayed
  @param duration The toast duration
  @param position The toast's center point. Can be one of the predefined CSToastPosition
-                 constants or a `CGPoint` wrapped in an `NSValue` object.
+ constants or a `CGPoint` wrapped in an `NSValue` object.
  @param style The style. The shared style will be used when nil
  */
 - (void)makeToast:(NSString *)message
-         duration:(NSTimeInterval)interval
+         duration:(NSTimeInterval)duration
          position:(id)position
             style:(CSToastStyle *)style;
 
@@ -83,7 +96,7 @@ extern const NSString * CSToastPositionBottom;
                    didTap will be `YES` if the toast view was dismissed from a tap.
  */
 - (void)makeToast:(NSString *)message
-         duration:(NSTimeInterval)interval
+         duration:(NSTimeInterval)duration
          position:(id)position
             title:(NSString *)title
             image:(UIImage *)image
