@@ -250,12 +250,12 @@ extern const NSString * CSToastPositionBottom;
 /**
  The maximum number of lines for the title. The default is 0 (no limit).
  */
-@property (assign, nonatomic) CGFloat titleNumberOfLines;
+@property (assign, nonatomic) NSInteger titleNumberOfLines;
 
 /**
  The maximum number of lines for the message. The default is 0 (no limit).
  */
-@property (assign, nonatomic) CGFloat messageNumberOfLines;
+@property (assign, nonatomic) NSInteger messageNumberOfLines;
 
 /**
  Enable or disable a shadow on the toast view. Default is `NO`.
