@@ -31,7 +31,6 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
 
 @interface CSViewController ()
 
-@property (strong, nonatomic) IBOutlet UIButton *activityButton;
 @property (assign, nonatomic, getter=isShowingActivity) BOOL showingActivity;
 
 @end
@@ -107,7 +106,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         if (indexPath.row == 0) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
             if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewStylePlain reuseIdentifier:ZOToastSwitchCellId];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
                 UISwitch *tapToDismissSwitch = [[UISwitch alloc] init];
                 tapToDismissSwitch.onTintColor = [UIColor orangeColor];
                 [tapToDismissSwitch addTarget:self action:@selector(handleTapToDismissToggled) forControlEvents:UIControlEventValueChanged];
@@ -121,7 +120,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         } else {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
             if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewStylePlain reuseIdentifier:ZOToastSwitchCellId];
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
                 UISwitch *queueSwitch = [[UISwitch alloc] init];
                 queueSwitch.onTintColor = [UIColor orangeColor];
                 [queueSwitch addTarget:self action:@selector(handleQueueToggled) forControlEvents:UIControlEventValueChanged];
@@ -262,10 +261,8 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         
         // Make toast activity
         if (!self.isShowingActivity) {
-            [_activityButton setTitle:@"Hide Activity" forState:UIControlStateNormal];
             [self.navigationController.view makeToastActivity:CSToastPositionCenter];
         } else {
-            [_activityButton setTitle:@"Show Activity" forState:UIControlStateNormal];
             [self.navigationController.view hideToastActivity];
         }
         _showingActivity = !self.isShowingActivity;
