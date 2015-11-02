@@ -295,6 +295,11 @@ extern const NSString * CSToastPositionBottom;
 @property (assign, nonatomic) CGSize activitySize;
 
 /**
+ The fade in/out animation duration. Default is 0.2.
+ */
+@property (assign, nonatomic) NSTimeInterval fadeDuration;
+
+/**
  Creates a new instance of `CSToastStyle` with all the default values set.
  */
 - (instancetype)initWithDefaultStyle NS_DESIGNATED_INITIALIZER;
