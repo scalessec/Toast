@@ -349,7 +349,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     activityView.layer.cornerRadius = style.cornerRadius;
     
     if (style.displayShadow) {
-        activityView.layer.shadowColor = [UIColor blackColor].CGColor;
+        activityView.layer.shadowColor = style.shadowColor.CGColor;
         activityView.layer.shadowOpacity = style.shadowOpacity;
         activityView.layer.shadowRadius = style.shadowRadius;
         activityView.layer.shadowOffset = style.shadowOffset;
