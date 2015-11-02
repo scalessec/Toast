@@ -263,6 +263,11 @@ extern const NSString * CSToastPositionBottom;
 @property (assign, nonatomic) BOOL displayShadow;
 
 /**
+ The shadow color. Default is `[UIColor blackColor]`.
+ */
+@property (strong, nonatomic) UIColor *shadowColor;
+
+/**
  A value from 0.0 to 1.0, representing the opacity of the shadow.
  Default is 0.8 (80% opacity).
  */
