@@ -42,8 +42,6 @@ static const NSString * CSToastActiveToastViewKey   = @"CSToastActiveToastViewKe
 static const NSString * CSToastActivityViewKey      = @"CSToastActivityViewKey";
 static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
-static const NSTimeInterval CSToastFadeDuration     = 0.2;
-
 @interface UIView (ToastPrivate)
 
 /**
@@ -131,7 +129,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     
     [self addSubview:toast];
     
-    [UIView animateWithDuration:CSToastFadeDuration
+    [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
                      animations:^{
@@ -148,7 +146,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 }
     
 - (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap {
-    [UIView animateWithDuration:CSToastFadeDuration
+    [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
                      animations:^{
@@ -367,7 +365,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
     
     [self addSubview:activityView];
     
-    [UIView animateWithDuration:CSToastFadeDuration
+    [UIView animateWithDuration:style.fadeDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
@@ -378,7 +376,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
 - (void)hideToastActivity {
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
     if (existingActivityView != nil) {
-        [UIView animateWithDuration:CSToastFadeDuration
+        [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                               delay:0.0
                             options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
                          animations:^{
@@ -453,6 +451,7 @@ static const NSTimeInterval CSToastFadeDuration     = 0.2;
         self.shadowOffset = CGSizeMake(4.0, 4.0);
         self.imageSize = CGSizeMake(80.0, 80.0);
         self.activitySize = CGSizeMake(100.0, 100.0);
+        self.fadeDuration = 0.2;
     }
     return self;
 }
