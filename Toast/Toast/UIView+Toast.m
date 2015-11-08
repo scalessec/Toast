@@ -58,7 +58,6 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 - (void)cs_toastTimerDidFinish:(NSTimer *)timer;
 - (void)cs_handleToastTapped:(UITapGestureRecognizer *)recognizer;
 - (CGPoint)cs_centerPointForPosition:(id)position withToast:(UIView *)toast;
-- (CGSize)cs_sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode;
 - (NSMutableArray *)cs_toastQueue;
 
 @end
@@ -236,7 +235,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         
         // size the title label according to the length of the text
         CGSize maxSizeTitle = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageWidth, self.bounds.size.height * style.maxHeightPercentage);
-        CGSize expectedSizeTitle = [self cs_sizeForString:title font:titleLabel.font constrainedToSize:maxSizeTitle lineBreakMode:titleLabel.lineBreakMode];
+        CGSize expectedSizeTitle = [titleLabel sizeThatFits:maxSizeTitle];
         titleLabel.frame = CGRectMake(0.0, 0.0, expectedSizeTitle.width, expectedSizeTitle.height);
     }
     
@@ -253,7 +252,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         
         // size the message label according to the length of the text
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageWidth, self.bounds.size.height * style.maxHeightPercentage);
-        CGSize expectedSizeMessage = [self cs_sizeForString:message font:messageLabel.font constrainedToSize:maxSizeMessage lineBreakMode:messageLabel.lineBreakMode];
+        CGSize expectedSizeMessage = [messageLabel sizeThatFits:maxSizeMessage];
         messageLabel.frame = CGRectMake(0.0, 0.0, expectedSizeMessage.width, expectedSizeMessage.height);
     }
     
@@ -405,21 +404,6 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     // default to bottom
     return CGPointMake(self.bounds.size.width/2, (self.bounds.size.height - (toast.frame.size.height / 2)) - style.verticalPadding);
-}
-
-- (CGSize)cs_sizeForString:(NSString *)string font:(UIFont *)font constrainedToSize:(CGSize)constrainedSize lineBreakMode:(NSLineBreakMode)lineBreakMode {
-    if ([string respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
-        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        paragraphStyle.lineBreakMode = lineBreakMode;
-        NSDictionary *attributes = @{NSFontAttributeName:font, NSParagraphStyleAttributeName:paragraphStyle};
-        CGRect boundingRect = [string boundingRectWithSize:constrainedSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil];
-        return CGSizeMake(ceilf(boundingRect.size.width), ceilf(boundingRect.size.height));
-    }
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    return [string sizeWithFont:font constrainedToSize:constrainedSize lineBreakMode:lineBreakMode];
-#pragma clang diagnostic pop
 }
 
 @end
