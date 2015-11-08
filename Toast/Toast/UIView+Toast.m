@@ -186,12 +186,11 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         style = [CSToastManager sharedStyle];
     }
     
-    // dynamically build a toast view with any combination of message, title, & image.
+    // dynamically build a toast view with any combination of message, title, & image
     UILabel *messageLabel = nil;
     UILabel *titleLabel = nil;
     UIImageView *imageView = nil;
     
-    // create the parent view
     UIView *wrapperView = [[UIView alloc] init];
     wrapperView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
     wrapperView.layer.cornerRadius = style.cornerRadius;
@@ -215,6 +214,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     if(imageView != nil) {
         imageRect.origin.x = style.horizontalPadding;
+        imageRect.origin.y = style.verticalPadding;
         imageRect.size.width = imageView.bounds.size.width;
         imageRect.size.height = imageView.bounds.size.height;
     }
@@ -224,7 +224,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         titleLabel.numberOfLines = style.titleNumberOfLines;
         titleLabel.font = style.titleFont;
         titleLabel.textAlignment = style.titleAlignment;
-        titleLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        titleLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         titleLabel.textColor = style.titleColor;
         titleLabel.backgroundColor = [UIColor clearColor];
         titleLabel.alpha = 1.0;
@@ -233,6 +233,8 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         // size the title label according to the length of the text
         CGSize maxSizeTitle = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageRect.size.width, self.bounds.size.height * style.maxHeightPercentage);
         CGSize expectedSizeTitle = [titleLabel sizeThatFits:maxSizeTitle];
+        // UILabel can return a size larger than the max size when the number of lines is 1
+        expectedSizeTitle = CGSizeMake(MIN(maxSizeTitle.width, expectedSizeTitle.width), MIN(maxSizeTitle.height, expectedSizeTitle.height));
         titleLabel.frame = CGRectMake(0.0, 0.0, expectedSizeTitle.width, expectedSizeTitle.height);
     }
     
@@ -241,7 +243,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         messageLabel.numberOfLines = style.messageNumberOfLines;
         messageLabel.font = style.messageFont;
         messageLabel.textAlignment = style.messageAlignment;
-        messageLabel.lineBreakMode = NSLineBreakByWordWrapping;
+        messageLabel.lineBreakMode = NSLineBreakByTruncatingTail;
         messageLabel.textColor = style.messageColor;
         messageLabel.backgroundColor = [UIColor clearColor];
         messageLabel.alpha = 1.0;
@@ -249,25 +251,27 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         
         CGSize maxSizeMessage = CGSizeMake((self.bounds.size.width * style.maxWidthPercentage) - imageRect.size.width, self.bounds.size.height * style.maxHeightPercentage);
         CGSize expectedSizeMessage = [messageLabel sizeThatFits:maxSizeMessage];
+        // UILabel can return a size larger than the max size when the number of lines is 1
+        expectedSizeMessage = CGSizeMake(MIN(maxSizeMessage.width, expectedSizeMessage.width), MIN(maxSizeMessage.height, expectedSizeMessage.height));
         messageLabel.frame = CGRectMake(0.0, 0.0, expectedSizeMessage.width, expectedSizeMessage.height);
     }
     
     CGRect titleRect = CGRectZero;
     
     if(titleLabel != nil) {
-        titleRect.size.width = titleLabel.bounds.size.width;
-        titleRect.size.height = titleLabel.bounds.size.height;
         titleRect.origin.x = imageRect.origin.x + imageRect.size.width + style.horizontalPadding;
         titleRect.origin.y = style.verticalPadding;
+        titleRect.size.width = titleLabel.bounds.size.width;
+        titleRect.size.height = titleLabel.bounds.size.height;
     }
     
     CGRect messageRect = CGRectZero;
     
     if(messageLabel != nil) {
-        messageRect.size.width = messageLabel.bounds.size.width;
-        messageRect.size.height = messageLabel.bounds.size.height;
         messageRect.origin.x = imageRect.origin.x + imageRect.size.width + style.horizontalPadding;
         messageRect.origin.y = titleRect.origin.y + titleRect.size.height + style.verticalPadding;
+        messageRect.size.width = messageLabel.bounds.size.width;
+        messageRect.size.height = messageLabel.bounds.size.height;
     }
     
     CGFloat longerWidth = MAX(titleRect.size.width, messageRect.size.width);
