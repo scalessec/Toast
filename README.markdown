@@ -7,6 +7,7 @@ Toast for iOS
 Toast is an Objective-C category that adds toast notifications to the `UIView` object class. It is intended to be simple, lightweight, and easy to use. Most
  toast notifications can be triggered with a single line of code.
 
+**Using Swift? A native swift port of this library is now available: [Toast-Swift](https://github.com/scalessec/Toast-Swift "Toast-Swift").**
 
 Screenshots
 ---------
