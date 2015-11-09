@@ -134,7 +134,6 @@ extern const NSString * CSToastPositionBottom;
  
  @param position The toast's center point. Can be one of the predefined CSToastPosition
                  constants or a `CGPoint` wrapped in an `NSValue` object.
- @return The newly created toast view
  */
 - (void)makeToastActivity:(id)position;
 
