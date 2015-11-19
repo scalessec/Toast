@@ -75,8 +75,12 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style {
+    [self makeToast:message duration:duration position:position style:style completion:nil];
+}
+
+- (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
     UIView *toast = [self toastViewForMessage:message title:nil image:nil style:style];
-    [self showToast:toast duration:duration position:position completion:nil];
+    [self showToast:toast duration:duration position:position completion:completion];
 }
 
 - (void)makeToast:(NSString *)message duration:(NSTimeInterval)duration position:(id)position title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style completion:(void(^)(BOOL didTap))completion {
