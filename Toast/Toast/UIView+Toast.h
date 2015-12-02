@@ -104,6 +104,32 @@ extern const NSString * CSToastPositionBottom;
        completion:(void(^)(BOOL didTap))completion;
 
 /**
+ Creates and presents a new toast view with a message, title, left view, and right view. Duration,
+ position, and style can be set explicitly. The completion block executes when the
+ toast view completes. `didTap` will be `YES` if the toast view was dismissed from
+ a tap.
+ 
+ @param message The message to be displayed
+ @param duration The toast duration
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+ constants or a `CGPoint` wrapped in an `NSValue` object.
+ @param title The title
+ @param leftView Any UIView
+ @param rightView Any UIView
+ @param style The style. The shared style will be used when nil
+ @param completion The completion block, executed after the toast view disappears.
+ didTap will be `YES` if the toast view was dismissed from a tap.
+ */
+- (void)makeToast:(NSString *)message
+         duration:(NSTimeInterval)duration
+         position:(id)position
+            title:(NSString *)title
+         leftView:(UIView *)leftView
+        rightView:(UIView*)rightView
+            style:(CSToastStyle *)style
+       completion:(void(^)(BOOL didTap))completion;
+
+/**
  Creates a new toast view with any combination of message, title, and image.
  The look and feel is configured via the style. Unlike the `makeToast:` methods,
  this method does not present the toast view automatically. One of the showToast:
@@ -120,6 +146,27 @@ extern const NSString * CSToastPositionBottom;
 - (UIView *)toastViewForMessage:(NSString *)message
                           title:(NSString *)title
                           image:(UIImage *)image
+                          style:(CSToastStyle *)style;
+
+/**
+ Creates a new toast view with any combination of message, title, leftView, and rightView.
+ The look and feel is configured via the style. Unlike the `makeToast:` methods,
+ this method does not present the toast view automatically. One of the showToast:
+ methods must be used to present the resulting view.
+ 
+ @warning if message, title, and leftView, and rightView are all nil, this method will return nil.
+ 
+ @param message The message to be displayed
+ @param title The title
+ @param leftView Any UIView
+ @param rightView Any UIView
+ @param style The style. The shared style will be used when nil
+ @return The newly created toast view
+ */
+- (UIView *)toastViewForMessage:(NSString *)message
+                          title:(NSString *)title
+                       leftView:(UIView *)leftView
+                      rightView:(UIView *)rightView
                           style:(CSToastStyle *)style;
 
 /**
