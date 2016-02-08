@@ -180,6 +180,16 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
                      }];
 }
 
+- (void)hideActiveToast {
+  UIView *activeToastView = (UIView *)objc_getAssociatedObject(self, &CSToastActiveToastViewKey);
+  NSTimer *timer = (NSTimer *)objc_getAssociatedObject(activeToastView, &CSToastTimerKey);
+  [timer invalidate];
+  
+  if (activeToastView != nil) {
+    [self cs_hideToast:activeToastView fromTap:YES];
+  }
+}
+
 #pragma mark - View Construction
 
 - (UIView *)toastViewForMessage:(NSString *)message title:(NSString *)title image:(UIImage *)image style:(CSToastStyle *)style {
