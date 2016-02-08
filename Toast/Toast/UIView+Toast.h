@@ -213,6 +213,11 @@ extern const NSString * CSToastPositionBottom;
          position:(id)position
        completion:(void(^)(BOOL didTap))completion;
 
+/**
+ Dismisses the active toast view.
+ */
+- (void)hideActiveToast;
+
 @end
 
 /**
