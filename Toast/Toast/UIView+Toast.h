@@ -351,6 +351,25 @@ extern const NSString * CSToastPositionBottom;
 + (BOOL)isTapToDismissEnabled;
 
 /**
+ Showing toast exclusively or not. When 'YES', toast view will
+ be hidden upon arrival of new toast, without adding to the queue.
+ Thus there is only one toast showing at a time, the new toast overlaps
+ others completely. When 'NO', toast views can be queued or overlap
+ each other, leaving parts beneath new ones. Default is 'NO'.
+ 
+ @param exclusive
+ */
++ (void)setExclusive:(BOOL)exclusive;
+
+/**
+ Returns `YES` if toasts are shown exclusively, otherwise `NO`.
+ Default is `NO`.
+ 
+ @return BOOL
+ */
++ (BOOL)isExclusive;
+
+/**
  Enables or disables queueing behavior for toast views. When `YES`,
  toast views will appear one after the other. When `NO`, multiple Toast
  views will appear at the same time (potentially overlapping depending

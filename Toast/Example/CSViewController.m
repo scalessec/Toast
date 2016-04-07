@@ -71,6 +71,10 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     [CSToastManager setQueueEnabled:![CSToastManager isQueueEnabled]];
 }
 
+- (void)handleExclusiveToggled {
+    [CSToastManager setExclusive:![CSToastManager isExclusive]];
+}
+
 #pragma mark - UITableViewDelegate & Datasource Methods
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -79,7 +83,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     if (section == 0) {
-        return 2;
+        return 3;
     } else {
         return 9;
     }
@@ -117,7 +121,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
             cell.textLabel.text = @"Tap to Dismiss";
             [(UISwitch *)cell.accessoryView setOn:[CSToastManager isTapToDismissEnabled]];
             return cell;
-        } else {
+        } else if (indexPath.row == 1) {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
@@ -130,6 +134,20 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
             }
             cell.textLabel.text = @"Queue Toast";
             [(UISwitch *)cell.accessoryView setOn:[CSToastManager isQueueEnabled]];
+            return cell;
+        } else {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
+            if (cell == nil) {
+                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
+                UISwitch *exclusiveSwitch = [[UISwitch alloc] init];
+                exclusiveSwitch.onTintColor = [UIColor orangeColor];
+                [exclusiveSwitch addTarget:self action:@selector(handleExclusiveToggled) forControlEvents:UIControlEventValueChanged];
+                cell.accessoryView = exclusiveSwitch;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+            }
+            cell.textLabel.text = @"Exclusive Toast";
+            [(UISwitch *)cell.accessoryView setOn:[CSToastManager isExclusive]];
             return cell;
         }
     } else {
