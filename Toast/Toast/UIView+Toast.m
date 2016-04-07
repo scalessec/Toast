@@ -97,6 +97,18 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     // store the completion block on the toast view
     objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
     
+    if ([CSToastManager isExclusive]) {
+        //if there is toast view already, hide it, invalidate its timer.
+        UIView *currentToast = objc_getAssociatedObject(self, &CSToastActiveToastViewKey);
+        if (currentToast != nil) {
+            NSTimer *timer = (NSTimer *)objc_getAssociatedObject(currentToast, &CSToastTimerKey);
+            [timer invalidate];
+            
+//            currentToast.hidden = YES;
+            [self cs_hideToast:currentToast fromTap:NO];
+        }
+    }
+    
     if ([CSToastManager isQueueEnabled] && objc_getAssociatedObject(self, &CSToastActiveToastViewKey) != nil) {
         // we're about to queue this toast view so we need to store the duration and position as well
         objc_setAssociatedObject(toast, &CSToastDurationKey, @(duration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -128,23 +140,27 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     [self addSubview:toast];
     
+    NSTimer *timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(cs_toastTimerDidFinish:) userInfo:toast repeats:NO];
+    objc_setAssociatedObject(toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
                      animations:^{
                          toast.alpha = 1.0;
                      } completion:^(BOOL finished) {
-                         NSTimer *timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(cs_toastTimerDidFinish:) userInfo:toast repeats:NO];
                          [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-                         objc_setAssociatedObject(toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
                      }];
 }
 
 - (void)cs_hideToast:(UIView *)toast {
     [self cs_hideToast:toast fromTap:NO];
 }
-    
+
 - (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap {
+    // clear the active toast
+    objc_setAssociatedObject(self, &CSToastActiveToastViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
@@ -152,10 +168,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
                          toast.alpha = 0.0;
                      } completion:^(BOOL finished) {
                          [toast removeFromSuperview];
-                         
-                         // clear the active toast
-                         objc_setAssociatedObject(self, &CSToastActiveToastViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-                         
+
                          // execute the completion block, if necessary
                          void (^completion)(BOOL didTap) = objc_getAssociatedObject(toast, &CSToastCompletionKey);
                          if (completion) {
@@ -452,6 +465,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
 @property (strong, nonatomic) CSToastStyle *sharedStyle;
 @property (assign, nonatomic, getter=isTapToDismissEnabled) BOOL tapToDismissEnabled;
+@property (assign, nonatomic, getter=isExclusive) BOOL exclusive;
 @property (assign, nonatomic, getter=isQueueEnabled) BOOL queueEnabled;
 @property (assign, nonatomic) NSTimeInterval defaultDuration;
 @property (strong, nonatomic) id defaultPosition;
@@ -477,6 +491,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     if (self) {
         self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
         self.tapToDismissEnabled = YES;
+        self.exclusive = NO;
         self.queueEnabled = YES;
         self.defaultDuration = 3.0;
         self.defaultPosition = CSToastPositionBottom;
@@ -500,6 +515,14 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
 + (BOOL)isTapToDismissEnabled {
     return [[self sharedManager] isTapToDismissEnabled];
+}
+
++ (void)setExclusive:(BOOL)exclusive {
+    [[self sharedManager] setExclusive:exclusive];
+}
+
++ (BOOL)isExclusive {
+    return [[self sharedManager] isExclusive];
 }
 
 + (void)setQueueEnabled:(BOOL)queueEnabled {
