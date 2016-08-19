@@ -30,6 +30,7 @@
 NSString * CSToastPositionTop       = @"CSToastPositionTop";
 NSString * CSToastPositionCenter    = @"CSToastPositionCenter";
 NSString * CSToastPositionBottom    = @"CSToastPositionBottom";
+NSInteger const CSToastTag          = 1008;
 
 // Keys for values associated with toast views
 static const NSString * CSToastTimerKey             = @"CSToastTimerKey";
@@ -192,6 +193,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     UIImageView *imageView = nil;
     
     UIView *wrapperView = [[UIView alloc] init];
+    wrapperView.tag = CSToastTag;
     wrapperView.autoresizingMask = (UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin);
     wrapperView.layer.cornerRadius = style.cornerRadius;
     

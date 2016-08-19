@@ -28,6 +28,7 @@
 extern const NSString * CSToastPositionTop;
 extern const NSString * CSToastPositionCenter;
 extern const NSString * CSToastPositionBottom;
+extern NSInteger const CSToastTag;
 
 @class CSToastStyle;
 
