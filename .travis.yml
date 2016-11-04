@@ -1,2 +1,2 @@
 language: objective-c
-script: xcodebuild -project Toast.xcodeproj -scheme Toast -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+script: xcodebuild -project Toast.xcodeproj -scheme ToastDemo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
