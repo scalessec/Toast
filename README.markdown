@@ -92,7 +92,7 @@ Install with [Carthage](https://github.com/Carthage/Carthage) by adding the foll
 github "scalessec/Toast" ~> 3.1.0
 ```
 
-Run `carthage update` to build the framework and drag the built `Toast.framework` into your Xcode project.
+Run `carthage update` to build the framework and link against `Toast.framework`. Then, `#import <Toast/Toast.h>`.
 
 Manually: 
 
