@@ -123,6 +123,27 @@ extern const NSString * CSToastPositionBottom;
                           style:(CSToastStyle *)style;
 
 /**
+ Dismisses all active toast views. Any toast that is currently being displayed on the
+ screen is considered active.
+ 
+ @warning this does not clear toast views that are currently waiting in the queue. The next queued 
+ toast will appear immediately after `hideToasts` completes the dismissal animation.
+ 
+ */
+- (void)hideToasts;
+
+/**
+ Dismisses an active toast view.
+ 
+ @param toast The active toast view to dismiss. Any toast that is currently being displayed
+ on the screen is considered active. 
+ 
+ @warning this does not clear a toast view that is currently waiting in the queue.
+ 
+ */
+- (void)hideToast:(UIView *)toast;
+
+/**
  Creates and displays a new toast activity indicator view at a specified position.
  
  @warning Only one toast activity indicator view can be presented per superview. Subsequent
