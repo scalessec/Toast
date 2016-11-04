@@ -4,12 +4,12 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Toast.xcscheme_^#shared#^_</key>
+		<key>Toast Demo.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>ToastFramework.xcscheme_^#shared#^_</key>
+		<key>Toast.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
@@ -23,6 +23,11 @@
 			<true/>
 		</dict>
 		<key>152C43E11DCC1B9000430487</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>152C43EF1DCC1E0E00430487</key>
 		<dict>
 			<key>primary</key>
 			<true/>
