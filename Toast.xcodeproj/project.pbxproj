@@ -276,7 +276,7 @@
 				GCC_PREFIX_HEADER = "Toast/Toast-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Toast/Toast-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scalessec.toastexample;
 				PRODUCT_NAME = Toast;
 				PROVISIONING_PROFILE = "";
@@ -299,7 +299,7 @@
 				GCC_PREFIX_HEADER = "Toast/Toast-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Toast/Toast-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scalessec.toastexample;
 				PRODUCT_NAME = Toast;
 				PROVISIONING_PROFILE = "";
