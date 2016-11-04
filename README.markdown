@@ -82,13 +82,13 @@ Install with [CocoaPods](http://cocoapods.org) by adding the following to your P
 
 ``` ruby
 platform :ios, '8.0'
-pod 'Toast', '~> 3.1'
+pod 'Toast', '~> 3.1.0'
 ```
 
 Install with [Carthage](https://github.com/Carthage/Carthage) by adding the following to your Cartfile:
 
 ```ogdl
-github "scalessec/Toast" ~> 3.1
+github "scalessec/Toast" ~> 3.1.0
 ```
 
 Run `carthage update` to build the framework and drag the built `Toast.framework` into your Xcode project.
