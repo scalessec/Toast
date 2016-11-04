@@ -82,7 +82,7 @@ Install with [CocoaPods](http://cocoapods.org) by adding the following to your P
 
 ``` ruby
 platform :ios, '8.0'
-pod 'Toast', '~> 3.0'
+pod 'Toast', '~> 3.1'
 ```
 
 Install with [Carthage](https://github.com/Carthage/Carthage) by adding the following to your Cartfile:
