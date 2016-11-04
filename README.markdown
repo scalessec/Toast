@@ -82,10 +82,18 @@ Install with [CocoaPods](http://cocoapods.org) by adding the following to your P
 
 ``` ruby
 platform :ios, '8.0'
-pod 'Toast', '~> 3.0'
+pod 'Toast', '~> 3.1.0'
 ```
 
-or add manually: 
+Install with [Carthage](https://github.com/Carthage/Carthage) by adding the following to your Cartfile:
+
+```ogdl
+github "scalessec/Toast" ~> 3.1.0
+```
+
+Run `carthage update` to build the framework and drag the built `Toast.framework` into your Xcode project.
+
+Manually: 
 
 1. Add `UIView+Toast.h` & `UIView+Toast.m` to your project.
 2. Link against QuartzCore.
@@ -93,7 +101,7 @@ or add manually:
 
 MIT License
 -----------
-    Copyright (c) 2011-2015 Charles Scalesse.
+    Copyright (c) 2011-2016 Charles Scalesse.
 
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the
