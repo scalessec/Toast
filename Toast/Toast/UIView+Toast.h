@@ -80,6 +80,24 @@ extern const NSString * CSToastPositionBottom;
             style:(CSToastStyle *)style;
 
 /**
+ Creates and presents a new toast view with a message. Duration, position,
+ style and completion block can be set explicitly.
+ 
+ @param message The message to be displayed
+ @param duration The toast duration
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+ constants or a `CGPoint` wrapped in an `NSValue` object.
+ @param style The style. The shared style will be used when nil
+ @param completion The completion block, executed after the toast view disappears.
+ didTap will be `YES` if the toast view was dismissed from a tap.
+ */
+- (void)makeToast:(NSString *)message
+         duration:(NSTimeInterval)duration
+         position:(id)position
+            style:(CSToastStyle *)style
+       completion:(void(^)(BOOL didTap))completion;
+
+/**
  Creates and presents a new toast view with a message, title, and image. Duration,
  position, and style can be set explicitly. The completion block executes when the
  toast view completes. `didTap` will be `YES` if the toast view was dismissed from 
@@ -241,6 +259,12 @@ extern const NSString * CSToastPositionBottom;
  Default is 10.0.
  */
 @property (assign, nonatomic) CGFloat verticalPadding;
+
+/**
+ The spacing from the vertical edge of the toast view to the toast view. Used on CSToastPositionTop & CSToastPositionBottom.
+ Default is 0.0.
+ */
+@property (assign, nonatomic) CGFloat verticalMargin;
 
 /**
  The corner radius. Default is 10.0.
