@@ -187,6 +187,34 @@ extern const NSString * CSToastPositionBottom;
          position:(id)position
        completion:(void(^)(BOOL didTap))completion;
 
+/**
+ Displays any view as toast at a provided position and duration. The completion block
+ executes when the toast view completes. `didTap` will be `YES` if the toast view was
+ dismissed from a tap. Optional show and hide animation blocks can define a custom
+ animation when showing and hiding the toast. If not set, the default animation with
+ changing alpha channel will be used.
+ 
+ @param toast The view to be displayed as toast
+ @param duration The notification duration
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+ constants or a `CGPoint` wrapped in an `NSValue` object.
+ @param preShowAnimation Block in which the state of the toast can be changed prior to
+ execute the show animation
+ @param showAnimation Custom animation block which will occur to the toast when being
+ displayed
+ @param hideAnimation Custom animation block which will occur to the toast when being
+ hidden
+ @param completion The completion block, executed after the toast view disappears.
+ didTap will be `YES` if the toast view was dismissed from a tap.
+ */
+- (void)showToast:(UIView *)toast
+         duration:(NSTimeInterval)duration
+         position:(id)position
+ preShowAnimation:(void(^)(UIView *))preShowAnimation
+    showAnimation:(void(^)(UIView *))showAnimation
+    hideAnimation:(void(^)(UIView *))hideAnimation
+       completion:(void(^)(BOOL didTap))completion;
+
 @end
 
 /**

@@ -36,6 +36,9 @@ static const NSString * CSToastTimerKey             = @"CSToastTimerKey";
 static const NSString * CSToastDurationKey          = @"CSToastDurationKey";
 static const NSString * CSToastPositionKey          = @"CSToastPositionKey";
 static const NSString * CSToastCompletionKey        = @"CSToastCompletionKey";
+static const NSString * CSToastPreShowAnimationKey  = @"CSToastPreShowAnimationKey";
+static const NSString * CSToastShowAnimationKey     = @"CSToastShowAnimationKey";
+static const NSString * CSToastHideAnimationKey     = @"CSToastHideAnimationKey";
 
 // Keys for values associated with self
 static const NSString * CSToastActiveKey            = @"CSToastActiveKey";
@@ -91,16 +94,38 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 }
 
 - (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position completion:(void(^)(BOOL didTap))completion {
+    [self showToast:toast duration:duration position:position preShowAnimation:nil showAnimation:nil hideAnimation:nil completion:completion];
+}
+
+- (void)showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position preShowAnimation:(void(^)(UIView *))preShowAnimation showAnimation:(void(^)(UIView *))showAnimation hideAnimation:(void(^)(UIView *))hideAnimation completion:(void(^)(BOOL didTap))completion {
     // sanity
     if (toast == nil) return;
     
     // store the completion block on the toast view
-    objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(toast, &CSToastCompletionKey, completion, OBJC_ASSOCIATION_COPY_NONATOMIC);
     
-    if ([CSToastManager isQueueEnabled] && [self.cs_activeToasts count] > 0) {
+    // store pre show animation block on the toast view
+    if (preShowAnimation) {
+        objc_setAssociatedObject(toast, &CSToastPreShowAnimationKey, preShowAnimation, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+    // store show animation block on the toast view
+    if (showAnimation) {
+        objc_setAssociatedObject(toast, &CSToastShowAnimationKey, showAnimation, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+    // store hide animation block on the toast view
+    if (hideAnimation) {
+        objc_setAssociatedObject(toast, &CSToastHideAnimationKey, hideAnimation, OBJC_ASSOCIATION_COPY_NONATOMIC);
+    }
+    
+    // store position on the toast view
+    BOOL queueToast = [CSToastManager isQueueEnabled] && [self.cs_activeToasts count] > 0;
+    if (queueToast || preShowAnimation || showAnimation || hideAnimation) {
+        objc_setAssociatedObject(toast, &CSToastPositionKey, position, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    
+    if (queueToast) {
         // we're about to queue this toast view so we need to store the duration and position as well
         objc_setAssociatedObject(toast, &CSToastDurationKey, @(duration), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-        objc_setAssociatedObject(toast, &CSToastPositionKey, position, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
         
         // enqueue
         [self.cs_toastQueue addObject:toast];
@@ -132,7 +157,6 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
 - (void)cs_showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position {
     toast.center = [self cs_centerPointForPosition:position withToast:toast];
-    toast.alpha = 0.0;
     
     if ([CSToastManager isTapToDismissEnabled]) {
         UITapGestureRecognizer *recognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cs_handleToastTapped:)];
@@ -145,12 +169,26 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     [self addSubview:toast];
     
+    void (^preShowAnimation)(UIView *) = objc_getAssociatedObject(toast, &CSToastPreShowAnimationKey);
+    if (preShowAnimation) {
+        preShowAnimation(toast);
+    } else {
+        toast.alpha = 0.0;
+    }
+    
+    void (^animationBlock)() = ^{ toast.alpha = 1.0; };
+    void (^showAnimation)(UIView *) = objc_getAssociatedObject(toast, &CSToastShowAnimationKey);
+    if (showAnimation) {
+        animationBlock = ^{
+            showAnimation(toast);
+        };
+    }
+    
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseOut | UIViewAnimationOptionAllowUserInteraction)
-                     animations:^{
-                         toast.alpha = 1.0;
-                     } completion:^(BOOL finished) {
+                     animations:animationBlock
+                     completion:^(BOOL finished) {
                          NSTimer *timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(cs_toastTimerDidFinish:) userInfo:toast repeats:NO];
                          [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
                          objc_setAssociatedObject(toast, &CSToastTimerKey, timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -162,12 +200,19 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 }
     
 - (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap {
+    void (^animationBlock)() = ^{ toast.alpha = 0.0; };
+    void (^hideAnimation)(UIView *) = objc_getAssociatedObject(toast, &CSToastHideAnimationKey);
+    if (hideAnimation) {
+        animationBlock = ^{
+            hideAnimation(toast);
+        };
+    }
+    
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
-                     animations:^{
-                         toast.alpha = 0.0;
-                     } completion:^(BOOL finished) {
+                     animations:animationBlock
+                     completion:^(BOOL finished) {
                          [toast removeFromSuperview];
                          
                          // remove
