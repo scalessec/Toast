@@ -144,6 +144,14 @@ extern const NSString * CSToastPositionBottom;
 - (void)hideToast:(UIView *)toast;
 
 /**
+ Removes all queued toast views.
+ 
+ @warning this will clear all toast views that are currently in the queue.
+ 
+ */
+- (void)clearQueuedToast;
+
+/**
  Creates and displays a new toast activity indicator view at a specified position.
  
  @warning Only one toast activity indicator view can be presented per superview. Subsequent
