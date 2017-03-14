@@ -128,6 +128,11 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     [self cs_hideToast:toast];
 }
 
+- (void)clearQueuedToast
+{
+    [self.cs_toastQueue removeAllObjects];
+}
+
 #pragma mark - Private Show/Hide Methods
 
 - (void)cs_showToast:(UIView *)toast duration:(NSTimeInterval)duration position:(id)position {
