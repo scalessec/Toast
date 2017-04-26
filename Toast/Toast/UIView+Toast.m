@@ -354,11 +354,21 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 #pragma mark - Activity Methods
 
 - (void)makeToastActivity:(id)position {
+    [self makeToastActivity:position style:nil];
+}
+
+- (void)makeToastActivity:(id)position style:(CSToastStyle *)style {
+    [self makeToastActivity:position style:style indicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+}
+
+- (void)makeToastActivity:(id)position style:(CSToastStyle *)style indicatorStyle:(UIActivityIndicatorViewStyle)indicatorStyle {
     // sanity
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
     if (existingActivityView != nil) return;
     
-    CSToastStyle *style = [CSToastManager sharedStyle];
+    if (style == nil) {
+        style = [CSToastManager sharedStyle];
+    }
     
     UIView *activityView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, style.activitySize.width, style.activitySize.height)];
     activityView.center = [self cs_centerPointForPosition:position withToast:activityView];
@@ -374,7 +384,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
         activityView.layer.shadowOffset = style.shadowOffset;
     }
     
-    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    UIActivityIndicatorView *activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:indicatorStyle];
     activityIndicatorView.center = CGPointMake(activityView.bounds.size.width / 2, activityView.bounds.size.height / 2);
     [activityView addSubview:activityIndicatorView];
     [activityIndicatorView startAnimating];
@@ -391,6 +401,8 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
                          activityView.alpha = 1.0;
                      } completion:nil];
 }
+
+
 
 - (void)hideToastActivity {
     UIView *existingActivityView = (UIView *)objc_getAssociatedObject(self, &CSToastActivityViewKey);
