@@ -159,6 +159,39 @@ extern const NSString * CSToastPositionBottom;
 - (void)makeToastActivity:(id)position;
 
 /**
+ Creates and displays a new toast activity indicator view at a specified position.
+ 
+ @warning Only one toast activity indicator view can be presented per superview. Subsequent
+ calls to `makeToastActivity:` will be ignored until hideToastActivity is called.
+ 
+ @warning `makeToastActivity:` works independently of the showToast: methods. Toast activity
+ views can be presented and dismissed while toast views are being displayed. `makeToastActivity:`
+ has no effect on the queueing behavior of the showToast: methods.
+ 
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+ constants or a `CGPoint` wrapped in an `NSValue` object.
+ @param style The style. The shared style will be used when nil
+ */
+- (void)makeToastActivity:(id)position style: (CSToastStyle *)style;
+
+/**
+ Creates and displays a new toast activity indicator view at a specified position.
+ 
+ @warning Only one toast activity indicator view can be presented per superview. Subsequent
+ calls to `makeToastActivity:` will be ignored until hideToastActivity is called.
+ 
+ @warning `makeToastActivity:` works independently of the showToast: methods. Toast activity
+ views can be presented and dismissed while toast views are being displayed. `makeToastActivity:`
+ has no effect on the queueing behavior of the showToast: methods.
+ 
+ @param position The toast's center point. Can be one of the predefined CSToastPosition
+ constants or a `CGPoint` wrapped in an `NSValue` object.
+ @param style The style. The shared style will be used when nil
+ @param indicatorStyle The UIActivatyIndicatorViewStyle.
+ */
+- (void)makeToastActivity:(id)position style:(CSToastStyle *)style indicatorStyle:(UIActivityIndicatorViewStyle)indicatorStyle;
+
+/**
  Dismisses the active toast activity indicator view.
  */
 - (void)hideToastActivity;

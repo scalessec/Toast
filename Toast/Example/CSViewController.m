@@ -32,6 +32,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
 @interface CSViewController ()
 
 @property (assign, nonatomic, getter=isShowingActivity) BOOL showingActivity;
+@property (assign, nonatomic, getter=isShowingActivityWithCustomStyle) BOOL showingActivityWithCustomStyle;
 
 @end
 
@@ -44,6 +45,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     if (self) {
         self.title = @"Toast";
         self.showingActivity = NO;
+        self.showingActivityWithCustomStyle = NO;
     }
     return self;
 }
@@ -81,7 +83,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     if (section == 0) {
         return 2;
     } else {
-        return 9;
+        return 10;
     }
 }
 
@@ -156,6 +158,8 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
             cell.textLabel.text = @"Show an image as toast at point\n(110, 110)";
         } else if (indexPath.row == 8) {
             cell.textLabel.text = (self.isShowingActivity) ? @"Hide toast activity" : @"Show toast activity";
+        } else if (indexPath.row == 9) {
+            cell.textLabel.text = (self.isShowingActivityWithCustomStyle) ? @"Hide toast activity with a custom style" : @"Show toast activity with a custom style";
         }
         
         return cell;
@@ -266,6 +270,18 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
             [self.navigationController.view hideToastActivity];
         }
         _showingActivity = !self.isShowingActivity;
+        
+        [tableView reloadData];
+    } else if (indexPath.row == 9) {
+        // Make toast activity
+        if (!self.isShowingActivityWithCustomStyle) {
+            CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+            style.backgroundColor = nil;
+            [self.navigationController.view makeToastActivity:CSToastPositionCenter style:style indicatorStyle:UIActivityIndicatorViewStyleGray];
+        } else {
+            [self.navigationController.view hideToastActivity];
+        }
+        _showingActivityWithCustomStyle = !self.isShowingActivityWithCustomStyle;
         
         [tableView reloadData];
     }
