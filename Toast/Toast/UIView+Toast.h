@@ -350,7 +350,7 @@ extern const NSString * CSToastPositionBottom;
 /**
  Creates a new instance of `CSToastStyle` with all the default values set.
  */
-- (instancetype)initWithDefaultStyle NS_DESIGNATED_INITIALIZER;
+- (instancetype)initDefaultStyle NS_DESIGNATED_INITIALIZER;
 
 /**
  @warning Only the designated initializer should be used to create

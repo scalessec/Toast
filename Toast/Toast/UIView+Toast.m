@@ -477,7 +477,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 
 #pragma mark - Constructors
 
-- (instancetype)initWithDefaultStyle {
+- (instancetype)initDefaultStyle {
     self = [super init];
     if (self) {
         self.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.8];
@@ -546,7 +546,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.sharedStyle = [[CSToastStyle alloc] initWithDefaultStyle];
+        self.sharedStyle = [[CSToastStyle alloc] initDefaultStyle];
         self.tapToDismissEnabled = YES;
         self.queueEnabled = YES;
         self.defaultDuration = 3.0;
