@@ -347,17 +347,6 @@ extern const NSString * CSToastPositionBottom;
  */
 @property (assign, nonatomic) NSTimeInterval fadeDuration;
 
-/**
- Creates a new instance of `CSToastStyle` with all the default values set.
- */
-- (instancetype)initDefaultStyle NS_DESIGNATED_INITIALIZER;
-
-/**
- @warning Only the designated initializer should be used to create
- an instance of `CSToastStyle`.
- */
-- (instancetype)init NS_UNAVAILABLE;
-
 @end
 
 /**
