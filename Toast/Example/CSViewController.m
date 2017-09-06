@@ -221,7 +221,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     } else if (indexPath.row == 5) {
         
         // Make toast with a custom style
-        CSToastStyle *style = [[CSToastStyle alloc] initWithDefaultStyle];
+        CSToastStyle *style = [[CSToastStyle alloc] init];
         style.messageFont = [UIFont fontWithName:@"Zapfino" size:14.0];
         style.messageColor = [UIColor redColor];
         style.messageAlignment = NSTextAlignmentCenter;
