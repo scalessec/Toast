@@ -82,7 +82,7 @@ Setup Instructions
 [CocoaPods](http://cocoapods.org)
 ------------------
 
-Install with Cocoapods by adding the following to your `Podfile`:
+Install with CocoaPods by adding the following to your `Podfile`:
 ```ruby
 pod 'Toast', '~> 4.0.0'
 ```
