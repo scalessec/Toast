@@ -102,36 +102,34 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
-                UISwitch *tapToDismissSwitch = [[UISwitch alloc] init];
-                tapToDismissSwitch.onTintColor = [UIColor orangeColor];
-                [tapToDismissSwitch addTarget:self action:@selector(handleTapToDismissToggled) forControlEvents:UIControlEventValueChanged];
-                cell.accessoryView = tapToDismissSwitch;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            }
-            cell.textLabel.text = @"Tap to Dismiss";
-            [(UISwitch *)cell.accessoryView setOn:[CSToastManager isTapToDismissEnabled]];
-            return cell;
-        } else {
-            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
-                UISwitch *queueSwitch = [[UISwitch alloc] init];
-                queueSwitch.onTintColor = [UIColor orangeColor];
-                [queueSwitch addTarget:self action:@selector(handleQueueToggled) forControlEvents:UIControlEventValueChanged];
-                cell.accessoryView = queueSwitch;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                cell.textLabel.font = [UIFont systemFontOfSize:16.0];
-            }
-            cell.textLabel.text = @"Queue Toast";
-            [(UISwitch *)cell.accessoryView setOn:[CSToastManager isQueueEnabled]];
-            return cell;
+    if (indexPath.section == 0 && indexPath.row == 0) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
+            UISwitch *tapToDismissSwitch = [[UISwitch alloc] init];
+            tapToDismissSwitch.onTintColor = [UIColor colorWithRed:239.0 / 255.0 green:108.0 / 255.0 blue:0.0 / 255.0 alpha:1.0];
+            [tapToDismissSwitch addTarget:self action:@selector(handleTapToDismissToggled) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = tapToDismissSwitch;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
         }
+        cell.textLabel.text = @"Tap to Dismiss";
+        [(UISwitch *)cell.accessoryView setOn:[CSToastManager isTapToDismissEnabled]];
+        return cell;
+    } else if (indexPath.section == 0 && indexPath.row == 1) {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
+            UISwitch *queueSwitch = [[UISwitch alloc] init];
+            queueSwitch.onTintColor = [UIColor colorWithRed:239.0 / 255.0 green:108.0 / 255.0 blue:0.0 / 255.0 alpha:1.0];
+            [queueSwitch addTarget:self action:@selector(handleQueueToggled) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = queueSwitch;
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.font = [UIFont systemFontOfSize:16.0];
+        }
+        cell.textLabel.text = @"Queue Toast";
+        [(UISwitch *)cell.accessoryView setOn:[CSToastManager isQueueEnabled]];
+        return cell;
     } else {
         UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ZOToastDemoCellId forIndexPath:indexPath];
         cell.textLabel.numberOfLines = 2;
