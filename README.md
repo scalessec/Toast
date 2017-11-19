@@ -76,27 +76,32 @@ style.messageColor = [UIColor orangeColor];
     
 See the demo project for more examples.
 
-
 Setup Instructions
 ------------------
-Install with [CocoaPods](http://cocoapods.org) by adding the following to your Podfile:
 
+[CocoaPods](http://cocoapods.org)
+------------------
+
+Install with CocoaPods by adding the following to your `Podfile`:
 ```ruby
 pod 'Toast', '~> 4.0.0'
 ```
 
-Install with [Carthage](https://github.com/Carthage/Carthage) by adding the following to your Cartfile:
+[Carthage](https://github.com/Carthage/Carthage)
+------------------
 
+Install with Carthage by adding the following to your `Cartfile`:
 ```ogdl
 github "scalessec/Toast" ~> 4.0.0
 ```
-
 Run `carthage update` to build the framework and link against `Toast.framework`. Then, `#import <Toast/Toast.h>`.
 
-Manually: 
+Manually
+--------
 
-Add `UIView+Toast.h` & `UIView+Toast.m` to your project and then `#import "UIView+Toast.h"`.
-
+1. Add `UIView+Toast.h` & `UIView+Toast.m` to your project.
+2. `#import "UIView+Toast.h"`
+3. Grab yourself a cold 🍺.
 
 MIT License
 -----------
