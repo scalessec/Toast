@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author       = { "Charles Scalesse" => "scalessec@gmail.com" }
   s.source       = { :git => "https://github.com/scalessec/Toast.git", :tag => "3.1.0" }
   s.platform     = :ios
-  s.source_files = 'Toast/Toast','Toast/Toast.h'   
+  s.source_files = 'Toast/Toast','Toast-Framework/Toast.h'   
   s.framework    = 'QuartzCore'
   s.requires_arc = true
 end
