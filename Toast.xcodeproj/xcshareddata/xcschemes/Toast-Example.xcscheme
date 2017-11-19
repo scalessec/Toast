@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "151FC0D113D34B7A007DC282"
                BuildableName = "Toast.app"
-               BlueprintName = "ToastDemo"
+               BlueprintName = "Toast-Example"
                ReferencedContainer = "container:Toast.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,6 +26,7 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
+      language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
@@ -34,7 +35,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "151FC0D113D34B7A007DC282"
             BuildableName = "Toast.app"
-            BlueprintName = "ToastDemo"
+            BlueprintName = "Toast-Example"
             ReferencedContainer = "container:Toast.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -47,6 +48,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       displayScaleIsEnabled = "NO"
       displayScale = "1.00"
+      language = ""
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
@@ -59,7 +61,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "151FC0D113D34B7A007DC282"
             BuildableName = "Toast.app"
-            BlueprintName = "ToastDemo"
+            BlueprintName = "Toast-Example"
             ReferencedContainer = "container:Toast.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -80,7 +82,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "151FC0D113D34B7A007DC282"
             BuildableName = "Toast.app"
-            BlueprintName = "ToastDemo"
+            BlueprintName = "Toast-Example"
             ReferencedContainer = "container:Toast.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
