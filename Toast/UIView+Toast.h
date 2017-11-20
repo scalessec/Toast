@@ -2,7 +2,7 @@
 //  UIView+Toast.h
 //  Toast
 //
-//  Copyright (c) 2011-2016 Charles Scalesse.
+//  Copyright (c) 2011-2017 Charles Scalesse.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the
@@ -123,25 +123,44 @@ extern const NSString * CSToastPositionBottom;
                           style:(CSToastStyle *)style;
 
 /**
- Dismisses all active toast views. Any toast that is currently being displayed on the
- screen is considered active.
+ Hides the active toast. If there are multiple toasts active in a view, this method
+ hides the oldest toast (the first of the toasts to have been presented).
  
- @warning this does not clear toast views that are currently waiting in the queue. The next queued 
- toast will appear immediately after `hideToasts` completes the dismissal animation.
+ @see `hideAllToasts` to remove all active toasts from a view.
  
+ @warning This method has no effect on activity toasts. Use `hideToastActivity` to
+ hide activity toasts.
  */
-- (void)hideToasts;
+- (void)hideToast;
 
 /**
- Dismisses an active toast view.
+ Hides an active toast.
  
  @param toast The active toast view to dismiss. Any toast that is currently being displayed
- on the screen is considered active. 
+ on the screen is considered active.
  
  @warning this does not clear a toast view that is currently waiting in the queue.
- 
  */
 - (void)hideToast:(UIView *)toast;
+
+/**
+ Hides all active toast views and clears the queue.
+ */
+- (void)hideAllToasts;
+
+/**
+ Hides all active toast views, with options to hide activity and clear the queue.
+ 
+ @param includeActivity If `true`, toast activity will also be hidden. Default is `false`.
+ @param clearQueue If `true`, removes all toast views from the queue. Default is `true`.
+ */
+- (void)hideAllToasts:(BOOL)includeActivity clearQueue:(BOOL)clearQueue;
+
+/**
+ Removes all toast views from the queue. This has no effect on toast views that are
+ active. Use `hideAllToasts` to hide the active toasts views and clear the queue.
+ */
+- (void)clearToastQueue;
 
 /**
  Creates and displays a new toast activity indicator view at a specified position.
@@ -393,7 +412,7 @@ extern const NSString * CSToastPositionBottom;
  toast views will appear one after the other. When `NO`, multiple Toast
  views will appear at the same time (potentially overlapping depending
  on their positions). This has no effect on the toast activity view,
- which operates independently of normal toast views. Default is `YES`.
+ which operates independently of normal toast views. Default is `NO`.
  
  @param queueEnabled YES or NO
  */
@@ -401,7 +420,7 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Returns `YES` if the queue is enabled, otherwise `NO`.
- Default is `YES`.
+ Default is `NO`.
  
  @return BOOL
  */

@@ -12,7 +12,7 @@ Toast is an Objective-C category that adds toast notifications to the `UIView` o
 
 Screenshots
 ---------
-![Toast Screenshots](toast_screenshot.jpg)
+![Toast Screenshots](toast_screenshots.jpg)
 
 
 Basic Examples
@@ -72,37 +72,43 @@ style.messageColor = [UIColor orangeColor];
 
 // toggle queueing behavior
 [CSToastManager setQueueEnabled:YES];
+
+// immediately hides all toast views in self.view
+[self.view hideAllToasts];
 ```
     
 See the demo project for more examples.
 
-
 Setup Instructions
 ------------------
-Install with [CocoaPods](http://cocoapods.org) by adding the following to your Podfile:
 
-``` ruby
-platform :ios, '8.0'
-pod 'Toast', '~> 3.1.0'
+[CocoaPods](http://cocoapods.org)
+------------------
+
+Install with CocoaPods by adding the following to your `Podfile`:
+```ruby
+pod 'Toast', '~> 4.0.0'
 ```
 
-Install with [Carthage](https://github.com/Carthage/Carthage) by adding the following to your Cartfile:
+[Carthage](https://github.com/Carthage/Carthage)
+------------------
 
+Install with Carthage by adding the following to your `Cartfile`:
 ```ogdl
-github "scalessec/Toast" ~> 3.1.0
+github "scalessec/Toast" ~> 4.0.0
 ```
-
 Run `carthage update` to build the framework and link against `Toast.framework`. Then, `#import <Toast/Toast.h>`.
 
-Manually: 
+Manually
+--------
 
 1. Add `UIView+Toast.h` & `UIView+Toast.m` to your project.
-2. Link against QuartzCore.
-
+2. `#import "UIView+Toast.h"`
+3. Grab yourself a cold 🍺.
 
 MIT License
 -----------
-    Copyright (c) 2011-2016 Charles Scalesse.
+    Copyright (c) 2011-2017 Charles Scalesse.
 
     Permission is hereby granted, free of charge, to any person obtaining a
     copy of this software and associated documentation files (the

@@ -18,10 +18,8 @@
 		1536A60616B0E0CF0021C622 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60516B0E0CF0021C622 /* UIView+Toast.m */; };
 		1536A60D16B0E0D60021C622 /* CSAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60916B0E0D60021C622 /* CSAppDelegate.m */; };
 		1536A60E16B0E0D60021C622 /* CSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60B16B0E0D60021C622 /* CSViewController.m */; };
-		1536A61316B0E0E20021C622 /* toast.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A61216B0E0E20021C622 /* toast.png */; };
-		1536A62516B0E2050021C622 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62416B0E2050021C622 /* Default-568h@2x.png */; };
-		1536A62A16B0F0B20021C622 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62816B0F0B20021C622 /* Icon.png */; };
-		1536A62B16B0F0B20021C622 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1536A62916B0F0B20021C622 /* Icon@2x.png */; };
+		1566460D1FC1ED8D00ECDFCE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1566460C1FC1ED8D00ECDFCE /* Images.xcassets */; };
+		15F305681FC1EFAF0058458A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15F305671FC1EFAF0058458A /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,23 +27,21 @@
 		151FC0D613D34B7A007DC282 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		151FC0D813D34B7A007DC282 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		151FC0DA13D34B7A007DC282 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		151FC12713D35583007DC282 /* Toast-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Toast-Info.plist"; path = "Toast/Toast-Info.plist"; sourceTree = SOURCE_ROOT; };
-		151FC12813D35583007DC282 /* Toast-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Toast-Prefix.pch"; path = "Toast/Toast-Prefix.pch"; sourceTree = SOURCE_ROOT; };
-		151FC12A13D3558E007DC282 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Toast/main.m; sourceTree = SOURCE_ROOT; };
+		151FC12713D35583007DC282 /* Toast-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Toast-Info.plist"; path = "Example/Toast-Info.plist"; sourceTree = SOURCE_ROOT; };
+		151FC12813D35583007DC282 /* Toast-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Toast-Prefix.pch"; path = "Example/Toast-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		151FC12A13D3558E007DC282 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Example/main.m; sourceTree = SOURCE_ROOT; };
 		151FC13313D36FCB007DC282 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		152C43F01DCC1E0E00430487 /* Toast.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Toast.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		152C43F21DCC1E0E00430487 /* Toast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Toast.h; sourceTree = "<group>"; };
-		152C43F31DCC1E0E00430487 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		152C43F21DCC1E0E00430487 /* Toast.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Toast.h; path = "../Toast-Framework/Toast.h"; sourceTree = "<group>"; };
+		152C43F31DCC1E0E00430487 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = "../Toast-Framework/Info.plist"; sourceTree = "<group>"; };
 		1536A60416B0E0CF0021C622 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Toast.h"; sourceTree = "<group>"; };
 		1536A60516B0E0CF0021C622 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Toast.m"; sourceTree = "<group>"; };
 		1536A60816B0E0D60021C622 /* CSAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSAppDelegate.h; sourceTree = "<group>"; };
 		1536A60916B0E0D60021C622 /* CSAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSAppDelegate.m; sourceTree = "<group>"; };
 		1536A60A16B0E0D60021C622 /* CSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSViewController.h; sourceTree = "<group>"; };
 		1536A60B16B0E0D60021C622 /* CSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewController.m; sourceTree = "<group>"; };
-		1536A61216B0E0E20021C622 /* toast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toast.png; sourceTree = "<group>"; };
-		1536A62416B0E2050021C622 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
-		1536A62816B0F0B20021C622 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
-		1536A62916B0F0B20021C622 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		1566460C1FC1ED8D00ECDFCE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
+		15F305671FC1EFAF0058458A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				1536A60316B0E0CF0021C622 /* Toast */,
-				1536A60716B0E0D60021C622 /* Demo */,
-				151FC0DD13D34B7A007DC282 /* Supporting Files */,
-				1536A61016B0E0E20021C622 /* Resources */,
+				1536A60716B0E0D60021C622 /* Example */,
 				152C43F11DCC1E0E00430487 /* Carthage */,
 				151FC0D513D34B7A007DC282 /* Frameworks */,
 				151FC0D313D34B7A007DC282 /* Products */,
@@ -111,7 +105,7 @@
 				151FC12A13D3558E007DC282 /* main.m */,
 			);
 			name = "Supporting Files";
-			path = ToastTest;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 		152C43F11DCC1E0E00430487 /* Carthage */ = {
@@ -130,40 +124,29 @@
 				1536A60416B0E0CF0021C622 /* UIView+Toast.h */,
 				1536A60516B0E0CF0021C622 /* UIView+Toast.m */,
 			);
-			name = Toast;
-			path = Toast/Toast;
+			path = Toast;
 			sourceTree = SOURCE_ROOT;
 		};
-		1536A60716B0E0D60021C622 /* Demo */ = {
+		1536A60716B0E0D60021C622 /* Example */ = {
 			isa = PBXGroup;
 			children = (
 				1536A60816B0E0D60021C622 /* CSAppDelegate.h */,
 				1536A60916B0E0D60021C622 /* CSAppDelegate.m */,
 				1536A60A16B0E0D60021C622 /* CSViewController.h */,
 				1536A60B16B0E0D60021C622 /* CSViewController.m */,
+				151FC0DD13D34B7A007DC282 /* Supporting Files */,
+				1536A61016B0E0E20021C622 /* Resources */,
 			);
-			name = Demo;
-			path = Toast/Example;
+			path = Example;
 			sourceTree = SOURCE_ROOT;
 		};
 		1536A61016B0E0E20021C622 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1536A61116B0E0E20021C622 /* images */,
+				1566460C1FC1ED8D00ECDFCE /* Images.xcassets */,
+				15F305671FC1EFAF0058458A /* LaunchScreen.storyboard */,
 			);
-			name = Resources;
-			path = Toast/Resources;
-			sourceTree = "<group>";
-		};
-		1536A61116B0E0E20021C622 /* images */ = {
-			isa = PBXGroup;
-			children = (
-				1536A62816B0F0B20021C622 /* Icon.png */,
-				1536A62916B0F0B20021C622 /* Icon@2x.png */,
-				1536A62416B0E2050021C622 /* Default-568h@2x.png */,
-				1536A61216B0E0E20021C622 /* toast.png */,
-			);
-			path = images;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,9 +164,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		151FC0D113D34B7A007DC282 /* ToastDemo */ = {
+		151FC0D113D34B7A007DC282 /* Toast-Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 151FC0F313D34B7A007DC282 /* Build configuration list for PBXNativeTarget "ToastDemo" */;
+			buildConfigurationList = 151FC0F313D34B7A007DC282 /* Build configuration list for PBXNativeTarget "Toast-Example" */;
 			buildPhases = (
 				151FC0CE13D34B7A007DC282 /* Sources */,
 				151FC0CF13D34B7A007DC282 /* Frameworks */,
@@ -193,7 +176,7 @@
 			);
 			dependencies = (
 			);
-			name = ToastDemo;
+			name = "Toast-Example";
 			productName = ToastTest;
 			productReference = 151FC0D213D34B7A007DC282 /* Toast.app */;
 			productType = "com.apple.product-type.application";
@@ -245,7 +228,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				151FC0D113D34B7A007DC282 /* ToastDemo */,
+				151FC0D113D34B7A007DC282 /* Toast-Example */,
 				152C43EF1DCC1E0E00430487 /* Toast */,
 			);
 		};
@@ -256,10 +239,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1536A61316B0E0E20021C622 /* toast.png in Resources */,
-				1536A62516B0E2050021C622 /* Default-568h@2x.png in Resources */,
-				1536A62A16B0F0B20021C622 /* Icon.png in Resources */,
-				1536A62B16B0F0B20021C622 /* Icon@2x.png in Resources */,
+				1566460D1FC1ED8D00ECDFCE /* Images.xcassets in Resources */,
+				15F305681FC1EFAF0058458A /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,7 +291,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -329,7 +310,7 @@
 				GCC_VERSION = com.apple.compilers.llvmgcc42;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
@@ -348,9 +329,9 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Toast/Toast-Prefix.pch";
+				GCC_PREFIX_HEADER = "Example/Toast-Prefix.pch";
 				GCC_VERSION = "";
-				INFOPLIST_FILE = "Toast/Toast-Info.plist";
+				INFOPLIST_FILE = "Example/Toast-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scalessec.toastexample;
 				PRODUCT_NAME = Toast;
@@ -371,9 +352,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Toast/Toast-Prefix.pch";
+				GCC_PREFIX_HEADER = "Example/Toast-Prefix.pch";
 				GCC_VERSION = "";
-				INFOPLIST_FILE = "Toast/Toast-Info.plist";
+				INFOPLIST_FILE = "Example/Toast-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scalessec.toastexample;
 				PRODUCT_NAME = Toast;
@@ -426,9 +407,9 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = Toast/Info.plist;
+				INFOPLIST_FILE = "Toast-Framework/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scalessec.Toast;
@@ -477,9 +458,9 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				INFOPLIST_FILE = Toast/Info.plist;
+				INFOPLIST_FILE = "Toast-Framework/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.scalessec.Toast;
@@ -504,7 +485,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		151FC0F313D34B7A007DC282 /* Build configuration list for PBXNativeTarget "ToastDemo" */ = {
+		151FC0F313D34B7A007DC282 /* Build configuration list for PBXNativeTarget "Toast-Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				151FC0F413D34B7A007DC282 /* Debug */,
