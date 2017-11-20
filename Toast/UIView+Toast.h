@@ -395,7 +395,7 @@ extern const NSString * CSToastPositionBottom;
  toast views will appear one after the other. When `NO`, multiple Toast
  views will appear at the same time (potentially overlapping depending
  on their positions). This has no effect on the toast activity view,
- which operates independently of normal toast views. Default is `YES`.
+ which operates independently of normal toast views. Default is `NO`.
  
  @param queueEnabled YES or NO
  */
@@ -403,7 +403,7 @@ extern const NSString * CSToastPositionBottom;
 
 /**
  Returns `YES` if the queue is enabled, otherwise `NO`.
- Default is `YES`.
+ Default is `NO`.
  
  @return BOOL
  */
