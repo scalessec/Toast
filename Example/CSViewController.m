@@ -32,6 +32,8 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
 @interface CSViewController ()
 
 @property (assign, nonatomic, getter=isShowingActivity) BOOL showingActivity;
+@property (strong, nonatomic) UISwitch *tapToDismissSwitch;
+@property (strong, nonatomic) UISwitch *queueSwitch;
 
 @end
 
@@ -81,7 +83,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     if (section == 0) {
         return 2;
     } else {
-        return 9;
+        return 11;
     }
 }
 
@@ -106,29 +108,29 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
-            UISwitch *tapToDismissSwitch = [[UISwitch alloc] init];
-            tapToDismissSwitch.onTintColor = [UIColor colorWithRed:239.0 / 255.0 green:108.0 / 255.0 blue:0.0 / 255.0 alpha:1.0];
-            [tapToDismissSwitch addTarget:self action:@selector(handleTapToDismissToggled) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = tapToDismissSwitch;
+            self.tapToDismissSwitch = [[UISwitch alloc] init];
+            _tapToDismissSwitch.onTintColor = [UIColor colorWithRed:239.0 / 255.0 green:108.0 / 255.0 blue:0.0 / 255.0 alpha:1.0];
+            [_tapToDismissSwitch addTarget:self action:@selector(handleTapToDismissToggled) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = _tapToDismissSwitch;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
         }
         cell.textLabel.text = @"Tap to Dismiss";
-        [(UISwitch *)cell.accessoryView setOn:[CSToastManager isTapToDismissEnabled]];
+        [_tapToDismissSwitch setOn:[CSToastManager isTapToDismissEnabled]];
         return cell;
     } else if (indexPath.section == 0 && indexPath.row == 1) {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ZOToastSwitchCellId];
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ZOToastSwitchCellId];
-            UISwitch *queueSwitch = [[UISwitch alloc] init];
-            queueSwitch.onTintColor = [UIColor colorWithRed:239.0 / 255.0 green:108.0 / 255.0 blue:0.0 / 255.0 alpha:1.0];
-            [queueSwitch addTarget:self action:@selector(handleQueueToggled) forControlEvents:UIControlEventValueChanged];
-            cell.accessoryView = queueSwitch;
+            self.queueSwitch = [[UISwitch alloc] init];
+            _queueSwitch.onTintColor = [UIColor colorWithRed:239.0 / 255.0 green:108.0 / 255.0 blue:0.0 / 255.0 alpha:1.0];
+            [_queueSwitch addTarget:self action:@selector(handleQueueToggled) forControlEvents:UIControlEventValueChanged];
+            cell.accessoryView = _queueSwitch;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.font = [UIFont systemFontOfSize:16.0];
         }
         cell.textLabel.text = @"Queue Toast";
-        [(UISwitch *)cell.accessoryView setOn:[CSToastManager isQueueEnabled]];
+        [_queueSwitch setOn:[CSToastManager isQueueEnabled]];
         return cell;
     } else {
         UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ZOToastDemoCellId forIndexPath:indexPath];
@@ -154,6 +156,10 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
             cell.textLabel.text = @"Show an image as toast at point\n(110, 110)";
         } else if (indexPath.row == 8) {
             cell.textLabel.text = (self.isShowingActivity) ? @"Hide toast activity" : @"Show toast activity";
+        } else if (indexPath.row == 9) {
+            cell.textLabel.text = @"Hide toast";
+        } else if (indexPath.row == 10) {
+            cell.textLabel.text = @"Hide all toasts";
         }
         
         return cell;
@@ -266,6 +272,17 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         _showingActivity = !self.isShowingActivity;
         
         [tableView reloadData];
+        
+    } else if (indexPath.row == 9) {
+        
+        // Hide toast
+        [self.navigationController.view hideToast];
+        
+    } else if (indexPath.row == 10) {
+        
+        // Hide all toasts
+        [self.navigationController.view hideAllToasts];
+        
     }
 }
 
