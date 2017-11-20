@@ -27,9 +27,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import <objc/runtime.h>
 
-NSString * CSToastPositionTop       = @"CSToastPositionTop";
-NSString * CSToastPositionCenter    = @"CSToastPositionCenter";
-NSString * CSToastPositionBottom    = @"CSToastPositionBottom";
+// Positions
+NSString * CSToastPositionTop                       = @"CSToastPositionTop";
+NSString * CSToastPositionCenter                    = @"CSToastPositionCenter";
+NSString * CSToastPositionBottom                    = @"CSToastPositionBottom";
 
 // Keys for values associated with toast views
 static const NSString * CSToastTimerKey             = @"CSToastTimerKey";
@@ -110,22 +111,39 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     }
 }
 
-#pragma mark - Hide Toast Method
+#pragma mark - Hide Toast Methods
 
-- (void)hideToasts {
-    for (UIView *toast in [self cs_activeToasts]) {
-        [self hideToast:toast];
-    }
+- (void)hideToast {
+    [self hideToast:[[self cs_activeToasts] firstObject]];
 }
 
 - (void)hideToast:(UIView *)toast {
     // sanity
     if (!toast || ![[self cs_activeToasts] containsObject:toast]) return;
     
-    NSTimer *timer = (NSTimer *)objc_getAssociatedObject(toast, &CSToastTimerKey);
-    [timer invalidate];
-    
     [self cs_hideToast:toast];
+}
+
+- (void)hideAllToasts {
+    [self hideAllToasts:NO clearQueue:YES];
+}
+
+- (void)hideAllToasts:(BOOL)includeActivity clearQueue:(BOOL)clearQueue {
+    if (clearQueue) {
+        [self clearToastQueue];
+    }
+    
+    for (UIView *toast in [self cs_activeToasts]) {
+        [self hideToast:toast];
+    }
+    
+    if (includeActivity) {
+        [self hideToastActivity];
+    }
+}
+
+- (void)clearToastQueue {
+    [[self cs_toastQueue] removeAllObjects];
 }
 
 #pragma mark - Private Show/Hide Methods
@@ -162,6 +180,9 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 }
     
 - (void)cs_hideToast:(UIView *)toast fromTap:(BOOL)fromTap {
+    NSTimer *timer = (NSTimer *)objc_getAssociatedObject(toast, &CSToastTimerKey);
+    [timer invalidate];
+    
     [UIView animateWithDuration:[[CSToastManager sharedStyle] fadeDuration]
                           delay:0.0
                         options:(UIViewAnimationOptionCurveEaseIn | UIViewAnimationOptionBeginFromCurrentState)
