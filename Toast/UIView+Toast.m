@@ -433,9 +433,17 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
 - (CGPoint)cs_centerPointForPosition:(id)point withToast:(UIView *)toast {
     CSToastStyle *style = [CSToastManager sharedStyle];
     
+    UIEdgeInsets safeInsets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        safeInsets = self.safeAreaInsets;
+    }
+    
+    CGFloat topPadding = style.verticalPadding + safeInsets.top;
+    CGFloat bottomPadding = style.verticalPadding + safeInsets.bottom;
+    
     if([point isKindOfClass:[NSString class]]) {
         if([point caseInsensitiveCompare:CSToastPositionTop] == NSOrderedSame) {
-            return CGPointMake(self.bounds.size.width / 2.0, (toast.frame.size.height / 2.0) + style.verticalPadding);
+            return CGPointMake(self.bounds.size.width / 2.0, (toast.frame.size.height / 2.0) + topPadding);
         } else if([point caseInsensitiveCompare:CSToastPositionCenter] == NSOrderedSame) {
             return CGPointMake(self.bounds.size.width / 2.0, self.bounds.size.height / 2.0);
         }
@@ -444,7 +452,7 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     }
     
     // default to bottom
-    return CGPointMake(self.bounds.size.width / 2.0, (self.bounds.size.height - (toast.frame.size.height / 2.0)) - style.verticalPadding);
+    return CGPointMake(self.bounds.size.width / 2.0, (self.bounds.size.height - (toast.frame.size.height / 2.0)) - bottomPadding);
 }
 
 @end
