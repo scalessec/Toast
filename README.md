@@ -72,6 +72,9 @@ style.messageColor = [UIColor orangeColor];
 
 // toggle queueing behavior
 [CSToastManager setQueueEnabled:YES];
+
+// immediately hides all toast views in self.view
+[self.view hideAllToasts];
 ```
     
 See the demo project for more examples.
