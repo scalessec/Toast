@@ -405,6 +405,13 @@ static const NSString * CSToastQueueKey             = @"CSToastQueueKey";
     
     [self addSubview:activityView];
     
+    /*
+     解决 makeToastActivity 状态下 调用 hideAllToasts 无法被隐藏的问题
+     Fix makeToastActivity condition called hideAllToasts cannot be hidden
+     */
+    // enqueue
+    [[self cs_activeToasts] addObject:activityView];
+    
     [UIView animateWithDuration:style.fadeDuration
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
