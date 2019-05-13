@@ -208,7 +208,7 @@
 				LastUpgradeCheck = 0700;
 				TargetAttributes = {
 					151FC0D113D34B7A007DC282 = {
-						DevelopmentTeam = 3NC359BQ4D;
+						DevelopmentTeam = 8EDMCH2Z7A;
 					};
 					152C43EF1DCC1E0E00430487 = {
 						CreatedOnToolsVersion = 8.0;
@@ -221,6 +221,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 151FC0C713D34B79007DC282;
@@ -327,6 +328,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 8EDMCH2Z7A;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Toast-Prefix.pch";
@@ -351,6 +353,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = 8EDMCH2Z7A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Example/Toast-Prefix.pch";
 				GCC_VERSION = "";

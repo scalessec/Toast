@@ -44,6 +44,11 @@ extern const NSString * CSToastPositionBottom;
 @interface UIView (Toast)
 
 /**
+Make sure the ToastView popover only adds one, to prevent duplicate clicks and overlaps from adding ToastView
+ */
+@property (nonatomic ,strong)UIView *wrapperView;
+
+/**
  Creates and presents a new toast view with a message and displays it with the
  default duration and position. Styled using the shared style.
  
