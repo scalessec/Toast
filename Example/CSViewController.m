@@ -83,7 +83,7 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
     if (section == 0) {
         return 2;
     } else {
-        return 11;
+        return 12;
     }
 }
 
@@ -155,10 +155,12 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         } else if (indexPath.row == 7) {
             cell.textLabel.text = @"Show an image as toast at point\n(110, 110)";
         } else if (indexPath.row == 8) {
-            cell.textLabel.text = (self.isShowingActivity) ? @"Hide toast activity" : @"Show toast activity";
+            cell.textLabel.text = @"Show drop down view";
         } else if (indexPath.row == 9) {
-            cell.textLabel.text = @"Hide toast";
+            cell.textLabel.text = (self.isShowingActivity) ? @"Hide toast activity" : @"Show toast activity";
         } else if (indexPath.row == 10) {
+            cell.textLabel.text = @"Hide toast";
+        } else if (indexPath.row == 11) {
             cell.textLabel.text = @"Hide all toasts";
         }
         
@@ -263,6 +265,11 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         
     } else if (indexPath.row == 8) {
         
+        UIImageView *toastView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"toast.png"]];
+        [self.navigationController.view showDropdownNotificationToast:toastView duration:3 completion:nil];
+        
+    } else if (indexPath.row == 9) {
+        
         // Make toast activity
         if (!self.isShowingActivity) {
             [self.navigationController.view makeToastActivity:CSToastPositionCenter];
@@ -273,12 +280,12 @@ static NSString * ZOToastDemoCellId     = @"ZOToastDemoCellId";
         
         [tableView reloadData];
         
-    } else if (indexPath.row == 9) {
+    } else if (indexPath.row == 10) {
         
         // Hide toast
         [self.navigationController.view hideToast];
         
-    } else if (indexPath.row == 10) {
+    } else if (indexPath.row == 11) {
         
         // Hide all toasts
         [self.navigationController.view hideAllToasts];
