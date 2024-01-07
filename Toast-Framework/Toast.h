@@ -2,7 +2,7 @@
 //  Toast.h
 //  Toast
 //
-//  Created by Charles Scalesse on 11/3/16.
+//  Copyright 2011-2024 Charles Scalesse. All rights reserved.
 //
 //
 

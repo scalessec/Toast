@@ -2,7 +2,7 @@
 //  CSAppDelegate.h
 //  Toast
 //
-//  Copyright (c) 2011-2016 Charles Scalesse.
+//  Copyright (c) 2011-2024 Charles Scalesse.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a
 //  copy of this software and associated documentation files (the

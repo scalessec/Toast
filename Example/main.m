@@ -2,7 +2,7 @@
 //  main.m
 //  ToastTest
 //
-//  Copyright 2014 Charles Scalesse. All rights reserved.
+//  Copyright 2011-2024 Charles Scalesse. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
