@@ -11,4 +11,5 @@ Pod::Spec.new do |s|
   s.resources    = ['Toast/Resources/PrivacyInfo.xcprivacy']
   s.framework    = 'QuartzCore'
   s.requires_arc = true
+  s.ios.deployment_target = '12.0'
 end
