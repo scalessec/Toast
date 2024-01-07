@@ -1,7 +1,6 @@
 Toast for iOS
 =============
 
-[![Build Status](https://travis-ci.org/scalessec/Toast.svg?branch=3.0)](https://travis-ci.org/scalessec/Toast)
 [![CocoaPods Version](https://img.shields.io/cocoapods/v/Toast.svg)](http://cocoadocs.org/docsets/Toast)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 

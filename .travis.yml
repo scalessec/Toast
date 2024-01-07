@@ -1,4 +1,0 @@
-language: objective-c
-osx_image: xcode9
-script:
- - xcodebuild -project Toast.xcodeproj -scheme Toast-Example -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
