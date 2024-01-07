@@ -105,6 +105,10 @@ Manually
 2. `#import "UIView+Toast.h"`
 3. Grab yourself a cold 🍺.
 
+Privacy
+-----------
+Toast does not collect any data. A [privacy manifest](Toast/Resources/PrivacyInfo.xcprivacy) is provided with the library. See [Apple's documentation](https://developer.apple.com/documentation/bundleresources/privacy_manifest_files) for related details.
+ 
 MIT License
 -----------
     Copyright (c) 2011-2024 Charles Scalesse.
