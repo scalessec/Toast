@@ -86,7 +86,7 @@ Setup Instructions
 
 Install with CocoaPods by adding the following to your `Podfile`:
 ```ruby
-pod 'Toast', '~> 4.0.0'
+pod 'Toast', '~> 4.1.0'
 ```
 
 [Carthage](https://github.com/Carthage/Carthage)
@@ -94,9 +94,9 @@ pod 'Toast', '~> 4.0.0'
 
 Install with Carthage by adding the following to your `Cartfile`:
 ```ogdl
-github "scalessec/Toast" ~> 4.0.0
+github "scalessec/Toast" ~> 4.1.0
 ```
-Run `carthage update` to build the framework and link against `Toast.framework`. Then, `#import <Toast/Toast.h>`.
+Run `carthage update --use-xcframeworks` to build the framework and link against `Toast.xcframework`. Then, `#import <Toast/Toast.h>`.
 
 Manually
 --------
