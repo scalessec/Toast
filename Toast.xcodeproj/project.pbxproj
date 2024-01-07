@@ -20,6 +20,7 @@
 		1536A60E16B0E0D60021C622 /* CSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1536A60B16B0E0D60021C622 /* CSViewController.m */; };
 		1566460D1FC1ED8D00ECDFCE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1566460C1FC1ED8D00ECDFCE /* Images.xcassets */; };
 		15F305681FC1EFAF0058458A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15F305671FC1EFAF0058458A /* LaunchScreen.storyboard */; };
+		56E531712B4A3AF50034D6F5 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 56E531702B4A3AF50034D6F5 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		1536A60B16B0E0D60021C622 /* CSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSViewController.m; sourceTree = "<group>"; };
 		1566460C1FC1ED8D00ECDFCE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Example/Resources/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		15F305671FC1EFAF0058458A /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		56E531702B4A3AF50034D6F5 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +125,7 @@
 			children = (
 				1536A60416B0E0CF0021C622 /* UIView+Toast.h */,
 				1536A60516B0E0CF0021C622 /* UIView+Toast.m */,
+				56E5316F2B4A3ACA0034D6F5 /* Resources */,
 			);
 			path = Toast;
 			sourceTree = SOURCE_ROOT;
@@ -145,6 +148,14 @@
 			children = (
 				1566460C1FC1ED8D00ECDFCE /* Images.xcassets */,
 				15F305671FC1EFAF0058458A /* LaunchScreen.storyboard */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		56E5316F2B4A3ACA0034D6F5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				56E531702B4A3AF50034D6F5 /* PrivacyInfo.xcprivacy */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -250,6 +261,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				56E531712B4A3AF50034D6F5 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
