@@ -30,14 +30,29 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
     CSViewController *viewController = [[CSViewController alloc] initWithStyle:UITableViewStylePlain];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
     self.window.rootViewController = navigationController;
     [self.window makeKeyAndVisible];
-    [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
+    [self setupAppearance];
+
     return YES;
+}
+
+- (void)setupAppearance {
+    if (@available(iOS 13.0, *)) {
+        UINavigationBarAppearance *barAppearance = [[UINavigationBarAppearance alloc] init];
+        barAppearance.backgroundColor = [UIColor orangeColor];
+        barAppearance.titleTextAttributes = @{NSForegroundColorAttributeName : [UIColor whiteColor]};
+        
+        [[UINavigationBar appearance] setStandardAppearance:barAppearance];
+        [[UINavigationBar appearance] setScrollEdgeAppearance:barAppearance];
+    } else {
+        [[UINavigationBar appearance] setBarTintColor:[UIColor orangeColor]];
+        [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    }
 }
 
 @end
